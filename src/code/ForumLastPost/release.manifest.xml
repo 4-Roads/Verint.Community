@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<release id="FourRoads.VerintCommunity.ForumLastPost">
+  <files>
+    <file name="FourRoads.Common.dll" />
+    <file name="FourRoads.Common.Sql.dll" />
+    <file name="FourRoads.Common.TelligentCommunity.dll" />
+    <file name="FourRoads.Common.Web.dll" />
+    <file name="FourRoads.VerintCommunity.ForumLastPost.dll" />
+    <file name="FourRoads.VerintCommunity.Installer.dll" />
+  </files>
+  <resources>
+    <resource name="Resources\Sql\LastReadPosts.uninstall.sql" />
+    <resource name="Resources\Sql\LastReadPostsProcedures.install.sql" />
+    <resource name="Resources\Sql\LastReadPostsTables.install.sql" />
+  </resources>
+  <docs>
+    <doc name="readme.md" />
+  </docs>
+</release>

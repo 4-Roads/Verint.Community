@@ -1,0 +1,120 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server" ID="Head">
+    <TEControl:Script ID="Script2" runat="server" Src="../utility/global.js" />
+    <TEControl:PlatformHeaders runat="server" />
+    <title>
+        <asp:ContentPlaceHolder ID="PageTitleRegion" runat="server">
+            <CP:ResourceControl ID="HeaderTitle" runat="server" ResourceName="Admin_Title" />
+        </asp:ContentPlaceHolder>
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <TEControl:Style ID="UserStyles" runat="server" />
+    <TEControl:Style ID="Style2" runat="server" Href="../style/controlpanel.css" />
+    <asp:ContentPlaceHolder ID="StyleRegion" runat="server" />
+    <!--[if lte IE 6]>
+        <link type="text/css" rel="stylesheet" href="../style/ie6.css" media="screen,print" />
+    <![endif]-->
+</head>
+<body spellcheck="true" class="administration legacy <%= Telligent.Evolution.Components.CSContext.Current.Language.ToLowerInvariant() %>">
+    <form runat="server" id="AdminForm">
+    
+    <div id="CommonOuter">
+        <div id="Common">
+            <asp:ContentPlaceHolder ID="OuterTaskRegion" runat="server">
+                <div class="CommonContentArea">
+                    <div class="CommonContent">
+                        <asp:ContentPlaceHolder ID="TaskRegion" runat="server" />
+                    </div>
+                </div>
+            </asp:ContentPlaceHolder>
+        </div>
+    </div>
+    </form>
+    <script type="text/javascript">
+        if (window.jQuery && jQuery.glowModal) {
+            jQuery.extend(jQuery.glowModal.defaults, {
+                loadingHtmlUrl: 'about:blank',
+                windowCssClasses: ['CommonModal'],
+                windowTitleCssClasses: ['CommonModalTitle'],
+                windowCloseCssClasses: ['CommonModalClose'],
+                windowContentCssClasses: ['CommonModalContent'],
+                windowMaskCssClasses: ['CommonModalMask'],
+                windowFooterCssClasses: ['CommonModalFooter'],
+                windowResizeCssClasses: ['CommonModalResize'],
+                zIndex: 65000
+            });
+        }
+
+        $(function () {
+            if (window.parent && window.parent.$ && window.parent.$.telligent && window.parent.$.telligent.evolution && window.parent.$.telligent.evolution.widgets && window.parent.$.telligent.evolution.widgets.legacyAdministrationPanel) {
+                window.parent.$.telligent.evolution.widgets.legacyAdministrationPanel.register({
+                    window: window,
+                    container: $('html')
+                })
+                $(window).on('unload', function () {
+                    try {
+                        window.parent.$.telligent.evolution.widgets.legacyAdministrationPanel.unload({
+                            window: window
+                        });
+                    } catch (e) { }
+                });
+
+                var baseUrl = $.telligent.evolution.site.getBaseUrl();
+                if (baseUrl.indexOf('https://') < 0 && baseUrl.indexOf('http://') < 0) {
+                    var port = window.location.port;
+                    if (port <= 0 || port == 443 || port == 80) {
+                        port = '';
+                    } else {
+                        port = ':' + port;
+                    }
+                    baseUrl = window.location.protocol + '//' + window.location.hostname + port + baseUrl;
+                }
+
+                var localTest = new RegExp('^' + $.telligent.evolution.regex.encode(baseUrl));
+                $('a').each(function () {
+                    var href = $(this).attr('href');
+                    if (href && href.indexOf('mailto:') < 0 && (href.indexOf('https:') == 0 || href.indexOf('http:') == 0) && !localTest.test(href)) {
+                        $(this).attr('target', '_top');
+                    } 
+                });
+
+                window.Telligent_Modal = {
+                    GetWindowOpener: function (modalWindow, openerWindow) {
+                        return window.parent.$.telligent.evolution.widgets.legacyAdministrationPanel.getOpener(modalWindow);
+                    },
+                    IsShown: function (openerWindow) {
+                        return false;
+                    },
+                    Resize: function (width, height, preventAutomaticResizing, openerWindow) {
+                    },
+                    MoveTo: function (x, y, openerWindow) {
+                    },
+                    Open: function (url, width, height, onCloseFunction, x, y, ignoreCloseAndAnimation, isManuallyResized, openerWindow) {
+                        window.parent.$.telligent.evolution.widgets.legacyAdministrationPanel.open({
+                            url: url,
+                            onclose: onCloseFunction,
+                            opener: openerWindow || window,
+                            ismodal: true
+                        });
+                    },
+                    Close: function (returnValue, openerWindow) {
+                        window.parent.$.telligent.evolution.widgets.legacyAdministrationPanel.close({
+                            opener: openerWindow,
+                            returnValue: returnValue
+                        });
+                    },
+                    Refresh: function (openerWindow) {
+                    }
+                };
+            } else {
+                window.top.location = '<%= Telligent.Evolution.Components.SiteUrls.Instance().Administration %>'
+            }
+        });
+
+    </script>
+    <asp:Literal runat="server" ID="LicenseRestrictionScript" />
+</body>
+</html>

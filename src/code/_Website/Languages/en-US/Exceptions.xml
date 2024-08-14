@@ -1,0 +1,778 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<resource name="AmazonCfsProvider_FileOrPathIsInvalid">The provided path and/or file name is invalid</resource>
+	<resource name="AmazonCfsProvider_PathIsInvalid">The provided path is invalid</resource>
+	<resource name="CreateGroup_GroupName_DuplicateGroupName">The ${group_lowercase} name already exists under the selected parent ${group_lowercase}.</resource>
+	<resource name="FileEmbeddableContentType_InvalidTypeOrLength_Error">The saving embedded file is either of an invalid type or is larger than the settings allow.</resource>
+	<resource name="FileSystemCfsProvider_FileOrPathIsInvalid">The provided path and/or file name is invalid</resource>
+	<resource name="FileSystemCfsProvider_PathIsInvalid">The provided path is invalid</resource>
+	<resource name="FriendsRequest_BlankMessageError">Please provide a message.</resource>
+	<resource name="Groups_GroupDescription_TooLong">The ${group_lowercase} description cannot be longer than 256 characters.</resource>
+	<resource name="Groups_GroupName_TooLong">The ${group_lowercase} name cannot be longer than 256 characters.</resource>
+	<resource name="Groups_GroupValidation_GroupMembership_RemovingLastOwner">Cannot remove the last owner of a group.</resource>
+	<resource name="Groups_GroupValidation_GroupMembership_InvalidMemberType">That member type is not permitted for that group type.</resource>
+	<resource name="Groups_GroupValidation_GroupNameRequired">${group_propercase} Name is required and must be set to a non-empty value.</resource>
+	<resource name="Groups_GroupValidation_OnlyOneRootGroup">${group_propercase} ParentGroup must be set to a valid parent ${group_lowercase} unless it is the root ${group_lowercase}. Only one root ${group_lowercase} can exist.</resource>
+	<resource name="Groups_GroupValidation_ParentIsSelf">A ${group_lowercase} cannot be made a child of itself.</resource>
+	<resource name="PluginManager_MultipleSingletonInstancesError">The requested configuration would cause one or more singleton plugin types to have multiple instances.  The configuration was not saved.</resource>
+	<resource name="UploadAttachment_Error">The file uploaded is either of an invalid type or is larger than the settings allow.</resource>
+	<resource name="UploadAttachment_InvalidURL">Only valid URLs are allowed.</resource>
+	<resource name="Validation_Abuse_Exempt_AuthorCanManageAbuse_User">Members who can moderate member accounts are exempt from moderation.</resource>
+	<resource name="Validation_Abuse_Exempt_AuthorCanManageAbuse_Content">Content by moderators are exempt from moderation.</resource>
+	<resource name="Validation_Abuse_Exempt_SystemUserAccount">System accounts are exempt from moderation.</resource>
+	<resource name="Validation_Abuse_Exempt_AuthorReputation_User">The reputation of this member exempts them from moderation.</resource>
+	<resource name="Validation_Abuse_Exempt_AuthorReputation_Content">The reputation of the author of this content exempts it from moderation.</resource>
+	<resource name="Validation_Abuse_Exempt_Role_User">This member is exempt from moderation due to their role membership.</resource>
+	<resource name="Validation_Abuse_Exempt_Role_Content">The author of this content is exempt from moderation due to their role membership.</resource>
+	<resource name="Validation_Abuse_AbuseReportAsAnonymous">You must be logged in to log an abuse report.</resource>
+	<resource name="Validation_Abuse_AbuseReportCreatedUserIdNotSet">The user creating the abuse report must be identified when logging an abuse report.</resource>
+	<resource name="Validation_Abuse_AppealAlreadyMade">The appeal has already been made.</resource>
+	<resource name="Validation_Abuse_ContentTypeInvalid">This type of content cannot be reported as abusive.</resource>
+	<resource name="Validation_Abuse_InvalidAppeal">The appeal could not be retrieved.</resource>
+	<resource name="Validation_Abuse_MultipleReports">Only a single abuse report is allowed for each user.</resource>
+	<resource name="Validation_ActivityStories_ActorRequired">Activity stories require at least one actor.</resource>
+	<resource name="Validation_ActivityStories_Delete">Access to delete the activity story was denied.</resource>
+	<resource name="Validation_ActivityStories_InvalidStoryType">The activity story type is invalid.</resource>
+	<resource name="Validation_ActivityStories_SitePreference_NotOverridable">The default activity story preference cannot be overridden for the user.</resource>
+	<resource name="Validation_ActivityStories_SitePreferenceType">The default activity story preference cannot be set on a disabled or missing story type.</resource>
+	<resource name="Validation_ActivityStories_UserPreferenceType">The user activity story preference cannot be set on a disabled or missing story type.</resource>
+	<resource name="Validation_Application_Id">The application's ID must be specified.</resource>
+  <resource name="Validation_Application_Key_Is_Number">The application web key cannot be a numerical value, please enter another key.</resource>
+	<resource name="Validation_Application_Type">The application type was invalid.</resource>
+	<resource name="Validation_ApplicationInvalid">The specified application does not exist.</resource>
+	<resource name="Validation_Bookmarks_Create">Access to add a bookmark was denied.</resource>
+	<resource name="Validation_Bookmarks_Delete">Access to delete the bookmark was denied.</resource>
+	<resource name="Validation_CannotChangeRootGroupType">Changing the group type for the site root group is not supported.</resource>
+	<resource name="Validation_Comments_ParentComment">The parent comment could not be retrieved.</resource>
+	<resource name="Validation_Comments_ParentCommentContent">The parent comment was associated to other content.</resource>
+	<resource name="Validation_Container_Id">The container's ID must be specified.</resource>
+	<resource name="Validation_Container_Type">The container type was invalid.</resource>
+	<resource name="Validation_ContainerInvalid">The specified container does not exist.</resource>
+	<resource name="Validation_Content_Id">The content's ID must be specified.</resource>
+	<resource name="Validation_Content_Type">The content type was invalid.</resource>
+	<resource name="Validation_Content_ViewType">The view type must be specified.</resource>
+	<resource name="Validation_ContentIdentificationRequirements">Either ContentUrl or ContentId and ContentTypeId are required.</resource>
+	<resource name="Validation_ContentPropertyInvalid">The content property is invalid.</resource>
+	<resource name="Validation_ContentTypeInvalid">The content type is invalid.</resource>
+	<resource name="Validation_EntityTypeInvalid">The entity type is invalid.</resource>
+	<resource name="Validation_ExternalMessageStoryTypeDisabled">The external message story type is disabled. The message cannot be created.</resource>
+	<resource name="Validation_FeaturedContent_AlreadyFeatured">This item has already been featured.</resource>
+	<resource name="Validation_FeaturedContent_InvalidFileType">Featured image must be one of the following types: bmp, png, jpg, jpeg, gif, svg.</resource>
+	<resource name="Validation_FeaturedContent_InvalidTarget">One or more of the specified containers has a disallowed container type.</resource>
+	<resource name="Validation_FeaturedContent_NoTargets">One or more containers must be specified when featuring an item.</resource>
+	<resource name="Validation_FeaturedContent_Feature">Featuring this content type is not allowed at this time</resource>
+	<resource name="Validation_GroupInvalid">The group is invalid.</resource>
+	<resource name="Validation_GroupRoleInvalid">The specified role is not associated with current group.</resource>
+	<resource name="Validation_InvalidContent">The associated content could not be retrieved.</resource>
+	<resource name="Validation_InvalidDateRange">The date range is not valid.</resource>
+	<resource name="Validation_Leaderboard_AllTimeWindowRequiresNoDateParameters">If the period is set to 'all time', no other options should be specified.</resource>
+	<resource name="Validation_Leaderboard_DatesOrTimeSpanRequired">Leaderboards should only define either a static date range or rolling time window parameters, but not both.</resource>
+	<resource name="Validation_Leaderboard_RollingWindowRequiresLengthAndInterval">A rolling period requires specifying a time span.</resource>
+	<resource name="Validation_Leaderboard_StaticWindowRequiresStartAndEndDates">A static period requires specifying a start and end date.</resource>
+	<resource name="Validation_Leaderboard_UnknownTimeSpan">The time span for the leaderboad could not be determined.</resource>
+	<resource name="Validation_Mentions_ContentNotSupported">The content does not support containing mentions.</resource>
+	<resource name="Validation_MetricInvalid">The specified metric is invalid.</resource>
+	<resource name="Validation_Metric_ContentType">The metric does not support the specified content type.</resource>
+	<resource name="Validation_MetricScoreMismatch">The metric '{0}' and score '{1}' are not compatible.</resource>
+	<resource name="Validation_NotificationOfDifferentType">The notification is of a different type.  This notification type is not allowed to modify this notification.</resource>
+	<resource name="Validation_Notifications_ActorRequired">Notifications require at least one actor.</resource>
+	<resource name="Validation_Notifications_Delete">Access to delete the notification was denied.</resource>
+	<resource name="Validation_NotificationTypeInvalid">The notification type was invalid.</resource>
+	<resource name="Validation_Permissions_AccessDenied">Access to update permissions was denied."</resource>
+	<resource name="Validation_Permissions_ContentType">The permission does not support the specified content type.</resource>
+	<resource name="Validation_Permissions_ContentType_NotSecured">The content is not secured.</resource>
+	<resource name="Validation_Permissions_EntityType_NotSecured">The entity type is not secured.</resource>
+	<resource name="Validation_Permissions_InvalidPermission">The specified permission is invalid.</resource>
+	<resource name="Validation_PointTransactions_AccessDenied">Access to update user points was denied.</resource>
+	<resource name="Validation_PointTransactions_OldContent">Points cannot be awarded to content older than the configured consolidation timeframe in the Point Transaction Consolidation job.</resource>
+	<resource name="Validation_Rating_Create">Access to add a rating was denied.</resource>
+	<resource name="Validation_Rating_Delete">Access to delete the rating was denied.</resource>
+	<resource name="Validation_Rating_Value">Ratings must have an empty value or a value between 0 and 1.</resource>
+	<resource name="Validation_RoleInvalid">The specified role is invalid.</resource>
+	<resource name="Validation_Role_NodeId_Invalid">NodeId is not valid for a group nodeId. A group nodeId must be provided when passing in a PermissionId.</resource>
+	<resource name="Validation_Role_NodeId_Required">NodeId is required when passing in a PermissionId.</resource>
+	<resource name="Validation_ScoreInvalid">The specified score is invalid.</resource>
+	<resource name="Validation_Scoring_ContentType">The score does not support the specified content type.</resource>
+	<resource name="Validation_ScriptedContentFragment_FactoryDefaultDelete">Factory default widgets cannot be deleted.</resource>
+	<resource name="Validation_ScriptedContentFragment_Invalid">The widget is invalid.</resource>
+	<resource name="Validation_ScriptedContentFragmentFiles_FactoryDefaultDelete">Files cannot be deleted from factory default widgets.</resource>
+	<resource name="Validation_ScriptedContentFragmentFiles_FactoryDefaultSave">Files cannot be saved for factory default widgets.</resource>
+  <resource name="Validation_Theme_FactoryDefaultDelete">Factory default themes cannot be deleted.</resource>
+  <resource name="Validation_Theme_FactoryDefaultSave">Factory default themes cannot be edited.</resource>
+  <resource name="Validation_Theme_CannotDeleteLastThemeOfType">Cannot delete the last theme of its type.</resource>
+  <resource name="Validation_Automation_FactoryDefaultDelete">Factory default automations cannot be deleted.</resource>
+  <resource name="Validation_Automation_FactoryDefaultSave">Factory default automations cannot be edited.</resource>
+	<resource name="Validation_ScriptedEmbeddable_FactoryDefaultDelete">Factory default scripted embeddables cannot be deleted.</resource>
+	<resource name="Validation_ScriptedEmbeddable_FactoryDefaultSave">Factory default scripted embeddables cannot be edited.</resource>
+	<resource name="Validation_ScriptedEmail_FactoryDefaultDelete">Factory default scripted email cannot be deleted.</resource>
+	<resource name="Validation_ScriptedEmail_FactoryDefaultSave">Factory default scripted email cannot be edited.</resource>
+	<resource name="ScriptedEmailService_ScriptedEmail_NotSpecified">The scripted email was not provided.</resource>
+	<resource name="ScriptedEmailService_ScriptedEmail_MissingId">The scripted email ID is invalid.</resource>
+	<resource name="ScriptedEmailService_ScriptedEmailConfiguration_NotSpecified">The scripted email configuration was not provided.</resource>
+	<resource name="ScriptedEmailService_ScriptedEmail_Missing">The configuration's scripted email could not be found.</resource>
+	<resource name="Validation_SystemUser">The specified user is a system account.</resource>
+	<resource name="Validation_CannotDeleteSystemUser">'{0}' cannot be deleted because it is a system account.</resource>
+	<resource name="Validation_Theme_LastThemeOfType">The last theme of a type cannot be deleted.</resource>
+	<resource name="Validation_Theme_SourceThemeType">The source theme must be of the same theme type as the target theme.</resource>
+	<resource name="Validation_User_Create">One or more errors prevented the user from being created.</resource>
+	<resource name="Validation_User_Create_Error">The user could not be added due to validation errors.</resource>
+	<resource name="Validation_User_Rename_Error">The user could not be renamed due to validation errors.</resource>
+	<resource name="Validation_User_Update_Error">The user could not be updated due to validation errors.</resource>
+	<resource name="Validation_UserFolder_Empty">The folder name must be specified.</resource>
+	<resource name="Validation_UserFolder_InvalidCharacters">The folder name includes invalid characters.</resource>
+	<resource name="Validation_UserFolder_PathLength">The folder path is too long.</resource>
+	<resource name="Validation_UserInvalid">The specified user does not exist.</resource>
+	<resource name="Validation_Translation_LanguageResourceNameRequired">The language resource name must be specified.</resource>
+	<resource name="Validation_ActivityStories_StoryCannotBeUpdated">The story does not exist. It cannot be updated.</resource>
+	<resource name="Validation_ActivityStories_StoryTypeChange">The story type cannot be changed when updating.</resource>
+	<resource name="Validation_Likes_Create">Access to like was denied.</resource>
+	<resource name="Validation_Likes_Delete">Access to unlike was denied.</resource>
+	<resource name="Validation_Tags_Add">Access to add tags was denied.</resource>
+	<resource name="Validation_Tags_Delete">Access to remove tags was denied.</resource>
+	<resource name="Validation_Tags_Replace">Access to replace tags was denied.</resource>
+	<resource name="Validation_Tags_Context">A context was not specified. Tags cannot be modified globally.</resource>
+	<resource name="Validation_Tags_TagReplacementRequirements">When replacing tags, both the original and replacement tags must be specified.</resource>
+	<resource name="CreateNewAccount_CreateUserStatus_DisallowedUsername">That sign in name is not available.</resource>
+	<resource name="CreateNewAccount_CreateUserStatus_DuplicateEmailAddress">A user with this email address already exists.</resource>
+	<resource name="CreateNewAccount_CreateUserStatus_DuplicateUsername">That sign in name is not available.</resource>
+		<resource name="CreateNewAccount_CreateUserStatus_InvalidEmail">Your email address is invalid.</resource>
+	<resource name="CreateNewAccount_CreateUserStatus_InvalidUserName">Your sign in name does not meet the requirements for this site.</resource>
+	<resource name="CreateNewAccount_CreateUserStatus_UserName_TooShort">Your sign in name must be at least {0} characters long.</resource>
+	<resource name="CreateNewAccount_CreateUserStatus_UserName_TooLong">Your sign in name must not exceed {0} characters in length</resource>
+	<resource name="CreateNewAccount_PasswordEmpty">The password should not be empty.</resource>
+	<resource name="CreateNewAccount_PasswordLimits">Password must be at least {0} characters</resource>
+	<resource name="CreateNewAccount_PasswordRegExValidator">Password contains invalid chars ...</resource>
+	<resource name="Validation_IsEmailPatternValid_Error">The email address is in an invalid format.</resource>
+	<resource name="Validation_ScriptedContentFragment_LanguageResourcesShouldBeEditedDirectly">The widget supports editing. Translations should be saved directly against the widget.</resource>
+	<resource name="Validation_ScriptedContentFragment_Name">The widget's name must be specified.</resource>
+	<resource name="Validation_ScriptedContentFragment_NotEditable">The widget does not support editing.</resource>
+	<resource name="Validation_User_SystemAccountMustBeApproved">System accounts must remain approved.</resource>
+  <resource name="Validation_User_FormerMemberMustBeDisapproved">FormerMember must remain disapproved.</resource>
+	<resource name="Validation_User_EmailRequired">The email address must be specified.</resource>
+	<resource name="Validation_User_SignatureLength">The signature must be less than {0} characters.</resource>
+  <resource name="Validation_SSO_UserUpdate">A user cannot edit their username when single sign-on has been enabled.</resource>
+  <resource name="Validation_ReviewableContent_InvalidReviewableContent">The reviewable content record could not be retrieved.</resource>
+  <resource name="Validation_ReviewableContent_ContentTypeNotSupported">The content type does not support reviewable content.</resource>
+  <resource name="Validation_ReviewableContent_ApproveAccessDenied">You do not have permission to approve this content.</resource>
+  <resource name="Validation_ReviewableContent_DenyAccessDenied">You do not have permission to deny this content.</resource>
+  <resource name="Validation_ReviewableContent_PublishAccessDenied">You do not have permission to publish this content.</resource>
+  <resource name="Validation_ReviewableContent_DeleteAccessDenied">You do not have permission to delete this content.</resource>
+  <resource name="Validation_ReviewableContent_ContentNotCreated">The resulting published content was not provided when the reviewable content item was published.</resource>
+
+  <resource name="AuthorizationHeader_AuthorizationCodeInvalid">Request authorization failed. Try reloading your browser or logging in again.</resource>
+	<resource name="ApiRegistrar_ApiInstanceNull">An error occurred while initializing the API.</resource>
+	<resource name="CreateApiKey_ApiKeyEmpty">An identifying name was not specified.</resource>
+	<resource name="CoreContext_InvitationKeyInvalid">The invitation has expired or has already been used.</resource>
+	<resource name="FileSystemCfsProvider_FileNameTooLong">The file name is too long: {0}</resource>
+	<resource name="FileSystemCfsProvider_FilePathTooLong">The file path is too long: {0}</resource>
+	<resource name="FileSystemCfsProvider_FileNameDuplicateByCase">The file, {0}, already exists with alternate casing as {1}</resource>
+
+	<resource name="LicensingRestriction_GroupCount">The maximum number of groups already exists for the installed license.</resource>
+	<resource name="LicensingRestriction_JoinfulGroupsNotAllowed">Joinful groups are not allowed for the installed license.</resource>
+
+  <resource name="CP_Groups_RootDelete_Error">The top-level ${group_lowercase} cannot be deleted.</resource>
+	<resource name="CP_Groups_GroupWithSubGroupsDelete_Error">A ${group_lowercase} cannot be deleted when it has sub ${groups_lowercase}.</resource>
+	<resource name="CP_Groups_GroupWithApplicationsDelete_Error">A ${group_lowercase} cannot be deleted when it has content applications.</resource>
+  <resource name="LicensingRestriction_UserCount">The maximum number of users already exists for the installed license.</resource>
+	<resource name="Follower_SystemAccountsCannotBeFollowed">System accounts cannot be followed.</resource>
+	<resource name="Follower_SystemAccountsCannotFollow">System accounts cannot follow other users.</resource>
+	<resource name="Follower_SystemAccountsCannotBeFriended">System accounts cannot be friended.</resource>
+	<resource name="Follower_SystemAccountsCannotFriend">System accounts cannot befriend other users.</resource>
+	<resource name="OAuthHandler_ProcessLoginDataNull">The authentication provider did not successfully process login details.</resource>
+
+	<resource name="User_Banned">You are temporarily banned from accessing this site.</resource>
+	<resource name="User_Disapproved">Your account has been disapproved.</resource>
+  <resource name="User_Locked">Your account has been locked.</resource>
+  <resource name="User_SystemAccount">System accounts are not allowed to login to the site.</resource>
+	<resource name="User_SystemAccount_Achievement">System accounts cannot be awarded achievements.</resource>
+	<resource name="CSHttpModule_UnsafeUrl">The requested URL appears unsafe.</resource>
+
+	<resource name="ActivityDirectoryError_NoEmailSetForUser">Unable to create the user '{0}'.  The requested user does not have an email set that can be located by LDAP.</resource>
+	<resource name="UserProfileService_FieldGroupNamesMustBeUnique">Profile field group names must be unique.</resource>
+  <resource name="UserProfileService_FieldGroupNotFound">Profile field group not found.</resource>
+  <resource name="UserProfileService_FieldGroupNotFound_NoSpecial">Only Alphanumeric characters, underscores(_), dashes (-) and spaces are permitted in profile field group titles.</resource>
+	<resource name="SiteFiles_Disabled">Site file storage is disabled.</resource>
+	<resource name="SiteFiles_FileTooLarge">The size of the file exceeds the maximum limit for this site.</resource>
+	<resource name="SiteFiles_QuotaExceeded">The size of the file would cause the site to exceed its file storage quota.</resource>
+	<resource name="UploadAttachment_InvalidFileExtension">Only known URLs and the following file extensions are allowed: {0}. Please select a valid file or enter a valid URL.</resource>
+  <resource name="UploadAttachment_InvalidFileExtension_Generic">The file or url is invalid.</resource>
+	<resource name="UrlRedirectService_InvalidUrlFormat">The URL provided is not in a valid format.</resource>
+	<resource name="UrlRedirectService_UnsafeUrl">The URL '{0}' is not a safe URL for redirects.</resource>
+	<resource name="UrlRedirectService_InvalidUrlRedirect">The URL '{0}' cannot be redirected to '{1}'.</resource>
+
+	<resource name="UserFiles_Disabled">User file storage is disabled.</resource>
+	<resource name="UploadAttachment_UserFile_TooLarge">You cannot upload files larger than {0} MB into your profile.</resource>
+	<resource name="UserFiles_QuotaExceeded">The size of the file would cause you to exceed your file storage quota.</resource>
+
+	<resource name="UploadPostAttachmentFormBase_RemoteAttachmentDisabled">Linking to a file by URL is not allowed.</resource>
+	<resource name="UploadPostAttachmentFormBase_AllowLocalAttachmentDisabled">Uploading files is not allowed.</resource>
+
+	<resource name="Messages_Disabled">Private messaging is disabled.</resource>
+  <resource name="Messaging_MessageBodyTooLong">A status message cannot exceed {0} characters in length.</resource>
+	<resource name="Messaging_CannotRetrieveMessagesForAnotherUser">You cannot retrieve messages for another user.</resource>
+	<resource name="Messaging_CannotRetrieveConversationForAnotherUser">You cannot retrieve conversations that don't include you.</resource>
+	<resource name="Messaging_ConversationCannotIncludeSystemAccounts">System accounts cannot be included in conversations.</resource>
+  <resource name="LicensingRestriction_BlogCount">The maximum number of blogs already exists for the installed license.</resource>
+  <resource name="LicensingRestriction_ArticleCollectionCount">The maximum number of article collections already exists for the installed license.</resource>
+  <resource name="LicensingRestriction_MirroredFeedCount">The maximum number of mirrored feeds already exists for the installed license.</resource>
+  <resource name="WeblogFiles_Disabled">Blog file storage is disabled.</resource>
+	<resource name="WeblogFiles_TooLarge">You cannot upload files larger than {0} kB.</resource>
+	<resource name="WeblogFiles_QuotaExceeded">The size of the file would cause you to exceed the blog's file storage quota.</resource>
+  <resource name="LicensingRestriction_ForumCount">The maximum number of forums already exists for the installed license.</resource>
+	<resource name="LicensingRestriction_QaForumsNotAllowed">The installed license does not allow the usage of question and answer forums.</resource>
+	<resource name="ForumDataService_ForumCircularReference">The forum hierarchy would result in a circular reference.</resource>
+  <resource name="LicensingRestriction_MediaGalleryCount">The maximum number of media galleries already exists for the installed license.</resource>
+	<resource name="LicensingRestriction_MediaGalleriesDisabled">Media galleries are not allowed with the installed license.</resource>
+  <resource name="LicensingRestriction_WikiCount">The maximum number of wikis already exists for the installed license.</resource>
+	<resource name="LicensingRestriction_WikisDisabled">Wikis are not allowed with the installed license.</resource>
+	<resource name="WikiDataService_DefaultPageCannotBeDeleted">The default page for a wiki cannot be deleted.</resource>
+	<resource name="WikiDataService_DuplicatePageName">A page by this name exists in this wiki already. Please choose another name for this page.</resource>
+
+	<resource name="WikiFiles_TooLarge">You cannot upload files larger than {0} kB.</resource>
+	<resource name="WikiFiles_QuotaExceeded">The size of the file would cause you to exceed the wiki's file storage quota.</resource>
+
+	<resource name="AbuseService_InitiateAppealOnlyInvalidState">An appeal can only be initiated in an abusive or moderated state.</resource>
+	<resource name="AbuseService_ContentTypeNotSupported">The content does not support abuse tracking.</resource>
+
+	<resource name="OAuth_ContentUrlWithoutApplicationId">When interacting with URL-based content, the OAuth application must be specified.</resource>
+	<resource name="CommentService_CommentTooLong">The comment text was too long.</resource>
+	<resource name="OAuthAuthenticationService_VerifyTokenFailed">External authentication could not be verified.</resource>
+	<resource name="OAuthAuthenticationService_InvalidGrantType">External authentication failed.</resource>
+	<resource name="OAuthPasswordProvider_InvalidAccount">The username and/or password provided are incorrect.</resource>
+	<resource name="OAuthPasswordProvider_UserDisapproved">The user account is not approved.</resource>
+	<resource name="FlagCalculatedMetricsForRecalculationJob_InvalidJobData">Metric details could not be determined.</resource>
+	<resource name="FlagCalculatedScoresForRecalculationJob_InvalidJobData">Score details could not be determined.</resource>
+
+	<resource name="FileEmbeddableContentType_UnknownError">An error occurred while saving embedded files.</resource>
+	<resource name="FileEmbeddableContentType_Error">{0}</resource>
+
+	<resource name="FactoryDefaultScriptedContentFragmentFileService_FactoryDefaultNotEditable">The factory default widget provider associated to the widget does not allow editing.</resource>
+	<resource name="FactoryDefaultScriptedContentFragmentService_FactoryDefaultNotEditable">The factory default widget provider associated to the widget does not allow editing.</resource>
+
+	<resource name="BlogApplicationType_CreateApplicationDenied">You do not have permission to create a blog.</resource>
+	<resource name="ValidationError_Preformatted">{0}</resource>
+	<resource name="BlogApplicationType_EnableApplicationDenied">You do not have permission to enable or disable this blog.</resource>
+	<resource name="BlogApplicationType_DeleteApplicationDenied">You do not have permission to delete this blog.</resource>
+
+	<resource name="ForumApplicationType_CreateApplicationDenied">You do not have permission to create a forum.</resource>
+	<resource name="ForumApplicationType_EnableApplicationDenied">You do not have permission to enable or disable this forum.</resource>
+	<resource name="ForumApplicationType_DeleteApplicationDenied">You do not have permission to delete this forum.</resource>
+
+	<resource name="GalleryApplicationType_CreateApplicationDenied">You do not have permission to create a gallery.</resource>
+	<resource name="GalleryApplicationType_EnableApplicationDenied">You do not have permission to enable or disable this gallery.</resource>
+	<resource name="GalleryApplicationType_DeleteApplicationDenied">You do not have permission to delete this gallery.</resource>
+
+	<resource name="RootApplicationType_NewUserRegistrationDisabled">Users are not allowed to register on this site.</resource>
+	<resource name="RootApplicationType_MustBeAuthenticated">You must be logged in to perform this action.</resource>
+
+	<resource name="WikiApplicationType_CreateApplicationDenied">You do not have permission to create a wiki.</resource>
+	<resource name="WikiApplicationType_EnableApplicationDenied">You do not have permission to enable or disable this wiki.</resource>
+	<resource name="WikiApplicationType_DeleteApplicationDenied">You do not have permission to delete this wiki.</resource>
+
+	<resource name="Ensure_ArgumentIsValidEnumValue">'{0}' does not have a valid value. Supported values are: {1}.</resource>
+	<resource name="Ensure_ArgumentNull">{0} must have a value.</resource>
+	<resource name="Ensure_InRange">{0} must have a valid value.</resource>
+
+	<resource name="Abuse_CannotReviewAppeals">You do not have permission to review abusive content.</resource>
+
+	<resource name="Licensing_RecommendationsNotEnabled">Recommendations are not allowed with the installed license.</resource>
+	<resource name="EventLog_MessageRequired">The message of the event log entry must have a value.</resource>
+	<resource name="EventLog_InvalidEventType">The event log type should be Information, Warning and Error.</resource>
+	<resource name="ExceptionLog_ExceptionNull">Null exception cannot be logged.</resource>
+
+	<resource name="Licensing_LeaderboardsNotEnabled">Leaderboards are not allowed with the installed license.</resource>
+	<resource name="PointTransactions_LeaderboardsNotEnabled">Point tracking is not enabled in this community.</resource>
+	<resource name="ExternalMessageStoryType_SystemAccountDenied">System accounts are not allowed to create external messages.</resource>
+	<resource name="Group_MessagesDisabled">Group activity messages are disabled for the target group.</resource>
+	<resource name="ExternalMessageStoryType_CannotPostToGroup">You do not have permission to create an external message in the target group.</resource>
+
+	<resource name="StatusMessageStoryType_SystemAccountDenied">System accounts are not allowed to create status messages.</resource>
+	<resource name="StatusMessageStoryType_UpdateAccessDenied">You do not have permission to update this status messages.</resource>
+	<resource name="StatusMessageStoryType_CannotPostToGroup">You do not have permission to create a status message in the target group.</resource>
+	<resource name="StatusMessageStoryType_BodyOrFileRequired">A message or attachment is required.</resource>
+  <resource name="CP_ManageThemes_CannotDeleteLastTheme">The last theme of a type cannot be deleted.</resource>
+	<resource name="ThemesAdministrationPanel_CannotPreviewThemeType">The theme does not support previewing.</resource>
+	<resource name="ThemesAdministrationPanel_CannotPreviewTheme">You do not have permission to preview the theme.</resource>
+	<resource name="ThemesAdministrationPanel_CannotPreviewDefaultTheme">You do not have permission to preview the default theme.</resource>
+
+	<resource name="GroupApplicationsContainerPanel_CannotSetEnabled">You do not have permission to change enablement on this application.</resource>
+	<resource name="GroupApplicationsContainerPanel_CannotDelete">You do not have permission to delete this application.</resource>
+	<resource name="GroupApplicationsContainerPanel_CannotRestore">You do not have permission to restore this application.</resource>
+
+	<resource name="UpgradeExplicitPanel_SocialThemeIsCurrent">You cannot migrate to the social theme. It is already the current theme.</resource>
+	<resource name="UpgradeExplicitPanel_NoContentFragmentsToReview">There are no widgets to review.</resource>
+
+	<resource name="ConfigureThemePanel_AccessDenied">You do not have permission to configure this theme.</resource>
+	<resource name="ImportThemePanel_AccessDenied">You do not have permission to edit this theme.</resource>
+	<resource name="PagesThemePanel_DeleteAccessDenied">You do not have permission to delete this page.</resource>
+	<resource name="PagesThemePanel_EditAccessDenied">You do not have permission to edit this page.</resource>
+	<resource name="PagesThemePanel_DuplicatePage">A page with the same name already exists.</resource>
+	<resource name="PagesThemePanel_CreateAccessDenied">You do not have permission to add new pages.</resource>
+	<resource name="PagesThemePanel_InvalidPage">The page is invalid. Ensure that it has a name and title and that the name includes only alphanumeric characters or underbar or hyphen.</resource>
+
+	<resource name="ThemeImportService_ImportDoesntContainThemeImplementation">The import file did not contain a theme implementation.</resource>
+	<resource name="ThemeImportService_ImportDoesntContainThemeDetails">The import file did not contain a theme configuration.</resource>
+	<resource name="ThemeImportService_ImportDoesntContainThemeInformation">The import file did not contain a theme identification details.</resource>
+	<resource name="ThemeImportService_NewThemesNotEnabled">Importing new themes is not allowed with the installed license.</resource>
+
+	<resource name="SelectThemePanel_AccessDenied">You do not have permission to set the theme.</resource>
+	<resource name="EmbeddedForum_EmbeddingDisabled">Embedding is not enabled for this forum</resource>
+  <resource name="EmbeddedForum_ForumDisabled">This embedded forum is not currently enabled.</resource>
+  <resource name="EmbeddedForum_DomainNotAllowed">Forum embedding is not allowed for this web site</resource>
+
+	<resource name="Licensing_AchievementsNotEnabled">Achievements are not currently enabled in this community.</resource>
+	<resource name="BlogService_InvalidFileOptions">Only a posted file, file URL, or file upload context is valid, but not more than one.</resource>
+	<resource name="BlogService_InvalidFilename">A file name must be included when attaching a file.</resource>
+	<resource name="BlogService_InvalidContentType">The file's content type must be provided when attaching a file.</resource>
+	<resource name="BlogService_InvalidOpenGraphFile">The Open Graph file name and image context must be included when attaching an image for use with Open Graph.</resource>
+	<resource name="BlogService_InvalidPostImageFile">You must supply a PostImageFileName with either PostImageFileData or a PostImageFileContext.</resource>
+
+	<resource name="CommentService_CreateCommentDenied">You do not have permission to create comments.</resource>
+	<resource name="CommentService_ReadCommentDenied">You do not have permission to read this comment.</resource>
+	<resource name="CommentService_EditCommentDenied">You do not have permission to edit this comment.</resource>
+  <resource name="CommentService_EditDeletedCommentDenied">Deleted comments cannot be edited.</resource>
+	<resource name="CommentService_DeleteCommentDenied">You do not have permission to delete this comment.</resource>
+	<resource name="CommentService_CommentVoteDenied">You do not have permission to vote on this comment.</resource>
+
+	<resource name="ContentConversionService_ApplicationNotFound">The target application id {0} could not be loaded.</resource>
+	<resource name="ApplicationMergeService_ApplicationNotFound">The target application id {0} could not be loaded.</resource>
+	<resource name="ApplicationMergeService_ApplicationMatch">The target application id {0} cannot match the source application id {1}.</resource>
+
+	<resource name="EmailDigestSubscriptionService_SubscriptionAccessDenied">You do not have access to modify this subscription.</resource>
+
+	<resource name="FavoriteService_InvalidFavoriteTypes">The requested favorite types are missing or invalid.</resource>
+
+	<resource name="FeaturedContentService_InvalidFile">A posted file or file upload context should be specified, but not both.</resource>
+
+	<resource name="FileService_AccessDenied">You do not have access to this file.</resource>
+
+	<resource name="MailingList_DuplicateEmail_NoDetails">Duplicate Mailing List Name</resource>
+  <resource name="MailingList_EmptyEmailAddress">Mailing list email address is empty.</resource>
+  <resource name="MailingList_EmptyPassiveModeAddress">Passive email address is empty.</resource>
+  <resource name="MailingList_InvalidPassiveModeAddress">Passive email address is invalid.</resource>
+  <resource name="MailingList_MappedMediaGalleryNotFound">Media Gallery not found.</resource>
+  <resource name="MailingList_MappedMediaGalleryNotInGroup">Media Gallery must be in the same group.</resource>
+
+	<resource name="ForumService_InvalidThreadType">The thread query type must be all, moderated, unanswered, answered, answerednotverified, answeredwithnotverified, active (obsolete), unread, mythreads, authored or noresponse.</resource>
+	<resource name="ForumService_InvalidThreadSortBy">The sort by must be LastPost, FirstPost, Replies, Views or Topic.</resource>
+	<resource name="ForumService_UpdateReplyAccessDenied">You do not have permission to update this reply.</resource>
+  <resource name="ForumService_EditDeletedReplyDenied">Deleted forum replies cannot be edited.</resource>
+	<resource name="ForumService_DeleteAccessDenied">You do not have permission to delete this reply.</resource>
+	<resource name="Forumervice_InvalidFileOptions">Only a posted file, file URL, or file upload context is valid, but not more than one.</resource>
+	<resource name="ForumService_InvalidFilename">A file name must be included when attaching a file.</resource>
+	<resource name="ForumService_InvalidContentType">The file's content type must be provided when attaching a file.</resource>
+	<resource name="ForumService_AnnonymousCannotVoteOnThreads">Only registered users can vote on threads.</resource>
+	<resource name="ForumService_VotingOnlyOnQAThreads">Answer verification voting can only occur on questions.</resource>
+	<resource name="ForumService_InterestVotingOnlyOnQAThreads">Interest voting can only occur on questions.</resource>
+	<resource name="ForumService_AnswerVerificationVoteFalse">Answer verification vote value cannot be false.</resource>
+	<resource name="ForumService_AnswerVerificationUpdate">Answer verification vote cannot be updated.</resource>
+	<resource name="ForumService_InterestVoteFalse">Interest vote value cannot be false.</resource>
+	<resource name="ForumService_InterestUpdate">Interest vote cannot be updated.</resource>
+
+	<resource name="FriendshipService_CannotBeOwnFriend">You cannot be your own friend.</resource>
+
+	<resource name="GalleryService_InvalidFileOptions">Only a posted file, file URL, or file upload context is valid, but not more than one.</resource>
+	<resource name="GalleryService_InvalidFilename">A file name must be included when attaching a file.</resource>
+	<resource name="GalleryService_InvalidContentType">The file's content type must be provided when attaching a file.</resource>
+	<resource name="GalleryService_InvalidOpenGraphFile">The Open Graph file name and image context must be included when attaching an image for use with Open Graph.</resource>
+
+	<resource name="GroupService_GroupRequiredWhenFilteringMembersByName">When listing members using a filter, a group must be specified.</resource>
+  <resource name="GroupService_UserRequiredWhenFilteringGroupsByName">When listing groups using a filter, a user must be specified.</resource>
+  <resource name="GroupService_MemberListGroupOrUserRequired">When listing members, a group or user must be specified.</resource>
+	<resource name="GroupService_CannotAddSystemAccountAsMember">System accounts cannot be added as members.</resource>
+
+	<resource name="MessageService_ContentNotFoundForActivity_CannotComment">The activity story does not support commenting.</resource>
+	<resource name="MessageService_CannotDeleteConversation">You do not have permission to delete this message.</resource>
+
+	<resource name="PermissionService_RoleDoesntExistInNode">The requested role does not exist within the requested security context.</resource>
+	<resource name="PermissionService_RoleEditingNotEnabled">Role editing is not allowed with the installed license.</resource>
+
+	<resource name="SearchService_DuplicateDocument">A document with the same identification already exists.</resource>
+	<resource name="SearchService_InvalidContentType">The document's content type must be one of: blog, blogapp, file, fileapp, forum, forumapp, group, page, user, wiki, wikiapp.</resource>
+	<resource name="SearchService_DeleteInvalidContentType">You cannot remove a document with a content type of blog, blogapp, file, fileapp, forum, forumapp, group, page, user, wiki, or wikiapp.</resource>
+	<resource name="SearchService_RolesRequired">Roles must be provided when adding a document.</resource>
+	<resource name="SearchService_ContentTypeNotSupported">The type of content being indexed does not support search.</resource>
+
+	<resource name="SearchSynonyms_ParsedLineNoItems">Invalid format while parsing synonym set: Not enough terms for set. [Data = '{0}']</resource>
+	<resource name="SearchSynonyms_ParsedLineDuplicate">Invalid format while parsing synonym set: Set contains duplicate term. [Term = '{0}', Data = '{1}']</resource>
+  <resource name="SearchSynonyms_ParsedLineInvalid">Invalid format while parsing synonym set: Term contains invalid character '{0}'. [Term = '{1}', Data = '{2}']</resource>
+  <resource name="SolrSynonymDelete_MissingParameter">Missing parameter when attempting to deleted synonym: No synonym specified.</resource>
+
+  <resource name="StatusMessageService_StatusMessagesDisabled">Status messages are currently disabled.</resource>
+
+	<resource name="UserAvatarService_EditDenied">Avatars cannot be updated on system accounts.</resource>
+	<resource name="UserAvatarService_InvalidFileOptions">Only a posted file, file URL, or file upload context is valid, but not more than one.</resource>
+	<resource name="UserAvatarService_RemoteAvatarsDisabled">Remote avatars are disabled.</resource>
+  <resource name="UserAvatar_InvalidFileType">Avatars must be image file types.</resource>
+
+  <resource name="UserCoverPhotoService_EditDenied">Cover photos cannot be updated on system accounts.</resource>
+	<resource name="UserCoverPhotoService_InvalidFileOptions">Only a posted file, file URL, or file upload context is valid, but not more than one.</resource>
+	<resource name="UserCoverPhotoService_InvalidFileType">Cover photos must be image file types.</resource>
+
+	<resource name="UserFileService_FileStorageDisabled">User file storage is currently disabled.</resource>
+  <resource name="UserFileService_CreatePermissionDenied">Permission to create user file is denied.</resource>
+	<resource name="UserInvitationError_InvalidEmail">The email address of the invited user is invalid.</resource>
+	<resource name="UserInvitationError_IllegalAnonymousUserInvitation">Unauthenticated users cannot create invitations.</resource>
+
+	<resource name="ChangePassword_InvalidRegExContent">The password does not meet site requirements.</resource>
+
+	<resource name="UserService_RenameError_DisallowedUserName">Renaming user failed, desired username is disallowed.</resource>
+	<resource name="UserService_RenameError_DuplicateUserName">Renaming user failed, username is already taken.</resource>
+	<resource name="UserService_RenameError_InsufficientPermissions">Renaming user failed, insufficient permissions.</resource>
+	<resource name="UserService_RenameError_UnknownFailure">Renaming user failed, unknown failure.</resource>
+
+	<resource name="UserService_LoginStatus_InvalidCredentials">The username and/or password are incorrect.</resource>
+	<resource name="UserService_LoginStatus_AccountPending">The account is pending approval.</resource>
+	<resource name="UserService_LoginStatus_AccountBanned">The account is temporarily banned.</resource>
+	<resource name="UserService_LoginStatus_AccountDisapproved">The account is disapproved.</resource>
+	<resource name="UserService_LoginStatus_SystemAccount">The account is a system account. You cannot login as this account.</resource>
+	<resource name="UserService_LoginStatus_AccountLocked">The account is locked.</resource>
+	<resource name="UserService_LoginStatus_UnknownError">An unknown error occurred while authenticating the account.</resource>
+
+	<resource name="WikiService_PageRequiresBody">The page's body must have a value.</resource>
+
+	<resource name="MailingListSqlDataProvider_MailingListAlreadyExists">A mailing list with this name already exists.</resource>
+
+	<resource name="Authentication_AnonymousCannotChangePassword">Unauthenticated users cannot change their password.</resource>
+
+	<resource name="Media_ExternalLinksToDownloadsPrevented">External links to downloads are currently restricted.</resource>
+
+	<resource name="ApiKeyService_AnonyousUserCannotManageApiKeys">Unauthenticated users cannot manage API keys.</resource>
+
+	<resource name="ThemePages_EditPermissionDenied">You do not have permission to edit this page.</resource>
+
+	<resource name="CookieAuthentication_RegistrationDisabled">User registration is currently disabled.</resource>
+
+
+	<resource name="accessdenied">You do not have the '{0}' permission for '{1}' that is required to complete this action.</resource>
+	<resource name="accessdenied_withoutcontext">You do not have the '{0}' permission that is required to complete this action.</resource>
+
+	<resource name="applicationnotfound">The {0} with identifier '{1}' could not be found.</resource>
+	<resource name="applicationnotfound_noid">The {0} could not be found.</resource>
+
+	<resource name="containernotfound">The {0} with identifier '{1}' could not be found.</resource>
+	<resource name="containernotfound_noid">The {0} could not be found.</resource>
+
+	<resource name="contentnotfound">The {0} with identifier '{1}' could not be found.</resource>
+	<resource name="contentnotfound_noid">The {0} could not be found.</resource>
+
+	<resource name="contentunderreview">The {0} is currently unavailable because it is pending review by moderators.</resource>
+
+	<resource name="genericnotfound">The {0} with identifier '{1}' could not be found.</resource>
+	<resource name="genericnotfound_noid">The {0} could not be found.</resource>
+
+	<resource name="configurationerror">A misconfiguration prevented the site from working properly. Details about this message were logged for site administrators to resolve.</resource>
+
+	<resource name="internal">An internal issue occurred that prevented your action from completing successfully. Details have been logged for site administrators to resolve.</resource>
+
+	<resource name="usercreationfailed_UnknownFailure">An unknown issue occurred while creating a user account.</resource>
+	<resource name="usercreationfailed_DuplicateUsername">The username of the user being created is already in use.</resource>
+	<resource name="usercreationfailed_DuplicateEmailAddress">The email address of the user being created is already in use.</resource>
+	<resource name="usercreationfailed_InvalidFirstCharacter">Usernames must being with an alphabetic character.</resource>
+	<resource name="usercreationfailed_DisallowedUsername">The requested username is disallowed.</resource>
+	<resource name="usercreationfailed_InvalidQuestionAnswer">The validation question/answer pair did not match.</resource>
+	<resource name="usercreationfailed_InvalidPassword">The password does not meet site requirements.</resource>
+	<resource name="usercreationfailed_InvalidEmail">The email address of the user account is invalid.</resource>
+	<resource name="usercreationfailed_InvalidUserName">The username of the user account does not meet site requirements.</resource>
+	<resource name="usercreationfailed_SpamUser">The account being created was determined to be SPAM.</resource>
+	<resource name="usercreationfailed_OverLicenseLimit">This site is over its licensed number of users.</resource>
+
+	<resource name="TemplatablePluginTypesEditor_EmailPreviewNotSupported">This template does not support email previewing.</resource>
+
+	<resource name="WeblogPostDataService_InvalidPostNameFormat">The post name is invalid. Ensure that it includes at least one non-numeric character.</resource>
+
+	<resource name="ConversationMessage_CannotStartConversationWithUser">You cannot currently message this user, either you do not have permission or the user is not accepting messages.</resource>
+  <resource name="Polls_Errors_LogginEx">You must be logged in to vote.</resource>
+  <resource name="Polls_Errors_ExpiredDateInPast">Expired date cannot be in the past.</resource>
+	<resource name="Polls_Errors_InvalidInputExpire">Error: The poll must expire if the results are only shown after expiration.</resource>
+  <resource name="Polls_Errors_InvalidInputContadiction">Error: Cannot set Show Results Before Vote and not set Show Results Before Expiration.</resource>
+  <resource name="Polls_Errors_PermissionEx">You do not have permission to manage polls.</resource>
+	<resource name="Polls_Errors_ExpiredPollError">You can no longer vote on this poll. It has expired.</resource>
+  <resource name="Polls_Errors_NotExpired">Results cannot be viewed until this poll has expired.</resource>
+  <resource name="Polls_Errors_MustVote">You must vote to view results for this poll.</resource>
+
+	<resource name="Assert_MustBeNull">'{0}' must not be set. The requested action could not be completed.</resource>
+	<resource name="Assert_MustNotBeNull">'{0}' must not be null. The requested action could not be completed.</resource>
+	<resource name="Assert_MustNotBeNullOrEmpty">'{0}' must not be null or empty. The requested action could not be completed.</resource>
+	<resource name="Assert_MustNotBeNullOrWhiteSpace">'{0}' must have a meaningful value. The requested action could not be completed.</resource>
+	<resource name="Assert_MustBeGreaterThanZero">'{0}' must be greater than zero. The requested action could not be completed.</resource>
+	<resource name="Assert_MustBeEqualToOrGreaterThan">'{0}' must be equal to or greater than {1}. The requested action could not be completed.</resource>
+	<resource name="Assert_MustBeInRange">'{0}' must be between {1} and {2}. The requested action could not be completed.</resource>
+	<resource name="Assert_MustNotBeEmptyGuid">'{0}' must not be an empty GUID. The requested action could not be completed.</resource>
+	<resource name="Assert_MustBeGuid">'{0}' is not a valid GUID value. The requested action could not be completed.</resource>
+	<resource name="Assert_MustBeInt">'{0}' is not a valid integer value. The requested action could not be completed.</resource>
+	<resource name="Assert_MustBeBool">'{0}' is not a valid boolean value. The requested action could not be completed.</resource>
+	<resource name="Assert_MustBeDateTime">'{0}' is not a valid date value. The requested action could not be completed.</resource>
+	<resource name="Assert_MustBeEnumValue">'{0}' does not have a valid value. Valid values are {1}. The requested action could not be completed.</resource>
+
+	<resource name="CalendarFiles_FileTooLarge">The file is too large to be stored within this calendar.</resource>
+	<resource name="CalendarFiles_OverQuota">The file would cause this calendar to be over its allowed file storage quota.</resource>
+	<resource name="CalendarFiles_InvalidFileExtension">Only the following file extensions are allowed: {0}. Please select a valid file.</resource>
+
+	<resource name="ChallengeService_ChallengeAlreadyExists">An ideation with the same name already exists in this group.</resource>
+	<resource name="IdeaFiles_NotEnabled">Ideation file storage is disabled.</resource>
+	<resource name="IdeaFiles_FileTooLarge">The file is too large to be stored within this ideation.</resource>
+	<resource name="IdeaFiles_OverQuota">The file would cause this ideation to be over its allowed file storage quota.</resource>
+	<resource name="IdeaFiles_InvalidFileExtension">Only the following file extensions are allowed: {0}. Please select a valid file.</resource>
+  <resource name="Validation_Ideas_CategoryDoesNotExist">The category requested does not currently exist for this ideation</resource>
+  <resource name="Validation_Ideas_CategoryExists">The category requested already exists</resource>
+  <resource name="Validation_Ideas_CategoryRequired">A category is required for this ideation.</resource>
+  <resource name="Validation_Ideas_CategoryIdRequired">A category ID is required.</resource>
+  <resource name="Validation_Ideas_CategoryNameRequired">A category name is required.</resource>
+  <resource name="Validation_Ideas_CategoryIdeationIdRequired">Ideation Id is required.</resource>
+	<resource name="WeblogPostDataService_UseCommentsService">Use the comments API to manage comments.</resource>
+
+	<resource name="cfs_invalidpath">The provided path, '{0}', is invalid.</resource>
+
+	<resource name="GroupService_NewTopLevelGroupInvalid">A new top-level group cannot be created.</resource>
+	<resource name="GroupService_TopLevelGroupCannotMove">The top-level group cannot be moved.</resource>
+	<resource name="GroupService_CannotMoveGroupToTopLevel">A group cannot be moved to the top-level.</resource>
+	<resource name="GroupService_InvalidGroupMembershipType">The user or role's group membership cannot be set to 'None'.</resource>
+
+	<resource name="UserDataService_CannotRenameUserInSharedMembership">When using shared membership with multiple sites, renaming a user is not supported.</resource>
+	<resource name="CP_Membership_Settings_Profile_Field_NotUnique_InternalName">The profile field's internal name must be unique.</resource>
+  <resource name="CP_Membership_Settings_Profile_Field_Not_Found">Profile field not found.</resource>
+  <resource name="CP_Membership_Settings_Profile_Field_Type_Not_Found">Profile field type not found.</resource>
+  <resource name="CP_Membership_Settings_Profile_Field_Choice_Duplicate">Choices within a profile field must have unique values.</resource>
+  <resource name="CP_Membership_Settings_Profile_Field_NoSpecial">Only Alphanumeric characters, underscores(_) and dashes (-) are permitted for profile field names.</resource>
+
+  <resource name="WikiDataService_PageCannotBeOwnParent">A page cannot be its own parent.</resource>
+	<resource name="WikiDataService_PageCannotBeItsChildsChild">A page cannot be made to be a child of one of its children.</resource>
+	<resource name="Page_MustBeInSameWikiAsParent">The page's parent must exist in the same wiki as the page.</resource>
+	<resource name="Page_WikiMustBeSameAsParent">The page must be in the same wiki as its parent.</resource>
+
+	<resource name="ThemeApi_OnlyXmlFilesAllowedAsWidgetDefinitionFiles">Only files with the XML file extension can be added as widget definition files.</resource>
+	<resource name="ThemeApi_ActionRequiresAConfigurationBasedTheme">This action is only valid on configuration-based themes.</resource>
+	<resource name="ThemeApi_ThemeDoesNotSupportFooters">The theme does not support footers.</resource>
+	<resource name="ThemeApi_ThemeDoesNotSupportHeaders">The theme does not support headers.</resource>
+
+	<resource name="LeaderboardFiles_Disabled">Leaderboard file storage is disabled.</resource>
+	<resource name="LeaderboardFiles_FileTooLarge">The file is too large to be stored within this leaderboard.</resource>
+	<resource name="LeaderboardFiles_InvalidFileExtension">Only the following file extensions are allowed: {0}. Please select a valid file.</resource>
+	<resource name="Challenges_OverLicenseLimit">This site is over its licensed number of ideations.</resource>
+  <resource name="Ideation_IdeationVoteMaxExceeded">You have no votes left of your {0} allowed within this ideation. You can remove votes from other ideas or wait for the ideas to be closed to free votes for use.</resource>
+  <resource name="Ideation_MultipleVotesNotAllowed">Multiple votes are not allowed on this idea.</resource>
+  <resource name="Ideation_VoteNotAllowed">Voting is not allowed on closed ideas.</resource>
+	<resource name="Ideation_IdeaVoteMaxExceeded">You have already applied the maximum number of votes ({0}) to this idea.</resource>
+
+	<resource name="IdeaService_IdeaWithSameNameExistsInChallenge">An idea with the same name already exists in this ideation.</resource>
+
+	<resource name="Ensure_MustBeGreaterThanZero">'{0}' must be greater than zero.</resource>
+	<resource name="Ensure_Required">'{0}' must have a value.</resource>
+
+	<resource name="UserInvitation_EmailInvalid">The email address of the invitation must be a valid email address.</resource>
+
+	<resource name="ExtensionsForRestRequest_InvalidParameter">'{0}' must be a valid {1}.</resource>
+
+  <resource name="ActivityDirectoryError_FoundMultipleUsersForUsername">More than one user was found with the name '{0}'.</resource>
+
+	<resource name="CSWebServiceBase_AuthenticationFailed">The provided username and/or password is incorrect.</resource>
+
+	<resource name="PluginResourceImport_NoResourcesInFile">No language resources were found in the file '{0}'.</resource>
+
+	<resource name="StatusMessageMediaConverter_StatusMessageMustHaveAttachment">The status message must have an attachment to be converted to a media file.</resource>
+
+	<resource name="TinyMceHashtags_ContentCannotBePreviewed">The hashtag cannot be previewed.</resource>
+	<resource name="TinyMceMedia_FileTooLarge">The file is too large to be saved directly.</resource>
+	<resource name="TinyMceMedia_FileCannotBeViewed">The file cannot be previewed.</resource>
+	<resource name="TinyMceMedia_UnsafeUrl">The file or URL is not allowed to be inserted.</resource>
+	<resource name="TinyMceMentions_ContentTypeNotMentionable">The content type requested does not support being mentioned.</resource>
+	<resource name="TinyMceMentions_ContentCannotBePreviewed">The mentioned content cannot be previewed.</resource>
+	<resource name="TinyMceQuotes_QuoteCannotBePreviewed">The quote cannot be previewed.</resource>
+
+	<resource name="AchievementService_BadgeIconOrDataRequested">Icon data or a icon file name must be provided when setting an achievement's badge icon.</resource>
+
+	<resource name="AchievementService_DuplicateId">An achievement with the specified ID already exists.</resource>
+
+	<resource name="BlogService_ApplicationIdsOrderWithoutApplicationIds">ApplicationIdsOrder cannot be used to sort when ApplicationIds are not provided.</resource>
+	<resource name="BlogService_ContentIdsOrderWithoutContentIds">ContentIdsOrder cannot be used to sort when ContentIds are not provided.</resource>
+	<resource name="BlogService_DateFilterTypeInvalid">The specified value for DateFilterType is invalid.</resource>
+
+	<resource name="CommentService_ContentIdsOrderWithoutContentIds">ContentIdsOrder cannot be used to sort when ContentIds are not provided.</resource>
+	<resource name="LikeService_ContentIdsOrderWithoutContentIds">ContentIdsOrder cannot be used to sort when ContentIds are not provided.</resource>
+
+	<resource name="ForumService_ApplicationIdsOrderWithoutApplicationIds">ApplicationIdsOrder cannot be used to sort when ApplicationIds are not provided.</resource>
+	<resource name="ForumService_ContentIdsOrderWithoutContentIds">ContentIdsOrder cannot be used to sort when ContentIds are not provided.</resource>
+
+	<resource name="GalleryService_ApplicationIdsOrderWithoutApplicationIds">ApplicationIdsOrder cannot be used to sort when ApplicationIds are not provided.</resource>
+	<resource name="GalleryService_ContentIdsOrderWithoutContentIds">ContentIdsOrder cannot be used to sort when ContentIds are not provided.</resource>
+
+	<resource name="GroupService_ContainerIdsOrderWithoutContainerIds">ContainerIdsOrder cannot be used to sort when ContainerIds are not provided.</resource>
+
+	<resource name="UserService_ContentIdsOrderWithoutContentIds">ContentIdsOrder cannot be used to sort when ContentIds are not provided.</resource>
+
+	<resource name="WikiService_ApplicationIdsOrderWithoutApplicationIds">ApplicationIdsOrder cannot be used to sort when ApplicationIds are not provided.</resource>
+	<resource name="WikiService_ContentIdsOrderWithoutContentIds">ContentIdsOrder cannot be used to sort when ContentIds are not provided.</resource>
+
+	<resource name="Subscriptions_ContainerIdButNoApplicationIdOrContentId">If ContainerId is set, ApplicationId and ContentId must not be set.</resource>
+	<resource name="Subscriptions_IncludeSubContainersButNoContainerId">If IncludeSubContainers is set, ContainerId must be set.</resource>
+	<resource name="Subscriptions_ApplicationIdButNoContentId">If ApplicationId is set, ContentId must not be set.</resource>
+	<resource name="Subscriptions_NoValidConext">ContainerId, ApplicationId, ContentId or UserId must be set.</resource>
+
+	<resource name="Calendar_ApplicationIdsOrderWithoutApplicationIds">ApplicationIdsOrder cannot be used to sort when ApplicationIds are not provided.</resource>
+	<resource name="Events_ContentIdsOrderWithoutContentIds">ContentIdsOrder cannot be used to sort when ContentIds are not provided.</resource>
+	<resource name="Events_IncludeSubGroupsWithoutSupportingParameters">IncludeSubGroups requires a CalendarReferenceId and CalendarContext="Group".</resource>
+
+	<resource name="Ideas_ContentIdsOrderWithoutContentIds">ContentIdsOrder cannot be used to sort when ContentIds are not provided.</resource>
+
+	<resource name="Widget_CannotWritePluginConfiguration">The widget can read plugin configuration, but is not allowed to write.</resource>
+
+	<resource name="ContentFragmentManagement_SearchQueryInvalid">The search query is invalid. When using regular expressions, ensure that the pattern is a valid regular expression.</resource>
+	<resource name="AutomationManagement_SearchQueryInvalid">The search query is invalid. When using regular expressions, ensure that the pattern is a valid regular expression.</resource>
+	<resource name="UserService_CannotSetStatusToPendingDeletion">You are not allowed to set the member account status to pending deletion.</resource>
+	<resource name="UserService_CannotSetStatusToPendingDeletion">You are not allowed to change the status of a member from pending deletion.</resource>
+
+	<resource name="JobSchedule_InvalidScheduleSelected">The background process cannot be scheduled because the schedule type was not recognized.</resource>
+	<resource name="JobSchedule_NoScheduleSelected">The background process cannot be scheduled because no schedule type has been selected.</resource>
+	<resource name="JobSchedule_InvalidSecondInterval">The background process cannot be scheduled because the 'every few seconds' schedule does not have a valid number of seconds specified between executions. The number of seconds must be greater than 0.</resource>
+	<resource name="JobSchedule_InvaliMinuteInterval">The background process cannot be scheduled because the 'every few minutes' schedule does not have a valid number of minutes specified between executions. The number of minutes must be greater than 0.</resource>
+	<resource name="JobSchedule_InvalidHourInterval">The background process cannot be scheduled because the 'every few hours' schedule does not have a valid number of hours specified between executions. The number of hours must be greater than 0.</resource>
+	<resource name="JobSchedule_NoDaysSelected">The background process cannot be scheduled because the daily schedule is not configured to run on any days of the week.</resource>
+	<resource name="SystemNotification_ConversationUpdateOptions">Cannot simultaneously specify Conversation Id and request to unlink conversation.</resource>
+	<resource name="UrlKeyManager_TooManyUniqueAttempts">A unique variation of a URL key could not be generated within the allowed number of attempts. Please provide a different or more unique URL key.</resource>
+	<resource name="UrlKeyManager_EmptyKey">The URL key must have a value.</resource>
+	<resource name="UrlKeyManager_InvalidKey">The URL key, '{0}', contains invalid characters. Only lowercase a-z, 0-9, _, and - are allowed.</resource>
+	<resource name="UrlKeyManager_InvalidKey_SpacesAllowed">The URL key, '{0}', contains invalid characters. Only lowercase a-z, 0-9, _, -, and space are allowed.</resource>
+	<resource name="UrlKeyManager_ReservedKey">The URL key, '{0}', is a reserved name and cannot be used. Please provide a different URL key value.</resource>
+	<resource name="UrlKeyManager_KeyAlreadyUsed">The URL key, '{0}', is already in use. Please provide a unique URL key value.</resource>
+	<resource name="UrlKeyManager_KeyTooLong">The URL key, '{0}', is too long. The value must be {1} or fewer characters in length.</resource>
+	<resource name="UrlKeyManager_CensoredWords">The URL key, '{0}', contains censored words. Please provide an appropriate URL key.</resource>
+
+	<resource name="Licensing_InvalidFileType">The file, {0}, is not a valid license file.</resource>
+
+	<resource name="ContentFragmentPage_TooManyApplicationOverrides">There are too many customizations to list.</resource>
+
+	<resource name="ContentPresence_ContentRequired_WithContentType">Either ContentId and ContentTypeId or ContentUrl must be specified.</resource>
+	<resource name="ContentPresence_ContentRequired">Either ContentId or ContentUrl must be specified.</resource>
+	<resource name="ServicePresence_ServiceRequired">ServiceId is required.</resource>
+
+  <resource name="ChangeUserAvatar_NotLoggedIn">You must be logged in to change your avatar.</resource>
+
+  <resource name="CSRequest_UrlNotAllowed">The URL, {0}, is not allowed to be accessed.</resource>
+
+  <resource name="ThemeService_Theme_NotSpecified">The theme was not provided.</resource>
+  <resource name="ThemeService_Theme_MissingId">The theme's identifier was missing or invalid.</resource>
+  <resource name="ThemeService_Theme_MissingThemeType">The theme must identify the a valid theme type.</resource>
+  <resource name="ThemeService_Theme_InvalidFileType">Theme previews must be image file types.</resource>
+  <resource name="ThemeManagement_SearchQueryInvalid">The search query is invalid. When using regular expressions, ensure that the pattern is a valid regular expression.</resource>
+
+  <resource name="AutomationService_Automation_NotSpecified">The automation was not provided.</resource>
+  <resource name="AutomationService_Automation_MissingId">The automation's identifier was missing or invalid.</resource>
+  <resource name="AutomationService_ConfiguredAutomation_NotSpecified">The automation configuration was not provided.</resource>
+  <resource name="AutomationService_Automation_Missing">The configured automation must identify a valid, published, automation.</resource>
+  <resource name="Validation_Automation_InUse">The automation cannot be deleted because it is in use.</resource>
+	<resource name="AutomationService_ConfiguredAutomation_StateTooLarge">The size of the configured automation state exceeds the maximum limit of {0}kb.</resource>
+  <resource name="AutomationService_Singleton_Type_Overused">The automation type, {0}, cannot be defined to prevent multiple automations since it is already used by more than one automation. Ensure only a single automation is using the automation type.</resource>
+  <resource name="AutomationService_Singleton_Configured_Overused">The automation type, {0}, only allows a single automation and it is already used by another automation, {1}. Ensure only a single automation is using the automation type.</resource>
+
+  <resource name="ThemeConfigurationService_ThemeConfiguration_NotSpecified">The theme configuration was not provided.</resource>
+  <resource name="ThemeConfigurationService_Theme_Missing">The theme configuration must identify a valid theme.</resource>
+
+	<resource name="ScriptedEmbeddableService_ScriptedEmbeddable_NotSpecified">The scripted embeddable was not provided.</resource>
+	<resource name="ScriptedEmbeddableService_ScriptedEmbeddable_MissingId">The scripted embeddable's identifier was missing or invalid.</resource>
+
+  <resource name="ScheduledFile_InvalidKey">The progress key was not provided.</resource>
+  <resource name="ScheduledFile_InvalidRunAs">The presenceId was not provided with a runAsUserId.</resource>
+  <resource name="ScheduledFile_StatusDenied">The initiating user of the scheduled file matching the key did not match the current user.</resource>
+  <resource name="ScheduledFile_RunAsDenied">The runAsUserId and presenceId did not match the scheduled file matching the key.</resource>
+
+  <resource name="Exception_CannotDeleteLastIdeaStatus">You cannot delete the last status from an idea.</resource>
+
+	<resource name="Invalid_Import_Format">The import file is invalid.</resource>
+
+	<resource name="Article_ArticleCollectionIdsOrderWithoutArticleCollectionIds">ArticleCollectionIds cannot be used to sort when ArticleCollectionIds are not provided.</resource>
+	<resource name="Article_ArticleIdsOrderWithoutArticleIds">ArticleIds cannot be used to sort when ArticleIds are not provided.</resource>
+	<resource name="Article_SortOrderWithoutCategoryIds">SortOrder cannot be used to sort when CategoryIds are not provided.</resource>
+	<resource name="Article_SortOrderWithTooManyCategoryIds">SortOrder cannot be used to sort when more than one CategoryId in CategoryIds is provided.</resource>
+	<resource name="Article_UpdateArticleVersionAlreadyPublished">The article version you are attempting to update is already published.  Published article versions cannot be updated.</resource>
+	<resource name="Article_ParentCategoryCollectionMatch">The parent category collection Id must match the collection Id of the category.</resource>
+	<resource name="Article_ParentCategoryCircularDependency">The parent category is invalid because the the hierarchy would cause a circular dependancy.</resource>
+	<resource name="Article_CategoryCollectionMatch">The article collection Id must match the collection Id of the category.</resource>
+	<resource name="Article_Category_CannotRestoreCategoryWithDeleteParent">A deleted category cannot be restored if the parent category is deleted.</resource>
+	<resource name="Article_CategoryDescriptionLength">The description for the category must be less than 1000 characters.</resource>
+	<resource name="Article_PublishGroupCollectionMatch">The article collection Id must match the collection Id of the publish group.</resource>
+	<resource name="Article_PublishGroupOnlyOneDraftAllowed">The publish group {0} already contains an unpublished draft for this article id {1}.  A publish group may only have one draft per article.</resource>
+	<resource name="Article_OnlyOneDraftAllowed">An unpublished draft already exists for the article id {0}.  There can only be one draft per article not assigned to a publish group.</resource>
+	<resource name="ArticleCollectionApplicationType_CreateApplicationDenied">You do not have permission to create an article collection.</resource>
+	<resource name="ArticleCollectionApplicationType_EnableApplicationDenied">You do not have permission to enable or disable this article collection.</resource>
+	<resource name="ArticleCollectionApplicationType_DeleteApplicationDenied">You do not have permission to delete this article collection.</resource>
+	<resource name="ArticleCollectionApplicationType_RestoreApplicationDenied">You do not have permission to restore this article collection.</resource>
+	<resource name="ArticleCollection_InvalidDefaultArticle">This default article is not valid for this collection.  Make sure the article assigned as the default is in the collection</resource>
+  <resource name="ArticleCollection_InvalidPrefix">The prefix for this collection must only contain numbers or letters.</resource>
+	<resource name="Article_Category_InvalidFile">Filename is missing or Invalid.</resource>
+	<resource name="Article_Category_InvalidArticle">This article is not valid for this category.  Make sure the article is assigned to a category before setting is as default</resource>
+	<resource name="Article_Category_InvalidFileType">Invalid file type.</resource>
+	<resource name="Article_CollectionRequired">An article collection id is required when looking up an article using criteria other than just an id.</resource>
+	<resource name="Article_SecondaryKeyRequired">An identifier is required.</resource>
+	<resource name="Article_InvalidIdentifier">The specified identifier is not valid for this collection.</resource>
+	<resource name="Article_CollectionIdOrArticleId"> When creating a new article version, either collection id or article id must be provided.</resource>
+	<resource name="Article_UnpublishedVersionAlreadyExists">An unpublished version already exists for this article. The existing version should be edited directly.</resource>
+	<resource name="Article_UnpublishedVersionAlreadyExistsInPublishGroup">An unpublished version already exists for this article in the requested publish group. The existing version should be edited directly.</resource>
+
+  <resource name="Helpfulness_InvalidResolvedVersion"> The resolved article version specified is not valid.</resource>
+  <resource name="Helpfulness_TypeRequired">A valid response type must by specified.</resource>
+  <resource name="Helpfulness_MessageRequiredForType">A valid message is required for this response type.</resource>
+  <resource name="Helpfulness_InvalidResponseType">The helpfulness response type specified is not valid for this article collection.</resource>
+  <resource name="Helpfulness_ArticleOrCollectionRequired">A CollectionId or ArticleId is Required.</resource>
+  <resource name="Helpfulness_ArticleRequired">An ArticleId is required when using ArticleVersionId or ResolvedByVersionId.</resource>
+
+  <resource name="Blog_DuplicateBody">Duplicate Body.</resource>
+	<resource name="Blog_DuplicateName">Duplicate Name.</resource>
+	<resource name="Blog_SpamIdentified">Identified as Spam.</resource>
+	<resource name="Forum_DuplicateReply">A forum reply exists that is a duplicate of this reply.</resource>
+	<resource name="Forum_DuplicateThread">A thread exists that is a duplicate of this thread.</resource>
+	<resource name="MediaGallery_DuplicateMedia">A media post by this title exists already. Please choose another title for this post.</resource>
+	<resource name="Friendships_ModifyAccessDenied">Permission to modify friendships for another user denied.</resource>
+	<resource name="MailingList_EmptyEmailAddress">Email address cannot be empty.</resource>
+	<resource name="MailingList_DuplicateEmail">Mailing List with email "{0}" already exists (ApplicationId = {1}, ApplicationTypeId = {2}).</resource>
+	<resource name="MailingList_EmptyEmailAddress">Email address cannot be empty.</resource>
+	<resource name="User_CannotBeDeleted">This user cannot be deleted.</resource>
+	<resource name="User_DeletePermissionError">Permission to delete user is denied.</resource>
+	<resource name="User_InvalidReassignUserName">The username to reassign to this user is invalid.</resource>
+	<resource name="User_UserIdOrUsernameRequired">A userId or username is required.</resource>
+	<resource name="User_EmailRequired">Email is required.</resource>
+	<resource name="Role_AdDistinguishedNameRequired">Distinguished name is required.</resource>
+	<resource name="Role_AdAlreadyMapped">The selected LDAP group is already mapped to a role, it cannot be mapped to another.</resource>
+	<resource name="UserAchievements_AchievementDisabled">Disabled achievements cannot be awarded to users.</resource>
+	<resource name="IncludeSubContainers_MissingContainerIds">ContainerIds must be set if IncludeSubContainer is set.</resource>
+	<resource name="IncludeSubContainers_MissingContainerId">ContainerId must be set if IncludeSubContainer is set.</resource>
+	<resource name="Search_TypeNotSupported">Search does not support this type.</resource>
+	<resource name="Achievements_BadgeIconDataRequired2">Badge Icon Data or Upload Context is required.</resource>
+	<resource name="Achievements_OptionsRequired">Options is required.</resource>
+	<resource name="Wiki_IdMissing">Wiki Id must be specified when searching by PageKey.</resource>
+	<resource name="Reporting_AccessDenied">You do not have permission to view this report.</resource>
+	<resource name="IdeationStatus_MissingName">Please add a status name.</resource>
+	<resource name="Friendship_RequestorIdOrRequestorNameRequired">Either RequestorId or RequestorName is required.</resource>
+	<resource name="Role_NameAlreadyUsed">Another role with the same name already exists.</resource>
+	<resource name="Configuration_SiteLogoFileNotProvided">No file data was included with the request.</resource>
+	<resource name="Subscription_EnableEmailDisabled">You do not have email enabled in your settings. The subscription has been saved, but you will not receive any emails.</resource>
+	<resource name="Validation_BlogPost_DeletePublishedChanges">This post edit was previously published and cannot be rolled back. Edit the post directly.</resource>
+
+	<resource name="UserVerification_IdentityCouldNotBeVerified">User identify could not be verified. Verification token is invalid or expired.</resource>
+
+  <resource name="ServiceAccountCannotBeRemovedFromAdministratorsRole">The {0} account cannot be removed from the Administrators role.</resource>
+  <resource name="SystemAccount_ProtectedChange_Roles">Roles cannot be modified on system accounts.</resource>
+  <resource name="SystemAccount_ProtectedChange_EnableDisplayInMemberList">'Include in search' cannot be modified on system accounts.</resource>
+  <resource name="SystemAccount_ProtectedChange_AccountStatus">Account status cannot be modified on system accounts.</resource>
+  <resource name="SystemAccount_ProtectedChange_IsIgnored">'Hide this member's content from other members' cannot be modified on system accounts.</resource>
+  <resource name="SystemAccount_ProtectedChange_ForceLogin">'Force login on next visit' cannot be modified on system accounts.</resource>
+  <resource name="SystemAccount_ProtectedChange_Password">Passwords cannot be modified on system accounts.</resource>
+  <resource name="SystemAccountsCannotBeAddedAsBlogAuthors">System accounts cannot be added as blog authors.</resource>
+  <resource name="SystemAccountsCannotBeAddedAsGalleryOwners">System accounts cannot be added as gallery owners.</resource>
+
+  <resource name="Throttling_Generic">Slow Down!  You can only perform this action so many times in a specific time frame.  Please wait before trying again.</resource>
+  <resource name="UnknownError">Unknown Error</resource>
+  <resource name="Oauth_Invalid_RedirectUri">One or more of the redirect urls provided is invalid.</resource>
+  <resource name="Oauth_Invalid_MainUrl">The main url provided is invalid.</resource>
+  <resource name="RestScopeGroup_InvalidId">The Id {0} is not a valid identifier for a Rest Scope Group. It can only contain lowercase letters and numbers.</resource>
+  <resource name="RestScopeEntity_InvalidId">The Id {0} is not a valid identifier for a Rest Scope Group Entity. It can only contain lowercase letters and numbers.</resource>
+  <resource name="RestScopeGroup_EntitiesRequired">A REST Scope Group must have at least one entity defined.</resource>
+  <resource name="Email_UnableToProcess">An email received was unable to be processed.</resource>
+  <resource name="TemporaryStore_AnonymousContext">Temporary storage cannot anonymously sign without HTTP context.</resource>
+	<resource name="PasswordValidation_Invalid">Password does not meet current complexity requirements.</resource>
+	<resource name="PasswordValidation_InvalidLength">Must be at least {0} characters long.</resource>
+	<resource name="PasswordValidation_NoLower">Must contain at least {0} lowercase characters.</resource>
+	<resource name="PasswordValidation_NoUpper">Must contain at least {0} uppercase characters.</resource>
+	<resource name="PasswordValidation_NoNumbers">Must contain at least {0} numbers.</resource>
+	<resource name="PasswordValidation_NoSpecial">Must contain at least {0} special characters. You can choose from any of the following characters: {1}</resource>
+</root>

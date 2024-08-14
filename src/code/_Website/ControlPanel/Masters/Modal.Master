@@ -1,0 +1,113 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" %>
+
+<script runat="server">
+
+    protected override void OnInit(EventArgs e)
+    {
+        Telligent.Evolution.Components.CSContext.Current.IsModal = true;
+
+        Response.CacheControl = "no-cache";
+        Response.Cache.SetCacheability(HttpCacheability.NoCache);
+
+        base.OnInit(e);
+    }
+    
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+    <asp:ContentPlaceHolder id="HeaderRegion" runat="server">
+        <head runat="Server" ID="Head">
+            <TEControl:PlatformHeaders runat="server" />
+            <TEControl:Script runat="server" ID="Script1"/>
+ 			<TEControl:Style id="UserStyles" runat="server" />
+			<TEControl:Style runat="server" Href="../style/ControlPanel.css" ID="Style3" />
+			<TEControl:Style runat="server" Href="../style/ControlPanelModal.css" />
+			<asp:ContentPlaceHolder id="AdditionalScripts" runat="server" />
+        </head>
+    </asp:ContentPlaceHolder>
+	<body spellcheck="true" class="administration legacy modal <%= Telligent.Evolution.Components.CSContext.Current.Language.ToLowerInvariant() %>">
+        <script type="text/javascript">
+            if (window.jQuery && jQuery.glowModal) {
+                jQuery.extend(jQuery.glowModal.defaults, {
+                    loadingHtmlUrl: 'about:blank',
+                    windowCssClasses: ['CommonModal'],
+                    windowTitleCssClasses: ['CommonModalTitle'],
+                    windowCloseCssClasses: ['CommonModalClose'],
+                    windowContentCssClasses: ['CommonModalContent modal-content'],
+                    windowMaskCssClasses: ['CommonModalMask'],
+                    windowFooterCssClasses: ['CommonModalFooter'],
+                    windowResizeCssClasses: ['CommonModalResize'],
+                    zIndex: 65000
+                });
+            }
+
+            $(function () {
+                if (window.parent && window.parent.$ && window.parent.$.telligent && window.parent.$.telligent.evolution && window.parent.$.telligent.evolution.widgets && window.parent.$.telligent.evolution.widgets.legacyAdministrationPanel) {
+
+                    $(function () {
+                        window.parent.$.telligent.evolution.widgets.legacyAdministrationPanel.register({
+                            window: window,
+                            container: $('html')
+                        })
+                    });
+
+                    $(window).on('unload', function () {
+                        try {
+                            window.parent.$.telligent.evolution.widgets.legacyAdministrationPanel.unload({
+                                window: window
+                            });
+                        } catch (e) { }
+                    });
+
+                    window.Telligent_Modal = {
+                        GetWindowOpener: function (modalWindow, openerWindow) {
+                            return window.parent.$.telligent.evolution.widgets.legacyAdministrationPanel.getOpener(modalWindow);
+                        },
+                        IsShown: function (openerWindow) {
+                            return false;
+                        },
+                        Resize: function (width, height, preventAutomaticResizing, openerWindow) {
+                        },
+                        MoveTo: function (x, y, openerWindow) {
+                        },
+                        Open: function (url, width, height, onCloseFunction, x, y, ignoreCloseAndAnimation, isManuallyResized, openerWindow) {
+                            window.parent.$.telligent.evolution.widgets.legacyAdministrationPanel.open({
+                                url: url,
+                                onclose: onCloseFunction,
+                                opener: openerWindow || window,
+                                ismodal: true
+                            });
+                        },
+                        Close: function (returnValue, openerWindow) {
+                            window.parent.$.telligent.evolution.widgets.legacyAdministrationPanel.close({
+                                opener: openerWindow,
+                                returnValue: returnValue
+                            });
+                        },
+                        Refresh: function (openerWindow) {
+                        }
+                    };
+                }
+            });
+
+    </script>
+		<form runat="server">
+			<asp:ContentPlaceHolder id="bscr" runat="server" />
+				<div id="CommonOuter"><div id="Common">
+					<div id="CommonHeader">
+						<asp:ContentPlaceHolder id="bhcr" runat="server" />
+					</div>
+
+					<div id="CommonBody">
+    					<asp:ContentPlaceHolder id="bcr" runat="server" />
+					</div>
+				
+					<div id="CommonFooter">
+						<asp:ContentPlaceHolder id="BodyFooterRegion" runat="server" />
+					</div>
+			 </div></div>
+		</form>
+        <asp:Literal runat="server" ID="LicenseRestrictionScript" />
+	</body>
+</html>

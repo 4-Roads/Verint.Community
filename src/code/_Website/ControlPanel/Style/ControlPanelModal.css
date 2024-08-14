@@ -1,0 +1,288 @@
+
+/*
+Overrides
+*/
+
+#CommonFooter
+{
+	margin: 0px;
+	padding: 0px;
+	border-style: none;
+	border-width: 0px;
+	display: none;
+}
+
+#CommonHeader
+{
+	padding: 0px;
+	margin: 0px;
+	height: 0px;
+	border-style: none;
+	border-width: 0px;
+	display: none;
+}
+
+#CommonOuter
+{
+	margin: 0px;
+	width: auto;
+}
+
+#CommonOuter fieldset {
+    border: 0px;
+}
+#CommonOuter fieldset ul {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+#CommonOuter fieldset > ul {
+    padding: 1em;
+}
+
+#Common
+{
+	padding: 0;
+	margin: 0px;
+	border-style: none;
+	border-width: 0px;
+	background-color: #fff;
+	width: auto;
+	min-width: 0;
+}
+
+body, html
+{
+	background-image: none;
+	margin: 0px;
+	padding: 0px;
+	background-color: #fff;
+	border-style: none;
+}
+
+.CommonContentArea
+{
+	padding: 0px;
+	font-family: Arial, Helvetica;
+	border-style: none;
+	margin: 0px;
+	padding-top: 4px;
+	background-color: #fff;
+}
+
+.CommonContent
+{
+	border-style: none;
+	background-color: #fff;
+}
+
+.CommonDescription
+{
+	padding: 6px;
+	font-size: 90%;
+}
+
+.PostBody
+{
+	display: block;
+	position: relative;
+	overflow: auto;
+}
+
+td.CommonFormField input[type="text"]
+{
+	width: 99%;
+}
+td.CommonFormField.tokenStringControl input[type="text"] 
+{ 
+    width: 80%; 
+}
+
+td.CommonFormField select
+{
+	width: 100%;
+}
+
+fieldset.field-list { border: none; margin: 1em 0; padding: 0; }
+    .field-list-description { color: #000; white-space: normal; display: inline; overflow: auto; }
+    .field-list-description span { float: left; position: relative; }
+    ul.field-list { list-style-type: none; margin: 0; padding: 0; clear: both; }
+.field-item { margin: 0; padding: .5em 0 }
+    .field-item-description { display: block; color: #999; clear: both; }
+    .field-item-header { font-weight: bold; display: block; }
+    .field-item-validation { color: #f00; }
+    .field-item .field-item-input input { margin-left: 0; }
+    .field-item .field-item-input textarea { margin-left: 0; font-family: sans-serif; font-size: 12px; width: 98%; padding: 4px; resize: none; border: 1px solid #A0A0A0; }
+    .field-item .field-item-input textarea.scaled { height: 1em; }
+label, .label { }
+    label.hidden, .label.hidden { display: none !important; }
+
+
+.ChangeAvatarStatus
+{
+	margin: 8px;
+}
+
+/* Merging */
+div.mergeContainer {
+    color: #666;
+    position: relative;
+    top: -20px;
+    }
+    div.mergeContainer select {
+        }
+    div.mergeContainer div.CommonDescription {
+        margin: 20px 0 20px;
+		height: 22px;
+        }
+    div.mergeContainer div.HeaderDescription {
+        margin: -10px 0px 10px 0px
+        }
+    div.mergeContainer div.widgetResourceMergeOptions div.CommonDescription {
+        background-color: transparent;
+        margin: 5px 0px 5px;
+        background-color: #F5F5F5;
+        }            
+    div.mergeContainer .merged .fragmentname {
+        color: #444;
+        float: left;
+        width: 200px;
+        clear: both;
+        font-weight: bold;
+        line-height: 2.2em;
+        }
+        div.mergeContainer .merged .all .fragmentname {
+            width: 195px;
+            }
+    div.mergeContainer .widgetImplementationMergeOption,
+    div.mergeContainer .widgetResourceMergeOption,
+    div.mergeContainer .widgetMergeOption {
+        float: left;
+        width: 200px;
+        margin: 5px 5px 5px 5px;
+        }
+	div.mergeContainer .widgetMergeOptions {
+		float: left;
+        display: none;
+		}
+    div.mergeContainer .widgetResourceMergeSummary {
+        display: none;
+        }
+    div.mergeContainer .widgetResourceMergeOptions {
+        margin: 0px 0px 10px 205px;
+        clear: both;
+        padding-top: 3px;
+        width: 690px;
+        }
+        div.mergeContainer .all.withMergeOptions .widgetMergeOptions,
+        div.mergeContainer .fragment.withMergeOptions .widgetMergeOptions {
+            display: block !important;
+            }
+        div.mergeContainer .fragment.withResourceMergeSummary .widgetResourceMergeSummary {
+            background-color: #F5F5F5;
+            color: #777777;
+            display: block;
+            float: left;
+            font-size: 10px;
+            line-height: 13px;
+            margin-top: 5px;
+            padding: 3px;
+            text-align: center;
+            width: 55px;
+            }
+            div.mergeContainer .fragment.withResourceMergeSummary .widgetResourceMergeSummared {
+                background-color: yellow;
+                color: #000;
+                }
+        div.mergeContainer .fragment.withResourceMergeOptions .widgetResourceMergeOptions {
+            display: block !important;
+            }
+    div.mergeContainer .resource th,
+    div.mergeContainer .resource td {
+        padding: 0px 10px 10px 0px;
+        }
+        div.mergeContainer .resource td.resourceExisting,
+        div.mergeContainer .resource td.resourceNew {
+            padding: 0px;
+            }
+         
+    .field-item-input .processing { 
+        background-image: url('../../Utility/spinner.gif');
+        background-repeat: no-repeat;
+        background-position: top left; 
+        width: 16px; 
+        height: 0; 
+        padding: 16px 0px 0px 0px; 
+        display: inline-table; 
+        display: -moz-inline-box; 
+        display: inline-block; 
+        overflow: hidden; 
+        position: absolute; 
+        left: 9px; 
+        top: 9px !important;
+        }
+
+div.mergeContainer ul {
+    padding: 0px;
+	margin-left: 0px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    overflow: hidden;
+    }
+    div.mergeContainer ul li {
+        list-style: none;
+        clear: both;
+        padding: 0px;
+        padding-left: 5px;
+        }
+        div.mergeContainer ul.fragment.merged li.all {
+            background-color: #F5F5F5;
+            overflow: hidden;
+            padding: 3px 0px 2px 10px;
+            margin-bottom: 8px;
+            }
+        div.mergeContainer .resource td {
+            vertical-align: top;
+            text-align: left;
+            }
+        div.mergeContainer .resource label {
+            float: left;
+            line-height: 1.3em;
+            padding: 0 0 1em 0;
+            }
+        div.mergeContainer ul li.fragment.merged {
+            border-top: 1px dotted #DDDDDD;
+            }
+        div.mergeContainer ul li.fragment.merged.first {
+            border-top: 0px;
+            }
+    div.mergeContainer ul li input {
+        margin: 0px 8px 6px 0px;
+        }
+    div.mergeContainer .field-item { margin-bottom: 0px; }
+
+/* modal resource editor */
+div.resource-editor .attribute-name input {
+    width: 250px;
+    }
+div.resource-editor .attribute-value input {
+    width: 500px;
+    }
+div.resource-editor .attribute-list-header label.input {
+    width: 250px;
+    }
+div.resource-editor li {
+    clear: both;
+    display: block;
+    min-width: 400px;
+	white-space: nowrap;
+    }
+
+
+div.schedule-editor .schedule-type-settings {
+	display: none;
+}
+
+div.schedule-editor input[type="text"] {
+	width: auto;
+}

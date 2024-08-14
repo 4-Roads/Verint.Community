@@ -1,0 +1,26 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" %>
+<%@ Import Namespace="Telligent.Evolution.Components" %>
+
+<script runat="server">
+
+    protected override void OnInit(EventArgs e)
+    {
+        CSContext.Current.IsModal = true;
+				Response.CacheControl = "no-cache";
+				Response.Cache.SetCacheability(HttpCacheability.NoCache);
+				base.OnInit(e);
+    }
+    
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head runat="server">
+        <TEControl:PlatformHeaders runat="server" IncludeThemeHeaders="True" />
+    </head>
+	<body class="modal <%= Telligent.Evolution.Components.CSContext.Current.Language.ToLowerInvariant() %>" spellcheck="true">
+		<form runat="server">
+			<asp:ContentPlaceHolder id="content" runat="server" />
+		</form>
+	</body>
+</html>

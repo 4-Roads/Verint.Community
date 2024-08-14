@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<release id="FourRoads.VerintCommunity.MicroData">
+  <files>
+    <file name="AngleSharp.dll" />
+    <file name="FourRoads.Common.dll" />
+    <file name="FourRoads.Common.Sql.dll" />
+    <file name="FourRoads.Common.TelligentCommunity.dll" />
+    <file name="FourRoads.Common.Web.dll" />
+    <file name="FourRoads.VerintCommunity.MicroData.dll" />
+    <file name="FourRoads.VerintCommunity.RenderingHelper.dll" />
+    <file name="System.Text.Encoding.CodePages.dll" />
+  </files>
+  <resources />
+  <docs>
+    <doc name="readme.md" />
+  </docs>
+</release>

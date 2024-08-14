@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<scriptedContentFragments>
+  <scriptedContentFragment name="${resource:Mfa_Name}" version="10.0.0.4689" description="${resource:Mfa_Description}" instanceIdentifier="8495afe3dB4c4ab2837e839ba8cf7399" theme="" isCacheable="false" varyCacheByUser="false" showHeaderByDefault="false" cssClass="admin-disable-mfa" provider="3bd55b782e624b77b6e730f6bce17de2">
+    <contentScript>
+      <![CDATA[
+#set($isAdmin = $core_v2_roleUsers.IsUserInRoles($core_v2_user.Accessing.Username, $core_v2_utility.MakeList("Administrators")))
+#if(!$isAdmin)
+  $core_v2_widget.Hide()
+#end
+#set($user = false)
+#set($user = $core_v2_user.Current)
+#if(!$user)
+  $core_v2_widget.Hide()
+#end
+
+#set($isMfaEnabled = false)
+#set($isMfaEnabled = $frcommon_v1_Mfa.TwoFactorEnabled($core_v2_user.Current.Id))
+
+#set($url = $core_v2_widget.GetExecutedFileUrl('disablemfa.vm'))
+
+#set($validateEmailUrl = $core_v2_widget.GetExecutedFileUrl('validateemail.vm'))
+
+  <div class="ui-links navigation-list action" data-minlinks="2" data-direction="vertical">
+    <ul class="navigation-list">
+      #if ($isMfaEnabled)
+		  <li class="navigation-list-item">
+			<a class="disable-mfa" href="#">$core_v2_language.GetResource('disableMFA')</a>
+	      </li>
+	  #end
+	  #if ($frcommon_v1_Mfa.EmailVerificationRequired($user.Id))<li class="navigation-list-item">
+		  <li class="navigation-list-item">
+			  <span>$core_v2_language.FormatString($core_v2_language.GetResource('EmailChanged'), $user.PrivateEmail )</span>
+			  <a class="validate-email" href="#">$core_v2_language.GetResource('validateEmail')</a>
+		  </li>
+	  #end
+    </ul>
+  </div>
+#registerEndOfPageHtml('ns.widgets.disableMFA')
+<script type='text/javascript' src='$core_v2_widget.GetFileUrl("ui.js")'></script>
+#end
+#registerEndOfPageHtml()
+<script type='text/javascript'>
+  jQuery(document).ready(function() {
+    jQuery.ns.widgets.disableMFA.register({
+	 validateEmailSuccessMsg:'$core_v2_encoding.JavascriptEncode($core_v2_language.GetResource("validateEmailSuccessMsg"))',
+      disableMfaSuccessMsg: '$core_v2_encoding.JavascriptEncode($core_v2_language.GetResource("disableMfaSuccessMsg"))',
+      disableMfaUrl: '$core_v2_encoding.JavascriptEncode($url)',
+	  validateEmaolUrl: '$core_v2_encoding.JavascriptEncode($validateEmailUrl)',
+      userId: $user.Id
+    });
+  });
+</script>
+#end
+]]>
+    </contentScript>
+    <languageResources>
+		<language key="en-us">
+			<resource name="Mfa_Name">4 Roads - Admin Disable MFA</resource>
+			<resource name="Mfa_Description">Administrators can disable MFA for users by visiting their profile pages.</resource>
+			<resource name="disableMFA">Disable MFA</resource>
+			<resource name="disableMfaSuccessMsg">MFA was disabled</resource>
+			<resource name="validateEmailSuccessMsg">New email address validated</resource>
+			<resource name="validateEmail">Validate Email</resource>
+			<resource name="EmailChanged">The email of this user has changed to {0} or MFA has been disabled, forcing revalidation of email</resource>
+		</language>
+    </languageResources>
+  </scriptedContentFragment>
+</scriptedContentFragments>

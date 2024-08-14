@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>FourRoads.VerintCommunity130.ContentDiscuss</id>
+        <version>$version$</version>
+        <title>$title$</title>
+        <authors>$author$</authors>
+        <owners>$author$</owners>
+        <licenseUrl>https://www.4-roads.com/contact/?rel=nugetLicense</licenseUrl>
+        <projectUrl>https://github.com/4-Roads/Verint.Community</projectUrl>
+        <requireLicenseAcceptance>true</requireLicenseAcceptance>
+        <copyright>Copyright © 4 Roads Ltd 2024</copyright>
+        <description>$description$</description>
+        <tags>Telligent utility</tags>
+        <dependencies>
+            <dependency id="FourRoads.Common" version="5.2.39" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="bin\**\FourRoads.VerintCommunity.ContentDiscuss.dll" target="lib\net47" exclude="*Tests*" />
+    </files>
+</package>

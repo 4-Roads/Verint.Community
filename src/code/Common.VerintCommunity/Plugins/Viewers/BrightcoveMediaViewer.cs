@@ -1,0 +1,117 @@
+// //------------------------------------------------------------------------------
+// // <copyright company="4 Roads LTD">
+// //     Copyright (c) 4 Roads LTD 2019.  All rights reserved.
+// // </copyright>
+// //------------------------------------------------------------------------------
+
+#region
+
+using FourRoads.Common.VerintCommunity.Plugins.Base;
+using System;
+using System.Net;
+using System.Text;
+using System.Text.RegularExpressions;
+using FourRoads.Common.Interfaces;
+using Telligent.Evolution.Extensibility;
+using Telligent.Evolution.Extensibility.Caching.Version1;
+
+#endregion
+
+namespace FourRoads.Common.VerintCommunity.Plugins.Viewers
+{
+    public class BrightcoveMediaViewer : VideoFileViewerBase
+  {
+
+    public override string SupportedUrlPattern
+    {
+      get { return @"(http[s]?://bcove\.me|players\.brightcove\.net)"; }
+    }
+
+    protected override string ViewerName
+    {
+        get { return "Brightcove"; }
+    }
+
+
+    private static Regex BcRegex = new Regex("^http(?<https>[s]?):\\/\\/players\\.brightcove\\.net\\/(?<accountId>\\d+)\\/(?<player>\\w*)_(?<embed>\\w*).*videoId=(?<videoId>\\d+).*$", RegexOptions.Compiled);
+
+   //https://players.brightcove.net/689254975001/default_default/index.html?videoId=5541774265001
+
+    public override string CreateRenderedViewerMarkup(Uri url, int maxWidth, int maxHeight)
+    {
+      string videoUrl = new BcWebClient().ResolveMinifiedUrl(url);
+
+      //WORKAROUND for telligent bug
+      videoUrl = videoUrl.Replace("&amp;", "&");
+
+      Match match = BcRegex.Match(videoUrl);
+
+        if (match.Success)
+        {
+            int height = 450;
+            int width = 480;
+
+            //bool isHttps = !string.IsNullOrEmpty(match.Groups["https"].Value);
+            string accountId = match.Groups["accountId"].Value;
+            string player = match.Groups["player"].Value;
+            string videoId = match.Groups["videoId"].Value;
+            string embed = match.Groups["embed"].Value;
+
+            ScaleUpDown(ref width, ref height, maxWidth, maxHeight);
+
+            var wrapper = new StringBuilder();
+
+            wrapper.Append($"<video data-video-id=\"{videoId}\" data-account=\"{accountId}\" data-player=\"{player}\" data-embed=\"{embed}\"");
+            wrapper.Append($" data-application-id class=\"video-js\" controls></video><script> src=\"//players.brightcove.net/{accountId}/{player}_{embed}/index.min.js\"></script>");
+
+            return wrapper.ToString();
+        }
+        return videoUrl;
+    }
+
+    class BcWebClient : WebClient
+    {
+      public string ResolveMinifiedUrl(Uri url)
+      {
+        if (url.Host != "bcove.me")
+        {
+          //no point resolving
+          return url.ToString();
+        }
+        string cacheKey = url.ToString();
+        var cacheService = Injector.Get<ICache>();
+
+        string result = (string)cacheService.Get<string>(cacheKey);
+
+        if (!string.IsNullOrWhiteSpace(result))
+        {
+            return result;
+        }
+        
+        DownloadData(url);
+
+        if (_responseUri != null)
+        {
+          string resolved = _responseUri.ToString();
+          cacheService.Insert(cacheKey, resolved);
+          return resolved;
+        }
+        //if no luck resolving, return the original url
+        return cacheKey;
+      }
+
+      Uri _responseUri;
+
+      protected override WebResponse GetWebResponse(WebRequest request)
+      {
+        WebResponse response = base.GetWebResponse(request);
+        if (response != null)
+        {
+          _responseUri = response.ResponseUri;
+          return response;
+        }
+        return null;
+      }
+    }
+  }
+}

@@ -1,0 +1,67 @@
+<scriptedContentFragments>
+  <scriptedContentFragment name="${resource:MetaData_Name}" cssClass="metadata" description="${resource:MetaData_Description}" instanceIdentifier="411f7656968348e1906a695a01b5f56c" isCacheable="false" varyCacheByUser="false" showHeaderByDefault="false" provider="4405a32103d9460181f381b84f6efb01">
+    <contentScript>
+      <![CDATA[
+      #set($hasPermission = $frcommon_v1_metaData.CanEdit)
+      
+      #if($hasPermission) 
+	        #set($saveId = $core_v2_widget.UniqueId('save'))
+	        #set($metaForm = $frcommon_v1_metaData.GetDynamicFormXml())
+	        #set($formId =  $core_v2_widget.UniqueId('formId'))
+
+          <h2>Available Parameters</h2>
+          <ul>
+            <li>{SiteName}</li>
+            <li>{SiteLogoUrl}</li>
+            <li>{ContainerName}</li>
+            <li>{ContainerDescription}</li>
+            <li>{ParentContainerName}</li>
+            <li>{PageImage}</li>
+            <li>{ApplicationName}</li>
+            <li>{ApplicationDescription}</li>
+            <li>{ApplicationrImage}</li>
+            <li>{ContentName}</li>
+            <li>{ContentDescription}</li>
+          </ul>
+
+          <hr/>
+          $core_v2_dynamicForm.RenderForm($formId, $metaForm)
+
+	        #registerEndOfPageHtml('fourroads.widgets.metadata')
+		        <script type="text/javascript" src="$core_v2_encoding.HtmlAttributeEncode($core_v2_widget.GetFileUrl('metadata.js'))"></script>
+	        #end
+
+	        #registerEndOfPageHtml()
+	            <script type="text/javascript">
+		            jQuery(function(){
+			            jQuery.fourroads.widgets.metaDataUpdate.register({
+				          getData : function() {return $core_v2_dynamicForm.GetValuesScript($formId);},
+                  resources : {
+                    save:'$core_v2_encoding.JavascriptEncode( $core_v2_language.GetResource("Save"))',
+                    updated:'$core_v2_encoding.JavascriptEncode( $core_v2_language.GetResource("Updated"))'
+                  },
+					        urls : {
+						        saveDataCallback:'$core_v2_encoding.JavascriptEncode( $core_v2_widget.GetExecutedFileUrl("saveData.vm"))'
+					        }
+				        });
+		            });
+	            </script>
+            #end
+        #end
+			]]>
+    </contentScript>
+    <languageResources>
+      <language key="en-us">
+        <resource name="MetaData_Name">4 Roads - MetaData Administration</resource>
+        <resource name="MetaData_Header">MetaData Widget</resource>
+        <resource name="MetaData_Description">Adds support for configurable meta data.</resource>
+        <resource name="MetaData_Seperator">Dynamic Property Seperator</resource>
+        <resource name="Options">Options</resource>
+        <resource name="Save">Save</resource>
+        <resource name="MetaData">Meta Data</resource>
+        <resource name="Updated">Meta Data updated for page</resource>
+        <resource name="EditMetaData">Edit Meta Data</resource>
+      </language>
+    </languageResources>
+  </scriptedContentFragment>
+</scriptedContentFragments>
