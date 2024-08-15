@@ -239,10 +239,12 @@ $RECYCLE.BIN/
 
 **/lib/Telligent*/*.dll
 **/lib/Telligent*/*.xml
-/src/code/TelligentCommunity
+/src/code/_Website
 /src/lib/Telligent
 src/.vs/FourRoads.TelligentCommunity/v15/Server/sqlite3
 /src/.vs/FourRoads.TelligentCommunity
+src/.vs/FourRoads.VerintCommunity/v15/Server/sqlite3
+/src/.vs/FourRoads.VerintCommunity
 
 # ============================
 # gulp config (user specific)
