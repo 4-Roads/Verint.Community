@@ -1,0 +1,58 @@
+@iet_dark_purple: #4F1B59;
+@iet_light_purple: #965fa3;
+
+@defaultBaseFontSize: 14px;
+@baseFontSize: -evo-themeconfig-unit('baseFontSizeValue', @defaultBaseFontSize);
+
+@defaultBackgroundColour: #22252C;
+@backgroundColor: -evo-themeconfig-color('backgroundColor', @defaultBackgroundColour);
+
+@defaultLinkColour: #ffffff;
+@linkColour: -evo-themeconfig-color('linkFontColor', @defaultLinkColour);
+
+@defaultMinWidth: 670px;
+@minWidth: -evo-themeconfig-unit('minWidth', @defaultMinWidth);
+
+@defaulAccentdColour: #006FFF;
+@accentColor: -evo-themeconfig-color('accentColor', @defaulAccentdColour);
+
+
+.content {
+	.paywall-restricted {
+
+
+	}
+	
+	.paywall {
+		display: none;
+		position: fixed;
+		width: 100%;
+		bottom: 0;
+		left: 0;
+		background-color: @backgroundColor;
+		padding: 20px;
+		opacity: 1;
+		animation: fade 2s linear;
+		border-style: inset;
+		border-color: @accentColor;
+		border-size:2px;
+
+		a{
+			:link, :hover,:visited {
+				color: @linkColour;
+			}
+		}
+	}
+}
+
+//== Mobile
+
+@media only screen and (max-width: @minWidth) {
+
+	.content-fragment .paywall{	
+		
+
+		
+	}
+    
+}

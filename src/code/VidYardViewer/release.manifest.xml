@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<release id="FourRoads.VerintCommunity.VidYardViewer">
+  <files>
+    <file name="FourRoads.Common.dll" />
+    <file name="FourRoads.Common.Sql.dll" />
+    <file name="FourRoads.Common.TelligentCommunity.dll" />
+    <file name="FourRoads.Common.Web.dll" />
+    <file name="FourRoads.VerintCommunity.VidYardViewer.dll" />
+  </files>
+  <resources />
+  <docs />
+</release>

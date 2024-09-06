@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<scriptedEmails>
+  <scriptedEmail name="Verify Email Code" version="13.0.0.29206" description="Sends an email validate users email address." id="20734e3f728541ae850ba300663fd40d" lastModified="2024-05-08 15:16:41Z" isFactoryDefault="true">
+    <subjectScript language="Velocity">
+      <![CDATA[#format($core_v2_language.GetResource('Subject'))
+#token('site_name')
+    $core_v2_infoResult.Get().SiteName
+#end]]>
+    </subjectScript>
+    <headerScript language="Velocity"><![CDATA[$core_v2_language.GetResource('Header')]]></headerScript>
+    <bodyScript language="Velocity">
+      <![CDATA[<p></p>
+<p>Hi, $context_v1_email.Context.User.DisplayName</p>
+<p>You have been sent this email to verify that you own it.</p>
+<p>Please click on the <a href="$context_v1_email.Context.VerifyCodeUrl">link</a> to confirm that this is your email and activate your community account or type in the following code 
+<br/><center style="font-size:24px">$context_v1_email.Context.Code</center></p>
+<p></p>]]>
+    </bodyScript>
+    <footerScript language="Velocity" />
+    <languageResources>
+      <![CDATA[<language key="en-us">
+  <resource name="Footer">You were sent this email because an administrator sent it to all members of the {role} role on {site_name}.</resource>
+  <resource name="Header">Email Verification Code</resource>
+  <resource name="Subject">{site_name}: Email Verification Code</resource>
+</language>]]>
+    </languageResources>
+  </scriptedEmail>
+</scriptedEmails>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<release id="FourRoads.VerintCommunity.HubSpot">
+  <files>
+    <file name="FourRoads.Common.dll" />
+    <file name="FourRoads.Common.Sql.dll" />
+    <file name="FourRoads.Common.TelligentCommunity.dll" />
+    <file name="FourRoads.Common.Web.dll" />
+    <file name="FourRoads.VerintCommunity.HubSpot.dll" />
+    <file name="FourRoads.VerintCommunity.Installer.dll" />
+  </files>
+  <resources>
+    <resource name="Resources\Sql\HubSpot.install.sql" />
+  </resources>
+  <docs>
+    <doc name="README.md" />
+  </docs>
+</release>

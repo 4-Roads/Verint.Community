@@ -1,0 +1,21 @@
+﻿#set($errorMessage = "Something went wrong")
+#set($isAdmin = $core_v2_roleUsers.IsUserInRoles($core_v2_user.Accessing.Username, $core_v2_utility.MakeList("Administrators")))
+#if(!$isAdmin)
+	$core_v2_page.SendJsonError($errorMessage)
+#end
+#set($user = false)
+#set($user = $core_v2_user.Current)
+#if(!$user)
+	$core_v2_page.SendJsonError($errorMessage)
+#end
+#set($isMfaEnabled = '')
+#set($isMfaEnabled = $frcommon_v1_Mfa.TwoFactorEnabled($user.Id))
+#if($isMfaEnabled == '' || !$isMfaEnabled)
+	$core_v2_page.SendJsonError($errorMessage)
+#end
+#if(!$core_v2_page.IsPost)
+	$core_v2_page.SendJsonError($errorMessage)
+#end
+$frcommon_v1_Mfa.EnableTwoFactor($user.Id, false)
+$core_v2_page.SetContentType('application/json')
+true
