@@ -161,10 +161,9 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
 
                 return;
             }
-
-            //Never validated and also joined before cutoff date so assumed a valid user
-            if (user.JoinDate < _emailValidationCutoffDate && string.IsNullOrWhiteSpace(VerifiedEmail(user)))
-            {
+            
+            if (user.JoinDate < _emailValidationCutoffDate && VerifiedDateHasBeenSet(user))
+            { //Never validated and also joined before cutoff date so assumed a valid use
                 SetEmailInExtendedAttributes(user);
                 return;
             }
@@ -173,6 +172,22 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
 
             if (EmailNotSent(user)) 
                 SendValidationCode(user);
+        }
+
+        private bool VerifiedDateHasBeenSet(User user)
+        {
+            var dateStr = user.ExtendedAttributes.Get(_eakey_emailVerifiedDate)?.Value;
+
+            if (dateStr != null)
+            {
+                DateTime date;
+
+                if (DateTime.TryParse(dateStr, out date))
+                    if (date < _emailValidationCutoffDate)
+                        return true;
+            }
+
+            return false;
         }
 
         public bool VerifyEmail(User user)
