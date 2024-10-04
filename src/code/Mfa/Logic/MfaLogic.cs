@@ -368,10 +368,11 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
 
             var tfa = new FourRoadsTwoFactorAuthenticator();
 
-            if (!tfa.ValidateTwoFactorPIN(GetAccountSecureKey(user), code)) return false;
+            if (!tfa.ValidateTwoFactorPIN(GetAccountSecureKey(user), code, new TimeSpan(0,0,15)))
+                return false;
 
             SetTwoFactorState(user, TwoFactorState.Passed, persist);
-            return true;
+                return true;
         }
 
         public string GetAccountSecureKey(User user)
