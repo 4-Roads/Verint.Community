@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Web;
 using DryIoc;
 using FourRoads.Common.VerintCommunity.Plugins.Base;
 using FourRoads.Common.VerintCommunity.Plugins.Interfaces;
@@ -39,7 +40,8 @@ namespace FourRoads.VerintCommunity.Mfa.Plugins
                 PersistenceType,
                 PersistenceDuration,
                 _configuration.GetInt("emailVerificationExpirePeriod").GetValueOrDefault(0),
-                RequiredMfaRoles
+                RequiredMfaRoles,
+                _configuration.GetString("cookieSameSite") ?? nameof(SameSiteMode.Strict)
             );
         }
 
@@ -174,6 +176,23 @@ namespace FourRoads.VerintCommunity.Mfa.Plugins
                 };
 
                 mfaOptions.Properties.Add(persistentDurationProperty);
+
+                var cookieSameSiteProperty = new Property
+                {
+                    Id = "cookieSameSite",
+                    LabelResourceName = "CookieSameSite",
+                    DescriptionResourceName = "CookieSameSiteDesc",
+                    DataType = nameof(PropertyType.String),
+                    DefaultValue = "Strict"
+                };
+
+                cookieSameSiteProperty.SelectableValues.Add(new PropertyValue
+                    { LabelResourceName = "CookieSameSiteStrict", Value = nameof(SameSiteMode.Strict), OrderNumber = 1 });
+                cookieSameSiteProperty.SelectableValues.Add(new PropertyValue
+                    { LabelResourceName = "CookieSameSiteLax", Value = nameof(SameSiteMode.Lax), OrderNumber = 2 });
+                cookieSameSiteProperty.SelectableValues.Add(new PropertyValue
+                    { LabelResourceName = "CookieSameSiteNone", Value = nameof(SameSiteMode.None), OrderNumber = 3 });
+                mfaOptions.Properties.Add(cookieSameSiteProperty);
 
                 mfaOptions.Properties.Add(new Property
                 {

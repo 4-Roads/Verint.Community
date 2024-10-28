@@ -64,6 +64,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
         private int _persistentDuration = 1;
         private string[] _requiredRoles;
         private ISocketMessage _socketMessenger;
+        private SameSiteMode _sameSiteCookieMode;
 
         public MfaLogic(IUsers usersService, IUrl urlService, IMfaDataProvider mfaDataProvider,
             IEncryptedCookieService encryptedCookieService,
@@ -78,7 +79,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
 
         public void Initialize(bool enableEmailVerification, IVerifyEmailProvider emailProvider,
             ISocketMessage socketMessenger, DateTime emailValidationCutoffDate, PersitenceEnum isPersistent,
-            int persistentDuration, int emailVerificationExpiry, int[] requiredRoles)
+            int persistentDuration, int emailVerificationExpiry, int[] requiredRoles, string sameSiteMode)
         {
             EmailValidationEnabled = enableEmailVerification;
             _emailProvider = emailProvider;
@@ -93,6 +94,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
             _emailVerificationExpiry = emailVerificationExpiry;
             _requiredRoles = requiredRoles?.Select(rid => Apis.Get<IRoles>().Get(rid).Name).ToArray();
             _persistentDuration = persistentDuration;
+            _sameSiteCookieMode = (SameSiteMode)Enum.Parse(typeof(SameSiteMode), sameSiteMode, true);
         }
 
         private void Events_BeforeUpdate(UserBeforeUpdateEventArgs e)
@@ -117,13 +119,14 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
         /// </summary>
         public void FilterRequest(IHttpRequest request)
         {
-            if (IsUnprotectedRequest(request.HttpContext.Request)) return;
-
-            if (ShouldRemoveMfaToken(request.HttpContext.Request))
+            if (IsUnprotectedRequest(request.HttpContext.Request))
             {
-                if (_isPersistent == PersitenceEnum.Authentication)
-                    RemoveMfaToken();
+                return;
+            }
 
+            if (_isPersistent == PersitenceEnum.Authentication && ShouldRemoveMfaToken(request.HttpContext.Request))
+            {
+                RemoveMfaToken();
                 return;
             }
 
@@ -755,7 +758,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
             {
                 HttpOnly = true,
                 Secure = true,
-                SameSite = SameSiteMode.Strict
+                SameSite = _sameSiteCookieMode
             };
 
             if (expiration.HasValue) mfaCookie.Expires = expiration.Value;
