@@ -64,7 +64,8 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
         private int _persistentDuration = 1;
         private string[] _requiredRoles;
         private ISocketMessage _socketMessenger;
-
+        private SameSiteMode _sameSiteCookieMode;
+        
         public MfaLogic(IUsers usersService, IUrl urlService, IMfaDataProvider mfaDataProvider,
             IEncryptedCookieService encryptedCookieService,
             IPermissions permissions)
@@ -78,7 +79,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
 
         public void Initialize(bool enableEmailVerification, IVerifyEmailProvider emailProvider,
             ISocketMessage socketMessenger, DateTime emailValidationCutoffDate, PersitenceEnum isPersistent,
-            int persistentDuration, int emailVerificationExpiry, int[] requiredRoles)
+            int persistentDuration, int emailVerificationExpiry, int[] requiredRoles, string sameSiteMode)
         {
             EmailValidationEnabled = enableEmailVerification;
             _emailProvider = emailProvider;
@@ -93,6 +94,8 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
             _emailVerificationExpiry = emailVerificationExpiry;
             _requiredRoles = requiredRoles?.Select(rid => Apis.Get<IRoles>().Get(rid).Name).ToArray();
             _persistentDuration = persistentDuration;
+            _sameSiteCookieMode = (SameSiteMode)Enum.Parse(typeof(SameSiteMode), sameSiteMode, true);
+
         }
 
         private void Events_BeforeUpdate(UserBeforeUpdateEventArgs e)
@@ -117,13 +120,14 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
         /// </summary>
         public void FilterRequest(IHttpRequest request)
         {
-            if (IsUnprotectedRequest(request.HttpContext.Request)) return;
-
-            if (ShouldRemoveMfaToken(request.HttpContext.Request))
+            if (IsUnprotectedRequest(request.HttpContext.Request))
             {
-                if (_isPersistent == PersitenceEnum.Authentication)
-                    RemoveMfaToken();
+                return;
+            }
 
+            if (_isPersistent == PersitenceEnum.Authentication && ShouldRemoveMfaToken(request.HttpContext.Request))
+            {
+                RemoveMfaToken();
                 return;
             }
 
@@ -161,10 +165,9 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
 
                 return;
             }
-
-            //Never validated and also joined before cutoff date so assumed a valid user
-            if (user.JoinDate < _emailValidationCutoffDate && string.IsNullOrWhiteSpace(VerifiedEmail(user)))
-            {
+            
+            if (user.JoinDate < _emailValidationCutoffDate && VerifiedDateHasBeenSet(user))
+            { //Never validated and also joined before cutoff date so assumed a valid use
                 SetEmailInExtendedAttributes(user);
                 return;
             }
@@ -173,6 +176,22 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
 
             if (EmailNotSent(user)) 
                 SendValidationCode(user);
+        }
+
+        private bool VerifiedDateHasBeenSet(User user)
+        {
+            var dateStr = user.ExtendedAttributes.Get(_eakey_emailVerifiedDate)?.Value;
+
+            if (dateStr != null)
+            {
+                DateTime date;
+
+                if (DateTime.TryParse(dateStr, out date))
+                    if (date < _emailValidationCutoffDate)
+                        return true;
+            }
+
+            return false;
         }
 
         public bool VerifyEmail(User user)
@@ -353,10 +372,11 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
 
             var tfa = new FourRoadsTwoFactorAuthenticator();
 
-            if (!tfa.ValidateTwoFactorPIN(GetAccountSecureKey(user), code)) return false;
+            if (!tfa.ValidateTwoFactorPIN(GetAccountSecureKey(user), code, new TimeSpan(0,0,15)))
+                return false;
 
             SetTwoFactorState(user, TwoFactorState.Passed, persist);
-            return true;
+                return true;
         }
 
         public string GetAccountSecureKey(User user)
@@ -739,7 +759,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
             {
                 HttpOnly = true,
                 Secure = true,
-                SameSite = SameSiteMode.Strict
+                SameSite = _sameSiteCookieMode
             };
 
             if (expiration.HasValue) mfaCookie.Expires = expiration.Value;
