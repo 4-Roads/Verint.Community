@@ -12,6 +12,7 @@ namespace FourRoads.VerintCommunity.Mfa.Interfaces
         void Initialize(bool enableEmailVerification, IVerifyEmailProvider emailProvider,
             ISocketMessage socketMessenger, DateTime emailValidationCutoffDate, PersitenceEnum isPersistent,
             int persistentDuration, int emailVerificationExpiry, int[] requiredRoles, string sameSiteMode);
+      
         bool IsTwoFactorEnabled(User user);
         bool EmailValidationEnabled { get; }
         bool EmailVerificationOutOfDate(User user);

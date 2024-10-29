@@ -65,7 +65,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
         private string[] _requiredRoles;
         private ISocketMessage _socketMessenger;
         private SameSiteMode _sameSiteCookieMode;
-
+        
         public MfaLogic(IUsers usersService, IUrl urlService, IMfaDataProvider mfaDataProvider,
             IEncryptedCookieService encryptedCookieService,
             IPermissions permissions)
@@ -95,6 +95,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
             _requiredRoles = requiredRoles?.Select(rid => Apis.Get<IRoles>().Get(rid).Name).ToArray();
             _persistentDuration = persistentDuration;
             _sameSiteCookieMode = (SameSiteMode)Enum.Parse(typeof(SameSiteMode), sameSiteMode, true);
+
         }
 
         private void Events_BeforeUpdate(UserBeforeUpdateEventArgs e)
