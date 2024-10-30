@@ -6,6 +6,7 @@ namespace FourRoads.VerintCommunity.MetaData.Interfaces
 {
     public interface IMetaDataLogic
     {
+        MetaDataConfiguration GetConfig();
         void UpdateConfiguration(MetaDataConfiguration metaConfig);
         Logic.MetaData GetCurrentMetaData();
         string GetDynamicFormXml();

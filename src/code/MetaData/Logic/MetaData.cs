@@ -16,6 +16,7 @@ namespace FourRoads.VerintCommunity.MetaData.Logic
         public string Keywords { get; set; }
         public SerializableDictionary<string,string> ExtendedMetaTags { get; set; }
         public Guid ApplicationId { get; set; }
+        public Guid ApplicationTypeId { get; set; }
         public Guid ContainerId { get; set; }
         public bool InheritData { get; set; }
         public Guid ContainerTypeId { get; set; }

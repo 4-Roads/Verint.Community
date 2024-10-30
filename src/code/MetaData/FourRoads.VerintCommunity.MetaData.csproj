@@ -121,8 +121,13 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="Resources\Widgets\MetaDataImagePreview\index.vm" />
+    <EmbeddedResource Include="Resources\Widgets\PageCustomMetaData\index.vm" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Widgets\MetaDataImagePreview\widget.xml" />
+    <EmbeddedResource Include="Resources\Widgets\PageCustomMetaData\widget.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -1,0 +1,38 @@
+﻿#set($pageTitle =  $core_v2_widget.GetStringValue("pageTitle",""))
+#if($pageTitle != "")
+	$core_v2_page.SetTitle($core_v2_encoding.HtmlEncode($pageTitle),false,false)
+#end
+
+#set($metaKeywords =  $core_v2_widget.GetStringValue("metaKeywords",""))
+#if($metaKeywords != "")
+	$core_v2_page.AddMetaKeywords($core_v2_encoding.HtmlAttributeEncode($metaKeywords))
+#end
+
+#set($metaDescription =  $core_v2_widget.GetStringValue("metaDescription",""))
+#if($metaDescription != "")
+	$core_v2_page.AddMetaDescription($core_v2_encoding.HtmlAttributeEncode($metaDescription))
+#end
+
+#set($canonicalUrl =  $core_v2_widget.GetUrlValue("canonicalUrl",""))
+#if($canonicalUrl != "")
+	$core_v2_page.SetCanonicalLink($core_v2_encoding.HtmlAttributeEncode($canonicalUrl))
+#end
+
+$core_v2_page.AddOpenGraphNamespace("website", "http://ogp.me/ns/website#")
+$core_v2_page.AddOpenGraphMetaTag("og:type","website")
+$core_v2_page.AddOpenGraphMetaTag("og:url", $core_v2_page.AbsoluteUrl($core_v2_page.Url))
+
+#set($ogTitle =  $core_v2_widget.GetStringValue("openGraphTitle",""))
+#if($ogTitle != "")
+	$core_v2_page.AddOpenGraphMetaTag("og:title", $core_v2_encoding.HtmlAttributeEncode($ogTitle))
+#end
+
+#set($ogDescription =  $core_v2_widget.GetStringValue("openGraphDescription",""))
+#if($ogDescription != "")
+	$core_v2_page.AddOpenGraphMetaTag("og:description", $core_v2_encoding.HtmlAttributeEncode($ogDescription))
+#end
+
+#set($ogImage =  $core_v2_widget.GetUrlValue("openGraphImage",""))
+#if($ogImage != "")
+	$core_v2_page.AddOpenGraphMetaTag("og:image",$core_v2_encoding.HtmlAttributeEncode($core_v2_page.AbsoluteUrl($ogImage)))
+#end
