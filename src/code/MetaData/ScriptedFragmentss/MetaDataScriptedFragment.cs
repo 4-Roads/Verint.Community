@@ -3,6 +3,7 @@ using System.Collections;
 using FourRoads.Common.VerintCommunity.Components;
 using FourRoads.VerintCommunity.MetaData.Api;
 using FourRoads.VerintCommunity.MetaData.Interfaces;
+using FourRoads.VerintCommunity.MetaData.Logic;
 using Telligent.Evolution.Extensibility.Api.Entities.Version1;
 
 namespace FourRoads.VerintCommunity.MetaData.ScriptedFragmentss
@@ -87,6 +88,11 @@ namespace FourRoads.VerintCommunity.MetaData.ScriptedFragmentss
             }
 
             return new ApiMetaData(metaData);
+        }
+
+        public MetaDataConfiguration GetConfig()
+        {
+            return MetaDataLogic.GetConfig();
         }
     }
 }

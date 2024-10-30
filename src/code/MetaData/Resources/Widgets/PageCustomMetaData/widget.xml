@@ -1,0 +1,38 @@
+﻿<scriptedContentFragments><scriptedContentFragment name="${resource:SEO_Name}" version="12.1.2.21912" description="${resource:SEO_Description}" instanceIdentifier="a96c81b824b84582a62378a04616f5b7" theme="" isCacheable="true" varyCacheByUser="false" showHeaderByDefault="false" cssClass="" lastModified="2024-08-07 09:58:53Z" provider="2584523cf4054159a2055322f5957f27"><contentScript language="Velocity"><![CDATA[$core_v2_widget.ExecuteFile('index.vm')]]></contentScript><headerScript language="Unknown" /><configuration><![CDATA[
+      <propertyGroup id="options" resourceName="Options">
+        <property id="fragmentHeader" resourceName="Title" dataType="string" defaultValue="${resource:Title}" controlType="Telligent.Evolution.Controls.ContentFragmentTokenStringControl, Telligent.Evolution.Platform" />
+        <property id="pageTitle" resourceName="PageTitle" dataType="string" descriptionResourceName="PageTitle_Description" defaultValue="" />
+        <property id="metaKeywords" resourceName="MetaKeywords" dataType="string" descriptionResourceName="MetaKeywords_Description" defaultValue="" />
+        <property id="metaDescription" resourceName="MetaDescription" dataType="string" defaultValue="" descriptionResourceName="MetaDescription_Description" controlType="Telligent.DynamicConfiguration.Controls.MultilineHtmlControl, Telligent.DynamicConfiguration" />
+        <property id="canonicalUrl" resourceName="CanonicalUrl" dataType="url" defaultValue="" descriptionResourceName="CanonicalUrl_Description" />
+      </propertyGroup>
+      <propertyGroup id="openGraph" resourceName="OpenGraph">
+        <property id="openGraphTitle" resourceName="OpenGraphTitle" dataType="string" defaultValue="" descriptionResourceName="OpenGraphTitle_Description" />
+        <property id="openGraphDescription" resourceName="OpenGraphDescription" dataType="string" defaultValue="" descriptionResourceName="OpenGraphDescription_Description" controlType="Telligent.DynamicConfiguration.Controls.MultilineHtmlControl, Telligent.DynamicConfiguration"/>
+        <property id="openGraphImage" dataType="url" defaultValue="" resourceName="OpenGraphImage" descriptionResourceName="OpenGraphImage_Description"  controlType="Telligent.Evolution.Controls.ThemeFileUrlControl, Telligent.Evolution.Platform">
+          <propertyRule type="Telligent.Evolution.Controls.PropertyRules.FileExtensionRule, Telligent.Evolution.Platform" validExtensions="gif,jpg,jpeg,png" />
+        </property>
+
+      </propertyGroup>
+      ]]></configuration><languageResources><![CDATA[<language key="en-us">
+  <resource name="CanonicalUrl">Canonical Url</resource>
+  <resource name="CanonicalUrl_Description">If specified this will override the default url used in the canonical link tag.  By default the canonical url is the page's current base url.</resource>
+  <resource name="If specified this will override the default url used in the canonical link tag.  By default the canonical url is the page's current base url."></resource>
+  <resource name="MetaDescription">Meta Description</resource>
+  <resource name="MetaDescription_Description">Should describe the page's content and will be placed in the description meta tag.</resource>
+  <resource name="MetaKeywords">Meta Keywords</resource>
+  <resource name="MetaKeywords_Description">A comma separated list of keywords that will be placed in the keywords meta tag.</resource>
+  <resource name="OpenGraph">Open Graph</resource>
+  <resource name="OpenGraphDescription">Description</resource>
+  <resource name="OpenGraphDescription_Description">The description to be used in an Open Graph meta tag.  If not specified no tag will be rendered.</resource>
+  <resource name="OpenGraphImage">Image</resource>
+  <resource name="OpenGraphImage_Description">An image to be used in the open graph meta tag.  If not specified no tag will be rendered.</resource>
+  <resource name="OpenGraphTitle">Title</resource>
+  <resource name="OpenGraphTitle_Description">The title to be used in an Open Graph meta tag.  If not specified no tag will be rendered.</resource>
+  <resource name="Options">Options</resource>
+  <resource name="PageTitle">Page Title</resource>
+  <resource name="PageTitle_Description">The text to be used in the title tag of this page.  If not specified the page name will be used.</resource>
+  <resource name="SEO_Description">Provides SEO Meta Data For Custom Content Pages</resource>
+  <resource name="SEO_Name">4 Roads - Page Custom MetaData</resource>
+  <resource name="Title">4 Roads - Page Custom MetaData</resource>
+</language>]]></languageResources><additionalCssScript language="Unknown" /></scriptedContentFragment></scriptedContentFragments>

@@ -164,6 +164,11 @@ namespace FourRoads.VerintCommunity.MetaData.Logic
                     if (Uri.TryCreate(Apis.Get<IUrl>().Absolute(match.Groups["url"].Value), UriKind.Absolute,
                             out result))
                     {
+                        if (_metaConfig.EmbeddedImageExclusions.Any(s => result.AbsoluteUri.IndexOf(s, StringComparison.InvariantCultureIgnoreCase) != -1))
+                        {
+                            continue;
+                        }
+
                         results.Add(result.AbsoluteUri);
                     }
                 }
@@ -258,7 +263,7 @@ namespace FourRoads.VerintCommunity.MetaData.Logic
                 }
             }
             CacheService.Put(cacheKey, CacheScope.All, details, new PutOptions() { ExpiresAfter = TimeSpan.FromMinutes(15) });
-            
+
 
             return details;
         }
@@ -366,7 +371,10 @@ namespace FourRoads.VerintCommunity.MetaData.Logic
 
                 return data ?? new MetaData
                 {
-                    InheritData = true, ContainerId = details.ContainerId.GetValueOrDefault(Guid.Empty),
+                    InheritData = true,
+                    ApplicationId = details.ApplicationId.GetValueOrDefault(Guid.Empty),
+                    ApplicationTypeId = details.ApplicationTypeId.GetValueOrDefault(Guid.Empty),
+                    ContainerId = details.ContainerId.GetValueOrDefault(Guid.Empty),
                     ContainerTypeId = details.ContainerTypeId.GetValueOrDefault(Guid.Empty)
                 };
             }, CacheScope.All);
@@ -383,61 +391,117 @@ namespace FourRoads.VerintCommunity.MetaData.Logic
             Guid containerId = data.ContainerId;
             Guid containerTypeId = data.ContainerTypeId;
 
-            while (data.InheritData && containerId != Guid.Empty)
+            // are we starting with a piece of 'content', rather than application or container 
+            var isContent = details.ContentId.HasValue && details.ContentId != details.ApplicationId && details.ContentId != details.ContainerId;
+
+            var inheritData = data.InheritData;
+
+            if (inheritData)
             {
-                var container = Apis.Get<IContainers>().Get(containerId, containerTypeId);
-
-                //Once we start inheriting we go to the group home page
-                if (!container.HasErrors())
+                if (data.ApplicationId != Guid.Empty)
                 {
-                    var context = Apis.Get<IUrl>().ParsePageContext(container.Url);
+                    // if the save point is at application level the content id is the application id
+                    details.ContentId = data.ApplicationId;
+                    details.ContentTypeId = data.ApplicationTypeId;
 
-                    if (context != null && container.ParentContainer != null)
+                    var application = Apis.Get<IApplications>().Get(data.ApplicationId, data.ApplicationTypeId);
+
+                    if (!application.HasErrors())
                     {
-                        details.ApplicationId = Guid.Empty;
-                        details.ApplicationTypeId = Guid.Empty;
-                        details.ContainerId = container.ParentContainer.ContainerId;
-                        details.ContainerTypeId = container.ParentContainer.ContainerTypeId;
-                        details.PageName = context.PageName;
-
-                        var inherited = GetCurrentMetaData(details);
-
-                        containerId = container.ParentContainer.ContainerId;
-                        containerTypeId = container.ParentContainer.ContainerTypeId;
-
-                        if (string.IsNullOrWhiteSpace(data.Title))
-                            data.Title = inherited.Title;
-
-                        if (string.IsNullOrWhiteSpace(data.Description))
-                            data.Description = inherited.Description;
-
-                        if (string.IsNullOrWhiteSpace(data.Keywords))
-                            data.Keywords = inherited.Keywords;
-
-                        foreach (var key in data.ExtendedMetaTags.Keys)
+                        var context = Apis.Get<IUrl>().ParsePageContext(application.Url);
+                        if (context != null)
                         {
-                            if (string.IsNullOrWhiteSpace(data.ExtendedMetaTags[key]) &&
-                                inherited.ExtendedMetaTags.ContainsKey(key))
-                            {
-                                data.ExtendedMetaTags[key] = inherited.ExtendedMetaTags[key];
-                            }
-                        }
+                            details.PageName = context.PageName;
 
-                        if (container.ContainerId == Apis.Get<IGroups>().Root.ContainerId)
+                            inheritData = MergeMetaData(isContent, details, data);
+                        }
+                    }
+                }
+
+                details.ApplicationId = Guid.Empty;
+                details.ApplicationTypeId = Guid.Empty;
+
+                while (inheritData && containerId != Guid.Empty && containerId != Apis.Get<IGroups>().Root.ContainerId)
+                {
+                    var container = Apis.Get<IContainers>().Get(containerId, containerTypeId);
+
+                    //Once we start inheriting we go to the group home page (dont inherit metadata from site root)
+                    if (!container.HasErrors())
+                    {
+                        var context = Apis.Get<IUrl>().ParsePageContext(container.Url);
+
+                        if (context != null && container.ParentContainer != null)
+                        {
+                            // if the save point is at container level the content id is the container id
+                            details.ContentId = container.ContainerId;
+                            details.ContentTypeId = container.ContainerTypeId;
+
+                            details.ContainerId = container.ContainerId;
+                            details.ContainerTypeId = container.ContainerTypeId;
+
+                            details.PageName = context.PageName;
+
+                            inheritData = MergeMetaData(isContent, details, data);
+
+                            containerId = container.ParentContainer.ContainerId;
+                            containerTypeId = container.ParentContainer.ContainerTypeId;
+                        }
+                        else
+                        {
                             break;
+                        }
                     }
                     else
                     {
                         break;
                     }
                 }
-                else
-                {
-                    break;
-                }
             }
 
             return data;
+        }
+
+        private bool MergeMetaData(bool isContent, ContentDetails details, MetaData data)
+        {
+            var mergeData = GetCurrentMetaData(details);
+
+            if ((!isContent || _metaConfig.CanInheritTitle) && string.IsNullOrWhiteSpace(data.Title))
+            {
+                data.Title = mergeData.Title;
+            }
+
+            if ((!isContent || _metaConfig.CanInheritDesc) && string.IsNullOrWhiteSpace(data.Description))
+            {
+                data.Description = mergeData.Description;
+            }
+
+            if ((!isContent || _metaConfig.CanInheritKeywords) && string.IsNullOrWhiteSpace(data.Keywords))
+            {
+                data.Keywords = mergeData.Keywords;
+            }
+
+            if (!isContent || _metaConfig.CanInheritTags)
+            {
+                foreach (var key in mergeData.ExtendedMetaTags.Keys)
+                {
+                    if (!string.IsNullOrWhiteSpace(mergeData.ExtendedMetaTags[key]))
+                    {
+                        if (!data.ExtendedMetaTags.ContainsKey(key) || string.IsNullOrWhiteSpace(data.ExtendedMetaTags[key]))
+                        {
+                            if (data.ExtendedMetaTags.ContainsKey(key))
+                            {
+                                data.ExtendedMetaTags[key] = mergeData.ExtendedMetaTags[key];
+                            }
+                            else
+                            {
+                                data.ExtendedMetaTags.Add(key, mergeData.ExtendedMetaTags[key]);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return mergeData.InheritData;
         }
 
         private static string GetCacheKey(string contentName)
@@ -467,6 +531,11 @@ namespace FourRoads.VerintCommunity.MetaData.Logic
             return _metaConfig.ExtendedEntries.ToArray();
         }
 
+        public MetaDataConfiguration GetConfig()
+        {
+            return _metaConfig;
+        }
+
         public void SaveMetaDataConfiguration(string title, string description, string keywords, bool inherit,
             IDictionary extendedTags)
         {
@@ -482,6 +551,7 @@ namespace FourRoads.VerintCommunity.MetaData.Logic
                     {
                         InheritData = inherit,
                         ApplicationId = details.ApplicationId.GetValueOrDefault(Guid.Empty),
+                        ApplicationTypeId = details.ApplicationTypeId.GetValueOrDefault(Guid.Empty),
                         ContainerId = details.ContainerId.GetValueOrDefault(Guid.Empty),
                         ContainerTypeId = details.ContainerTypeId.GetValueOrDefault(Guid.Empty),
                         Title = title,
@@ -518,8 +588,10 @@ namespace FourRoads.VerintCommunity.MetaData.Logic
             group.PropertySubGroups.Add(subGroup);
 
             int order = 0;
-            subGroup.Properties.Add(new Property("Inherit", "Inherit From Parent", PropertyType.Bool, order++,
+
+            subGroup.Properties.Add(new Property("Inherit", "Inherit from parent application/groups", PropertyType.Bool, order++,
                 metaData.InheritData.ToString()));
+
             subGroup.Properties.Add(new Property("Title", "Title", PropertyType.String, order++, metaData.Title));
             subGroup.Properties.Add(new Property("Description", "Description", PropertyType.String, order++,
                 metaData.Description));

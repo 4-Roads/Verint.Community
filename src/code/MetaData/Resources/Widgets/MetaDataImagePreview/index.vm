@@ -1,0 +1,26 @@
+﻿#set ($user = $core_v2_user.Accessing)
+
+#set($isAdmin = false)
+#set($isAdmin = $core_v2_roleUsers.IsUserInRoles($user.Username,  $core_v2_utility.MakeList('Administrators')))
+
+#if (!$isAdmin)
+    $core_v2_widget.Hide()
+#end
+
+#set($url = false)
+#set($url = $frcommon_v1_metaData.GetBestImageUrlForCurrent())
+
+#if ($url)
+    #set ($mediaType = false)
+    #set ($mediaType = $core_v2_ui.GetMediaType($url, "%{ ViewType = 'View', OutputIsPersisted='False' }"))
+
+    <p> $core_v2_ui.GetMimeType($url)</p>
+    #if ($mediaType == 'Image')
+        $core_v2_ui.GetResizedImageHtml($url, 88, 88, "%{border='0',ResizeMethod = 'ZoomAndCrop'}")
+        <p><small>$url</small></p>
+    #else 
+        $core_v2_widget.Hide()
+    #end
+#else 
+    $core_v2_widget.Hide()
+#end
