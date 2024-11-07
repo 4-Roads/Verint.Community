@@ -230,21 +230,13 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
             var result = false;
             _usersService.RunAsUser(user.Username, () =>
             {
-                if (!EmailChanged(user))
+                string storedHashCode = user.ExtendedAttributes.Get(_eakey_emailVerifyCode)?.Value;
+
+                //Read the users profile, if matches then clear the user profile and set _eakey_emailVerified to current email
+                if (string.CompareOrdinal(storedHashCode, code.Hash(GetAccountSecureKey(user) , user.Id.Value)) == 0)
                 {
+                    SetEmailInExtendedAttributes(user);
                     result = true;
-                }
-                else
-                {
-                    string storedHashCode = user.ExtendedAttributes.Get(_eakey_emailVerifyCode)?.Value;
-
-
-                    //Read the users profile, if matches then clear the user profile and set _eakey_emailVerified to current email
-                    if (string.CompareOrdinal(storedHashCode, code.Hash(GetAccountSecureKey(user) , user.Id.Value)) == 0)
-                    {
-                        SetEmailInExtendedAttributes(user);
-                        result = true;
-                    }
                 }
             });
 
@@ -666,10 +658,12 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
             // is it a suitable time to redirect the user to the second auth page
             if (response.ContentType == "text/html" &&
                 !request.Path.StartsWith("/tinymce") &&
+                request.Url?.LocalPath != "/login" &&
                 request.Url?.LocalPath != "/logout" &&
                 request.Url?.LocalPath != "/mfa" &&
                 request.Url?.LocalPath != "/user/changepassword" &&
                 request.Url?.LocalPath != "/verifyemail" &&
+                request.Url?.LocalPath != "/user/consent" &&
                 string.Compare(httpRequest.HttpContext.Request.HttpMethod, "GET", StringComparison.OrdinalIgnoreCase) == 0 &&
                 //Is this a main page and not a callback etc 
                 (IsPageRequest(request) || IsSecuredFileStoreRequest(request)))
