@@ -7,7 +7,6 @@ using System.Text;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Security;
-using System.Windows.Media.Animation;
 using FourRoads.Common.Extensions;
 using FourRoads.Common.VerintCommunity.Components;
 using FourRoads.VerintCommunity.Mfa.Interfaces;
@@ -65,7 +64,8 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
         private string[] _requiredRoles;
         private ISocketMessage _socketMessenger;
         private SameSiteMode _sameSiteCookieMode;
-        
+        private Dictionary<string,bool> _safePages;
+
         public MfaLogic(IUsers usersService, IUrl urlService, IMfaDataProvider mfaDataProvider,
             IEncryptedCookieService encryptedCookieService,
             IPermissions permissions)
@@ -79,7 +79,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
 
         public void Initialize(bool enableEmailVerification, IVerifyEmailProvider emailProvider,
             ISocketMessage socketMessenger, DateTime emailValidationCutoffDate, PersitenceEnum isPersistent,
-            int persistentDuration, int emailVerificationExpiry, int[] requiredRoles, string sameSiteMode)
+            int persistentDuration, int emailVerificationExpiry, int[] requiredRoles, string sameSiteMode, string[] whitelistPages )
         {
             EmailValidationEnabled = enableEmailVerification;
             _emailProvider = emailProvider;
@@ -96,6 +96,20 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
             _persistentDuration = persistentDuration;
             _sameSiteCookieMode = (SameSiteMode)Enum.Parse(typeof(SameSiteMode), sameSiteMode, true);
 
+            _safePages = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var page in whitelistPages)
+                if (page.StartsWith("/"))
+                    _safePages.Add(page, true);
+                else
+                    _safePages.Add("/" + page, true);
+
+            _safePages.Add("/login", true);
+            _safePages.Add("/logout", true);
+            _safePages.Add("/mfa", true);
+            _safePages.Add("/user/changepassword", true);
+            _safePages.Add("/verifyemail", true);
+            _safePages.Add("/user/consent", true);
         }
 
         private void Events_BeforeUpdate(UserBeforeUpdateEventArgs e)
@@ -658,12 +672,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
             // is it a suitable time to redirect the user to the second auth page
             if (response.ContentType == "text/html" &&
                 !request.Path.StartsWith("/tinymce") &&
-                request.Url?.LocalPath != "/login" &&
-                request.Url?.LocalPath != "/logout" &&
-                request.Url?.LocalPath != "/mfa" &&
-                request.Url?.LocalPath != "/user/changepassword" &&
-                request.Url?.LocalPath != "/verifyemail" &&
-                request.Url?.LocalPath != "/user/consent" &&
+                !_safePages.ContainsKey(request.Url?.LocalPath ?? string.Empty) &&
                 string.Compare(httpRequest.HttpContext.Request.HttpMethod, "GET", StringComparison.OrdinalIgnoreCase) == 0 &&
                 //Is this a main page and not a callback etc 
                 (IsPageRequest(request) || IsSecuredFileStoreRequest(request)))

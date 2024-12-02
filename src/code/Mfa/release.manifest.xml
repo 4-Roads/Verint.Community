@@ -5,6 +5,7 @@
     <file name="FourRoads.Common.Sql.dll" />
     <file name="FourRoads.Common.TelligentCommunity.dll" />
     <file name="FourRoads.Common.Web.dll" />
+    <file name="FourRoads.Common.VerintCommunity.dll" />
     <file name="FourRoads.VerintCommunity.Installer.dll" />
     <file name="FourRoads.VerintCommunity.Mfa.dll" />
     <file name="Google.Authenticator.dll" />

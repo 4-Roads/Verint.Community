@@ -13,6 +13,7 @@ using FourRoads.VerintCommunity.Mfa.Logic;
 using FourRoads.VerintCommunity.Mfa.Model;
 using FourRoads.VerintCommunity.Mfa.Resources;
 using Telligent.DynamicConfiguration.Components;
+using Telligent.Evolution.Components;
 using Telligent.Evolution.Extensibility;
 using Telligent.Evolution.Extensibility.Api.Version1;
 using Telligent.Evolution.Extensibility.Urls.Version1;
@@ -41,10 +42,23 @@ namespace FourRoads.VerintCommunity.Mfa.Plugins
                 PersistenceDuration,
                 _configuration.GetInt("emailVerificationExpirePeriod").GetValueOrDefault(0),
                 RequiredMfaRoles,
-                _configuration.GetString("cookieSameSite") ?? nameof(SameSiteMode.Strict)
+                _configuration.GetString("cookieSameSite") ?? nameof(SameSiteMode.Lax),
+                _configuration.GetString("whiteListPages").Split([',',';','\n'],StringSplitOptions.RemoveEmptyEntries)
             );
         }
 
+        private string[] FromNavigation(string inputXml)
+        {
+            List<string> urls = new List<string>();
+            
+            var results = Injector.Get<ICustomNavigationService>().Deserialize(inputXml);
+
+            foreach(var result in results)
+            {
+                urls.Add(result.Url);
+            }
+            return urls.ToArray();
+        }
         public PersitenceEnum PersistenceType
         {
             get
@@ -183,7 +197,7 @@ namespace FourRoads.VerintCommunity.Mfa.Plugins
                     LabelResourceName = "CookieSameSite",
                     DescriptionResourceName = "CookieSameSiteDesc",
                     DataType = nameof(PropertyType.String),
-                    DefaultValue = "Strict"
+                    DefaultValue = nameof(SameSiteMode.Lax)
                 };
 
                 cookieSameSiteProperty.SelectableValues.Add(new PropertyValue
@@ -193,6 +207,20 @@ namespace FourRoads.VerintCommunity.Mfa.Plugins
                 cookieSameSiteProperty.SelectableValues.Add(new PropertyValue
                     { LabelResourceName = "CookieSameSiteNone", Value = nameof(SameSiteMode.None), OrderNumber = 3 });
                 mfaOptions.Properties.Add(cookieSameSiteProperty);
+
+
+                var whitelistPages = new Property
+                {
+                    Id = "whiteListPages",
+                    LabelResourceName = "WhiteListPages",
+                    DescriptionResourceName = "WhiteListPagesDesc",
+                    Template= "string",
+                    DataType = "string",
+                    DefaultValue = "",
+                    Options = new NameValueCollection { { "rows", "10"}, { "cols", "80" } }
+                };
+
+                mfaOptions.Properties.Add(whitelistPages);
 
                 mfaOptions.Properties.Add(new Property
                 {
@@ -269,6 +297,15 @@ namespace FourRoads.VerintCommunity.Mfa.Plugins
                 translation.Set("PersistentAuthentication", "Authentication Session (The same period as the logon session)");
                 translation.Set("PersistentDuration", "Persistence Duration");
                 translation.Set("PersistentDurationDesc", "Number of days that the MFA cookie remains persistent");
+
+                translation.Set("CookieSameSite", "MFA Cookie Same Site Setting");
+                translation.Set("CookieSameSiteDesc", "Specifies how the MFA cookie is handled, when set to strict the cookie is only accepted when it is sent from this domain");
+                translation.Set("CookieSameSiteStrict", "Strict");
+                translation.Set("CookieSameSiteLax", "Lax");
+                translation.Set("CookieSameSiteNone", "None");
+
+                translation.Set("WhiteListPages", "Whitelist pages");
+                translation.Set("WhiteListPagesDesc", "A list of pages that do not have MFA applied to them, for example terms and conditions or privacy, seperated by , ; or carriage retyurn");
 
                 return new[] {translation};
             }
