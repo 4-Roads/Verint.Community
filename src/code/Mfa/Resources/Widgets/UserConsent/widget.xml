@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<scriptedContentFragments>
+  <scriptedContentFragment name="${resource:Consent_Title}" version="13.0.0.29206" description="${resource:Consent_Description}" instanceIdentifier="a80385832b0243b2b3665471099d6ce2" theme="" isCacheable="false" varyCacheByUser="false" showHeaderByDefault="false" cssClass="user-consent" lastModified="2024-12-13 11:52:03Z" provider="3bd55b782e624b77b6e730f6bce17de2">
+    <contentScript language="Velocity"><![CDATA[#if ($core_v2_page.Url.Contains('accepttos=true'))
+    $core_v2_widget.ExecuteFile('accepterms.vm')
+#end
+
+#set($user = false)
+#set($user = $core_v2_user.Accessing)
+
+#if (!$user || !$core_v2_user.IsRegistered($user.Id) || !$user.RequiresTermsOfServiceAcceptance)
+    #if ($core_v2_urls.Current == 'UserConsent')
+        $core_v2_page.Redirect($core_v2_urls.Home(false))
+    #else
+        $core_v2_widget.Hide()
+    #end
+#end
+
+
+
+<p style="margin-bottom: 20px;">
+    $core_v2_language.GetResource('Instructions')
+</p>
+
+<fieldset class="field-list">
+	<ul class="field-list">
+
+    	<li class="field-item required">
+    		<span class="field-item-input">
+    			<input type="checkbox" name="$core_v2_widget.UniqueId('tos')" id="$core_v2_widget.UniqueId('tos')" />
+    			<label for="$core_v2_widget.UniqueId('tos')">
+    			    #set($termsOfServiceUrl = $core_v2_urls.TermsOfService())
+    			    #set($privacyPolicyUrl = $core_v2_urls.PrivacyPolicy())
+    			    #if($privacyPolicyUrl)
+        		        $core_v2_language.FormatString($core_v2_language.GetResource('TermsOfServiceAndPrivacyPolicy'), $core_v2_encoding.HtmlAttributeEncode($termsOfServiceUrl), $core_v2_encoding.HtmlAttributeEncode($privacyPolicyUrl))
+                    #else
+                        $core_v2_language.FormatString($core_v2_language.GetResource('TermsOfService'), $core_v2_encoding.HtmlAttributeEncode($termsOfServiceUrl))
+                    #end  
+                </label>
+    		</span>
+    		<span class="field-item-validation" style="display: none;"></span>
+    	</li>
+
+        <li class="field-item submit">
+            <span class="field-item-input">
+                <a href="#" id="$core_v2_widget.UniqueId('submit')" class="internal-link submit button disabled" disabled="disabled">$core_v2_language.GetResource('Consent')</a>
+                <a href="$core_v2_encoding.HtmlAttributeEncode($core_v2_urls.LogOut(false))" class="internal-link logout">$core_v2_language.GetResource('LogOut')</a>
+		    </span>
+			<span class="processing" style="visibility: hidden;"><span class="ui-loading" data-width="45" data-height="15"></span></span>
+        </li>
+
+    </ul>
+</fieldset>
+
+#set($returnUrl = false)
+#set($returnUrl = $core_v2_page.ReturnUrl)
+#if (!$returnUrl)
+    #set($returnUrl = $core_v2_urls.Home(false))
+#end
+
+<script type="text/javascript">
+jQuery(function() {
+    var submit = jQuery('#$core_v2_widget.UniqueId('submit')');
+    var tos = jQuery('#$core_v2_widget.UniqueId('tos')');
+
+    var toggleDisable = function(element, enableCondition) {
+    	if (enableCondition) {
+    		element.removeClass('disabled');
+    		element.attr("disabled", false);
+    	} else {
+    		element.addClass('disabled');
+    		element.attr("disabled", true);	
+    	}
+    }
+
+    tos.click(function() {
+        toggleDisable(submit, tos.is(':checked'))
+    });
+    
+	if(tos.length > 0) {
+		submit.evolutionValidation('addField', '#$core_v2_widget.UniqueId('tos')', {
+			required: true,
+			message: { required: '$core_v2_encoding.JavascriptEncode($core_v2_language.GetResource('ConsentRequired'))' }
+		}, tos.closest('.field-item').find('.field-item-validation'), null);
+	}
+	
+    submit
+		.evolutionValidation({
+			onValidated: function(isValid, buttonClicked, c) {
+			},
+			onSuccessfulClick: function(e) {
+				e.preventDefault();
+				submit.addClass('disabled');
+				jQuery('.processing', submit.parent()).css("visibility", "visible");
+
+				var data = {
+				    UserId: $user.Id
+				};
+
+				if (tos.length > 0) {
+				    data.AcceptTermsOfService = tos.is(':checked');
+				}
+                
+                if(data.AcceptTermsOfService)
+                    window.location.href = window.location.href + "&accepttos=" + data.AcceptTermsOfService;
+                else{
+				            jQuery.telligent.evolution.notifications.show('$core_v2_encoding.JavascriptEncode($core_v2_language.GetResource('ConsentRequired'))', { type: 'error' });
+				            toggleDisable(submit, !isSuccess);
+				            submit.removeClass('disabled');
+				        }
+                
+
+			}});
+})
+</script>]]></contentScript>
+    <headerScript language="Unknown" />
+    <languageResources><![CDATA[<language key="en-us">
+  <resource name="Consent">Acknowledge Agreement</resource>
+  <resource name="Consent_Description">Displays updated consent agreements to be accepted by users.</resource>
+  <resource name="Consent_Title">4 Roads - MFA User Consent</resource>
+  <resource name="ConsentRequired">You must agree in order to continue using the site.</resource>
+  <resource name="ConsentSuccessful">Your agreement has been recorded.</resource>
+  <resource name="Instructions">The terms of service have been updated since you last visited this community. Please review the policy changes below and acknowledge your agreement to continue.</resource>
+  <resource name="LogOut">Sign out</resource>
+  <resource name="TermsOfService">I agree to the &lt;a href="{0}" target="_blank"&gt;Terms of Service&lt;/a&gt;.</resource>
+  <resource name="TermsOfServiceAndPrivacyPolicy">I agree to the Terms of Service and Privacy Policy.</resource>
+</language>]]></languageResources>
+    <additionalCssScript language="Unknown" />
+    <restScopes>
+      <scope id="users.users.modify" />
+    </restScopes>
+  </scriptedContentFragment>
+</scriptedContentFragments>

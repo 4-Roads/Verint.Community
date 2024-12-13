@@ -1,0 +1,4 @@
+$core_v2_page.SetContentType('application/json')
+#set($flag = true)
+#set($userResponse = $core_v2_user.Update("%{ AcceptTermsOfService = $flag,Id = $core_v2_user.Accessing.Id}"))
+$core_v2_page.Redirect($core_v2_urls.Home(false))

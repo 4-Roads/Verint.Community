@@ -10,6 +10,7 @@
     <RootNamespace>FourRoads.VerintCommunity.Mfa</RootNamespace>
     <AssemblyName>FourRoads.VerintCommunity.Mfa</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <LangVersion>12.0</LangVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -130,6 +131,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Widgets\AdminDisableMfa\validateemail.vm" />
+    <EmbeddedResource Include="Resources\Widgets\UserConsent\accepterms.vm" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Widgets\SyncMfa\mfa.js" />
@@ -180,6 +182,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Emails\VerifyEmail\email.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Widgets\UserConsent\widget.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

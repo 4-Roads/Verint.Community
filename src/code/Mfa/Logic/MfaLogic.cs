@@ -110,6 +110,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
             _safePages.Add("/user/changepassword", true);
             _safePages.Add("/verifyemail", true);
             _safePages.Add("/user/consent", true);
+            _safePages.Add("/msgs", true);
         }
 
         private void Events_BeforeUpdate(UserBeforeUpdateEventArgs e)
