@@ -65,7 +65,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
         private ISocketMessage _socketMessenger;
         private SameSiteMode _sameSiteCookieMode;
         private Dictionary<string,bool> _safePages;
-
+        
         public MfaLogic(IUsers usersService, IUrl urlService, IMfaDataProvider mfaDataProvider,
             IEncryptedCookieService encryptedCookieService,
             IPermissions permissions)
@@ -111,6 +111,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
             _safePages.Add("/verifyemail", true);
             _safePages.Add("/user/consent", true);
             _safePages.Add("/msgs", true);
+            _safePages.Add("/register", true);
         }
 
         private void Events_BeforeUpdate(UserBeforeUpdateEventArgs e)
@@ -125,6 +126,36 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
         }
 
         public bool EmailValidationEnabled { get; private set; }
+
+        /// <summary>
+        /// Gets the current MFA state, if it has passed validation or not
+        /// </summary>
+        public bool CurrentState
+        {
+            get
+            {
+                var user = _usersService.AccessingUser;
+
+                Debug.Assert(user.Id != null, "user.Id != null");
+
+                HttpCookie jwtCookie = HttpContext.Current.Request.Cookies[GetMfaCookieName()];
+
+                return CheckJwtCookie(jwtCookie , user).HasValue;
+             }
+        }
+
+        private PayLoad? CheckJwtCookie(HttpCookie jwtCookie, User user)
+        {
+            PayLoad? payload = null;
+
+            if (jwtCookie != null)
+                payload = GetJwtPayload(jwtCookie.Value);
+
+            if (jwtCookie == null || ValidateJwtToken(user.Id.Value, payload) == false)
+                return null;
+
+            return payload;
+        }
 
         /// <summary>
         ///     Intercept requests and trap when a user has logged in
@@ -152,11 +183,10 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
             var mfaEnabled = TwoFactorCheckAndSetState(user) || UserRequiresMfa(user);
             if (mfaEnabled)
             {
-                PayLoad? payload = null;
                 var jwtCookie = request.HttpContext.Request.Cookies[GetMfaCookieName()];
-                if (jwtCookie != null) payload = GetJwtPayload(jwtCookie.Value);
+                var payload = CheckJwtCookie(jwtCookie, user);
 
-                if (jwtCookie == null || ValidateJwtToken(user.Id.Value, payload) == false)
+                if (!payload.HasValue)
                 {
                     var returnUrl = _urlService.Encode(request.HttpContext.Request.RawUrl);
                     returnUrl = $"?ReturnUrl={returnUrl}";
@@ -548,6 +578,8 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
         /// <returns></returns>
         private bool IsUnprotectedRequest(HttpRequestBase request)
         {
+            if (_usersService.AccessingUser.Username == _usersService.AnonymousUserName) return true;
+
             if (IsImpersonator(request)) return true;
 
             if (IsOauthRequest(request)) return true;

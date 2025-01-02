@@ -55,7 +55,7 @@
       },
       urls : {
           validate: '$core_v2_encoding.JavascriptEncode($core_v2_widget.GetExecutedFileUrl('validate.vm'))',
-          returnUrl: '$core_v2_encoding.JavascriptEncode($core_v2_page.GetQueryStringValue("returnUrl"))'
+          returnUrl: '$!core_v2_encoding.JavascriptEncode($!core_v2_page.GetQueryStringValue("returnUrl"))'
       },
       resources : {
          requiredField: '$core_v2_encoding.JavascriptEncode($core_v2_language.GetResource('Required'))',
@@ -64,6 +64,15 @@
           });
       });
   </script>
+#end
+
+
+#if (!$frcommon_v1_Mfa.MfaRequiresSetup() && $frcommon_v1_Mfa.MfaCurrentState && !$core_v2_widget.IsInWidgetPreviewMode)
+    #if ($core_v2_page.ReturnUrl)
+      $core_v2_page.Redirect( $core_v2_page.ReturnUrl)
+    #else
+      $core_v2_page.Redirect("/")
+    #end
 #end
 
 			]]></contentScript>

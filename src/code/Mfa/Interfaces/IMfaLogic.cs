@@ -31,5 +31,6 @@ namespace FourRoads.VerintCommunity.Mfa.Interfaces
         bool EmailValidationRequired(User user);
         string VerifiedEmail(User user);
         bool VerifyEmail(User user);
+        bool CurrentState { get;}
     }
 }

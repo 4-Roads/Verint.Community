@@ -60,6 +60,15 @@ namespace FourRoads.VerintCommunity.Mfa.Plugins.WidgetApi
             return _mfaLogic.MfaRequiresSetup(user.Id.Value);
         }
 
+        [Documentation("Returns true if MFA is enabled and has passed validation")]
+        public bool MfaCurrentState
+        {
+            get
+            {
+                return _mfaLogic.CurrentState;
+            }
+        }
+
         [Documentation("Returns if MFA is enabled for the current user")]
         public bool TwoFactorEnabled()
         {
