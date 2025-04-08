@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <scriptedContentFragments>
   <scriptedContentFragment name="${resource:Consent_Title}" version="13.0.0.29206" description="${resource:Consent_Description}" instanceIdentifier="a80385832b0243b2b3665471099d6ce2" theme="" isCacheable="false" varyCacheByUser="false" showHeaderByDefault="false" cssClass="user-consent" lastModified="2024-12-13 11:52:03Z" provider="3bd55b782e624b77b6e730f6bce17de2">
-    <contentScript language="Velocity"><![CDATA[#if ($core_v2_page.Url.Contains('accepttos=true'))
+    <contentScript language="Velocity">
+      <![CDATA[#if ($core_v2_page.Url.Contains('accepttos=true'))
     $core_v2_widget.ExecuteFile('accepterms.vm')
 #end
 
@@ -101,9 +102,14 @@ jQuery(function() {
 				    data.AcceptTermsOfService = tos.is(':checked');
 				}
                 
-                if(data.AcceptTermsOfService)
-                    window.location.href = window.location.href + "&accepttos=" + data.AcceptTermsOfService;
-                else{
+                if(data.AcceptTermsOfService) {
+                    debugger;
+                    var url = new URL(window.location.href);
+                    url.searchParams.set('accepttos', data.AcceptTermsOfService);
+                    window.location.href = url.toString();
+                }
+                else
+                {
 				            jQuery.telligent.evolution.notifications.show('$core_v2_encoding.JavascriptEncode($core_v2_language.GetResource('ConsentRequired'))', { type: 'error' });
 				            toggleDisable(submit, !isSuccess);
 				            submit.removeClass('disabled');
@@ -112,9 +118,11 @@ jQuery(function() {
 
 			}});
 })
-</script>]]></contentScript>
+</script>]]>
+    </contentScript>
     <headerScript language="Unknown" />
-    <languageResources><![CDATA[<language key="en-us">
+    <languageResources>
+      <![CDATA[<language key="en-us">
   <resource name="Consent">Acknowledge Agreement</resource>
   <resource name="Consent_Description">Displays updated consent agreements to be accepted by users.</resource>
   <resource name="Consent_Title">4 Roads - MFA User Consent</resource>
@@ -124,7 +132,8 @@ jQuery(function() {
   <resource name="LogOut">Sign out</resource>
   <resource name="TermsOfService">I agree to the &lt;a href="{0}" target="_blank"&gt;Terms of Service&lt;/a&gt;.</resource>
   <resource name="TermsOfServiceAndPrivacyPolicy">I agree to the Terms of Service and Privacy Policy.</resource>
-</language>]]></languageResources>
+</language>]]>
+    </languageResources>
     <additionalCssScript language="Unknown" />
     <restScopes>
       <scope id="users.users.modify" />

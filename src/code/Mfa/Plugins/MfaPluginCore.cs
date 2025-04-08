@@ -34,26 +34,27 @@ namespace FourRoads.VerintCommunity.Mfa.Plugins
 
         public void Initialize()
         {
-            Injector.Get<IMfaLogic>().Initialize(_configuration.GetBool("emailVerification").Value ,
-                PluginManager.Get<VerifyEmailPlugin>().FirstOrDefault() , 
+            Injector.Get<IMfaLogic>().Initialize(_configuration.GetBool("emailVerification").Value,
+                PluginManager.Get<VerifyEmailPlugin>().FirstOrDefault(),
                 PluginManager.Get<EmailVerifiedSocketMessage>().FirstOrDefault(),
                 _configuration.GetDateTime("emailCutoffDate").GetValueOrDefault(DateTime.MinValue),
                 PersistenceType,
                 PersistenceDuration,
+                TimeTolerance,
                 _configuration.GetInt("emailVerificationExpirePeriod").GetValueOrDefault(0),
                 RequiredMfaRoles,
                 _configuration.GetString("cookieSameSite") ?? nameof(SameSiteMode.Lax),
-                _configuration.GetString("whiteListPages").Split([',',';','\n'],StringSplitOptions.RemoveEmptyEntries)
+                _configuration.GetString("whiteListPages").Split([',', ';', '\n'], StringSplitOptions.RemoveEmptyEntries)
             );
         }
 
         private string[] FromNavigation(string inputXml)
         {
             List<string> urls = new List<string>();
-            
+
             var results = Injector.Get<ICustomNavigationService>().Deserialize(inputXml);
 
-            foreach(var result in results)
+            foreach (var result in results)
             {
                 urls.Add(result.Url);
             }
@@ -63,30 +64,33 @@ namespace FourRoads.VerintCommunity.Mfa.Plugins
         {
             get
             {
-                  string persistenceType =_configuration.GetString("isPersistent") ?? nameof(PersitenceEnum.Authentication);
+                string persistenceType = _configuration.GetString("isPersistent") ?? nameof(PersitenceEnum.Authentication);
 
-                  PersitenceEnum enumPersistenceType;
+                PersitenceEnum enumPersistenceType;
 
-                  if (!Enum.TryParse(persistenceType, true, out enumPersistenceType))
-                  {
-                      switch (persistenceType.ToLower())
-                      {
-                          case "true":
-                              enumPersistenceType = PersitenceEnum.Authentication;
-                              break;
-                          default:
-                              enumPersistenceType = PersitenceEnum.Off;
-                              break;
-                      }
-                  }
+                if (!Enum.TryParse(persistenceType, true, out enumPersistenceType))
+                {
+                    switch (persistenceType.ToLower())
+                    {
+                        case "true":
+                            enumPersistenceType = PersitenceEnum.Authentication;
+                            break;
+                        default:
+                            enumPersistenceType = PersitenceEnum.Off;
+                            break;
+                    }
+                }
 
-                  return enumPersistenceType;
+                return enumPersistenceType;
 
             }
         }
-     
+
 
         public int PersistenceDuration => _configuration.GetInt("persistentDuration").GetValueOrDefault(1);
+
+        public int TimeTolerance => _configuration.GetInt("timeTolerance").GetValueOrDefault(15);
+
 
         private int[] RequiredMfaRoles
         {
@@ -116,14 +120,14 @@ namespace FourRoads.VerintCommunity.Mfa.Plugins
         public string Description => "Plugin for adding MFA using the google authenticator";
         public void FilterRequest(IHttpRequest request)
         {
-            if (request?.HttpContext == null) 
+            if (request?.HttpContext == null)
                 return;
 
             try
             {
                 if (!(request.HttpContext.Request.Url is null))
                 {
-                   Injector.Get<IMfaLogic>().FilterRequest(request);
+                    Injector.Get<IMfaLogic>().FilterRequest(request);
                 }
             }
             catch
@@ -163,7 +167,7 @@ namespace FourRoads.VerintCommunity.Mfa.Plugins
         {
             get
             {
-                PropertyGroup mfaOptions = new PropertyGroup {LabelResourceName = "MFAOptions" , Id="options"};
+                PropertyGroup mfaOptions = new PropertyGroup { LabelResourceName = "MFAOptions", Id = "options" };
 
                 var mfaProperty = new Property
                 {
@@ -174,7 +178,7 @@ namespace FourRoads.VerintCommunity.Mfa.Plugins
                     DefaultValue = "true"
                 };
 
-                mfaProperty.SelectableValues.Add(new PropertyValue { LabelResourceName = "PersistentOff", Value = nameof(PersitenceEnum.Off), OrderNumber = 0});
+                mfaProperty.SelectableValues.Add(new PropertyValue { LabelResourceName = "PersistentOff", Value = nameof(PersitenceEnum.Off), OrderNumber = 0 });
                 mfaProperty.SelectableValues.Add(new PropertyValue { LabelResourceName = "PersistentUserDefined", Value = nameof(PersitenceEnum.UserDefined), OrderNumber = 0 });
                 mfaProperty.SelectableValues.Add(new PropertyValue { LabelResourceName = "PersistentAuthentication", Value = nameof(PersitenceEnum.Authentication), OrderNumber = 0 });
 
@@ -191,6 +195,17 @@ namespace FourRoads.VerintCommunity.Mfa.Plugins
 
                 mfaOptions.Properties.Add(persistentDurationProperty);
 
+                var timeToleranceProperty = new Property
+                {
+                    Id = "timeTolerance",
+                    LabelResourceName = "TimeTolerance",
+                    DescriptionResourceName = "TimeToleranceDesc",
+                    DataType = nameof(PropertyType.Int),
+                    DefaultValue = "15",
+                };
+
+                mfaOptions.Properties.Add(timeToleranceProperty);
+
                 var cookieSameSiteProperty = new Property
                 {
                     Id = "cookieSameSite",
@@ -201,11 +216,11 @@ namespace FourRoads.VerintCommunity.Mfa.Plugins
                 };
 
                 cookieSameSiteProperty.SelectableValues.Add(new PropertyValue
-                    { LabelResourceName = "CookieSameSiteStrict", Value = nameof(SameSiteMode.Strict), OrderNumber = 1 });
+                { LabelResourceName = "CookieSameSiteStrict", Value = nameof(SameSiteMode.Strict), OrderNumber = 1 });
                 cookieSameSiteProperty.SelectableValues.Add(new PropertyValue
-                    { LabelResourceName = "CookieSameSiteLax", Value = nameof(SameSiteMode.Lax), OrderNumber = 2 });
+                { LabelResourceName = "CookieSameSiteLax", Value = nameof(SameSiteMode.Lax), OrderNumber = 2 });
                 cookieSameSiteProperty.SelectableValues.Add(new PropertyValue
-                    { LabelResourceName = "CookieSameSiteNone", Value = nameof(SameSiteMode.None), OrderNumber = 3 });
+                { LabelResourceName = "CookieSameSiteNone", Value = nameof(SameSiteMode.None), OrderNumber = 3 });
                 mfaOptions.Properties.Add(cookieSameSiteProperty);
 
 
@@ -214,10 +229,10 @@ namespace FourRoads.VerintCommunity.Mfa.Plugins
                     Id = "whiteListPages",
                     LabelResourceName = "WhiteListPages",
                     DescriptionResourceName = "WhiteListPagesDesc",
-                    Template= "string",
+                    Template = "string",
                     DataType = "string",
                     DefaultValue = "",
-                    Options = new NameValueCollection { { "rows", "10"}, { "cols", "80" } }
+                    Options = new NameValueCollection { { "rows", "10" }, { "cols", "80" } }
                 };
 
                 mfaOptions.Properties.Add(whitelistPages);
@@ -297,6 +312,8 @@ namespace FourRoads.VerintCommunity.Mfa.Plugins
                 translation.Set("PersistentAuthentication", "Authentication Session (The same period as the logon session)");
                 translation.Set("PersistentDuration", "Persistence Duration");
                 translation.Set("PersistentDurationDesc", "Number of days that the MFA cookie remains persistent");
+                translation.Set("TimeTolerance", "Time Tolerance");
+                translation.Set("TimeToleranceDesc", "Number of seconds tolerance to allow between servers when checking code");
 
                 translation.Set("CookieSameSite", "MFA Cookie Same Site Setting");
                 translation.Set("CookieSameSiteDesc", "Specifies how the MFA cookie is handled, when set to strict the cookie is only accepted when it is sent from this domain");
@@ -307,7 +324,7 @@ namespace FourRoads.VerintCommunity.Mfa.Plugins
                 translation.Set("WhiteListPages", "Whitelist pages");
                 translation.Set("WhiteListPagesDesc", "A list of pages that do not have MFA applied to them, for example terms and conditions or privacy, seperated by , ; or carriage retyurn");
 
-                return new[] {translation};
+                return new[] { translation };
             }
         }
     }

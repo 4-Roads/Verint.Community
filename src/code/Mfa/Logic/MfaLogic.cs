@@ -61,6 +61,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
         private PersitenceEnum _isPersistent;
         private byte[] _jwtSecret;
         private int _persistentDuration = 1;
+        private int _timeTolerance = 15;
         private string[] _requiredRoles;
         private ISocketMessage _socketMessenger;
         private SameSiteMode _sameSiteCookieMode;
@@ -79,7 +80,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
 
         public void Initialize(bool enableEmailVerification, IVerifyEmailProvider emailProvider,
             ISocketMessage socketMessenger, DateTime emailValidationCutoffDate, PersitenceEnum isPersistent,
-            int persistentDuration, int emailVerificationExpiry, int[] requiredRoles, string sameSiteMode, string[] whitelistPages )
+            int persistentDuration, int timeTolerance, int emailVerificationExpiry, int[] requiredRoles, string sameSiteMode, string[] whitelistPages )
         {
             EmailValidationEnabled = enableEmailVerification;
             _emailProvider = emailProvider;
@@ -94,24 +95,31 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
             _emailVerificationExpiry = emailVerificationExpiry;
             _requiredRoles = requiredRoles?.Select(rid => Apis.Get<IRoles>().Get(rid).Name).ToArray();
             _persistentDuration = persistentDuration;
+            _timeTolerance = timeTolerance;
             _sameSiteCookieMode = (SameSiteMode)Enum.Parse(typeof(SameSiteMode), sameSiteMode, true);
 
             _safePages = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
 
             foreach (var page in whitelistPages)
+            {
                 if (page.StartsWith("/"))
+                {
                     _safePages.Add(page, true);
+                }
                 else
+                {
                     _safePages.Add("/" + page, true);
+                }
+            }
 
-            _safePages.Add("/login", true);
-            _safePages.Add("/logout", true);
-            _safePages.Add("/mfa", true);
-            _safePages.Add("/user/changepassword", true);
-            _safePages.Add("/verifyemail", true);
-            _safePages.Add("/user/consent", true);
-            _safePages.Add("/msgs", true);
-            _safePages.Add("/register", true);
+            string[] baselineSafe  = { "/login", "/logout", "/mfa", "/user/changepassword" , "/verifyemail", "/user/consent" , "/msgs" , "/register" };
+            foreach (var page in baselineSafe)
+            {
+                if (!_safePages.ContainsKey(page))
+                {
+                    _safePages.Add(page, true);
+                }
+            }
         }
 
         private void Events_BeforeUpdate(UserBeforeUpdateEventArgs e)
@@ -409,7 +417,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
 
             var tfa = new FourRoadsTwoFactorAuthenticator();
 
-            if (!tfa.ValidateTwoFactorPIN(GetAccountSecureKey(user), code, new TimeSpan(0,0,15)))
+            if (!tfa.ValidateTwoFactorPIN(GetAccountSecureKey(user), code, new TimeSpan(0,0, _timeTolerance)))
                 return false;
 
             SetTwoFactorState(user, TwoFactorState.Passed, persist);
