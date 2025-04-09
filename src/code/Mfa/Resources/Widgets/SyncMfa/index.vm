@@ -1,3 +1,9 @@
+$core_v2_page.AddLink('stylesheet', $core_v2_widget.GetExecutedFileUrl('style.less'), "%{ Position = 'AfterTheme' }")
+
+#set($manualcodeValue = $core_v2_widget.UniqueId('manualcodeValue'))
+#set($manualcodeCopied = $core_v2_widget.UniqueId('manualcodeCopied'))
+#set($manualcodeIcon = $core_v2_widget.UniqueId('manualcodeIcon'))
+
 #set($validateInput = $core_v2_widget.UniqueId('validateInput'))
 #set($submit = $core_v2_widget.UniqueId('submit'))
 #set($disable = $core_v2_widget.UniqueId('disable'))
@@ -16,40 +22,109 @@
    #set($onMfaPage = true)
 #end
 
+## todo - remove
+###set($requiredSetup = true)
 
 #if (!$twoFactorEnabled || $requiredSetup)
     #set($twoFactor = $frcommon_v1_Mfa.GenerateSetupInfo())
     #if ($frcommon_v1_Mfa.CurrentUserRequiresMfa())
-        <p class="two-factors-required">$core_v2_language.GetResource('TwoFactorReqiured')</p>
+        <div class="two-factors-required">$core_v2_language.GetResource('TwoFactorRequired')</div>
+    #else         
+        <div class="two-factors-summary">$core_v2_language.GetResource('TwoFactorSummary')</div>
     #end
     <div id="$core_v2_encoding.HtmlAttributeEncode($configure)" >
-        <p>$core_v2_language.GetResource('Introduction')</p>
-        <div><img src="$core_v2_encoding.HtmlAttributeEncode($twoFactor.QrCodeImageUrl)" /></div>
-        <div><label>Manual Code&nbsp;:&nbsp;</label>$twoFactor.ManualEntrySetupCode</div>
-
-        <div class="form">
-            <p>$core_v2_language.GetResource('Complete_Setup')</p>
-            <fieldset>
-                <ul class="field-list">
-                  <li class="field-item display-name">
-                    <label for="$core_v2_encoding.HtmlAttributeEncode($displayNameId)">$core_v2_language.GetResource('VerifyCode')</label>
-                    <span class="field-item-input"><input autocomplete="off" type="text" size="30" maxlength="254"  id="$core_v2_encoding.HtmlAttributeEncode($validateInput)" name="$core_v2_encoding.HtmlAttributeEncode($validateInput)" /></span>
-                    <span class="field-item-validation" style="display: none;">$core_v2_language.GetResource('InvalidCode')</span>
-                  </li>
-                  <li class="field-item">
-                      <a class="button" id="$core_v2_encoding.HtmlAttributeEncode($submit)" href="javascript:void(0)">$core_v2_language.GetResource('VerifyAndEnable')</a>
-                  </li>
-                </ul> 
-             </fieldset>   
+        
+        <div class="mfa-panel">
+          <div class="mfa-task-seq">1</div>
+          <div class="mfa-task">
+            <div class="mfa-title">
+              $core_v2_language.GetResource('DownloadApp')
+            </div>
+            <ul class="app-list">
+              <li>
+                <a href="$core_v2_encoding.HtmlAttributeEncode($core_v2_language.GetResource('GoogleAuthenticatorEndPoint'))">
+                  <div class="app-item">
+                    <div class="avatar">
+                      <img src='$core_v2_encoding.HtmlAttributeEncode($core_v2_widget.GetFileUrl("google.png"))' target="_blank" alt="$core_v2_language.GetResource('GoogleAuthenticator')"/>
+                    </div>
+                    $core_v2_language.GetResource('GoogleAuthenticator')
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="$core_v2_encoding.HtmlAttributeEncode($core_v2_language.GetResource('MicrosoftAuthenticatorEndPoint'))">
+                  <div class="app-item">
+                    <div class="avatar">
+                      <img src='$core_v2_encoding.HtmlAttributeEncode($core_v2_widget.GetFileUrl("microsoft.png"))' target="_blank" alt="$core_v2_language.GetResource('MicrosoftAuthenticator')"/>
+                    </div>
+                    $core_v2_language.GetResource('MicrosoftAuthenticator')
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
-    </div> ##Can't disable mfa from the mga configuration page 
+
+        <div class="mfa-panel">
+          <div class="mfa-task-seq">2</div>
+          <div class="mfa-task">
+            <div class="mfa-title">
+              $core_v2_language.GetResource('ScanCode')
+            </div>
+            <div class="scancode-wrapper">
+              <div class="scancode">
+                <img src="$core_v2_encoding.HtmlAttributeEncode($twoFactor.QrCodeImageUrl)" />
+              </div>
+              <div class="manualcode">
+                <div class="prompt">
+                  $core_v2_language.GetResource('CopyPaste')
+                </div>
+                <div class="code">
+                  <div class="setup-code" id="$core_v2_encoding.HtmlAttributeEncode($manualcodeValue)">$twoFactor.ManualEntrySetupCode</div>
+                  <img id="$core_v2_encoding.HtmlAttributeEncode($manualcodeIcon)" src='$core_v2_encoding.HtmlAttributeEncode($core_v2_widget.GetFileUrl("copypaste.svg"))' alt="$core_v2_language.GetResource('ScanCode')"/>
+                </div>
+                <div class="manual-code-copied">
+                  <span id="$core_v2_encoding.HtmlAttributeEncode($manualcodeCopied)" style="display: none;">
+                    $core_v2_language.GetResource('Copied')
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mfa-panel">
+          <div class="mfa-task-seq">3</div>
+          <div class="mfa-task">
+            <div class="mfa-title">
+              $core_v2_language.GetResource('ConfirmCode')
+            </div>
+            <div class="form">
+                <fieldset>
+                    <ul class="field-list confirm-code">
+                      <li class="field-item">
+                        <span class="field-item-input">
+                        <input autocomplete="off" type="text" size="30" maxlength="254" id="$core_v2_encoding.HtmlAttributeEncode($validateInput)" placeholder="$core_v2_language.GetResource('VerifyCode')" name="$core_v2_encoding.HtmlAttributeEncode($validateInput)" />
+                        </span>
+                        <span class="field-item-validation" style="display: none;">$core_v2_language.GetResource('InvalidCode')</span>
+                      </li>
+                      <li class="field-item">
+                          <a class="button btn" id="$core_v2_encoding.HtmlAttributeEncode($submit)" href="javascript:void(0)">$core_v2_language.GetResource('Confirm')</a>
+                      </li>
+                    </ul> 
+                </fieldset>   
+            </div>
+          </div>
+        </div>
+    </div> 
+    ##Can't disable mfa from the mfa configuration page 
 #elseif (!$onMfaPage) 
     #set($codesStatus = $frcommon_v1_Mfa.GetOneTimeCodesStatus($core_v2_user.Accessing.Id))
     <div class="form">
         <fieldset>
             <ul class="field-list">
                 <li class="field-item">  
-                    <h3 class="warning">$core_v2_language.GetResource('TwoFactorEnabled')</h3>
+                    <h3 class="mfa-enabled">$core_v2_language.GetResource('TwoFactorEnabled')</h3>
                     <span class="field-item-description">$core_v2_language.GetResource('Disable_Desc')</span>
                     <a class="button" id="$core_v2_encoding.HtmlAttributeEncode($disable)" href="javascript:void(0)">$core_v2_language.GetResource('DisableButton')</a>
                 </li>
@@ -91,6 +166,9 @@
       jQuery(function(){
          jQuery.fourroads.widgets.mfa.register({
                selectors : {
+                  manualcodeValue: '#$core_v2_encoding.JavascriptEncode($manualcodeValue)',
+                  manualcodeCopied: '#$core_v2_encoding.JavascriptEncode($manualcodeCopied)',
+                  manualcodeIcon: '#$core_v2_encoding.JavascriptEncode($manualcodeIcon)',
                   validateInput: '#$core_v2_encoding.JavascriptEncode($validateInput)',
                   submit: '#$core_v2_encoding.JavascriptEncode($submit)',
                   disable: '#$core_v2_encoding.JavascriptEncode($disable)',

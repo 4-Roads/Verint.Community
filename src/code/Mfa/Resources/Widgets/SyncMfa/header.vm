@@ -1,0 +1,7 @@
+<div class="content">
+    <div class="avatar">
+        <img src='$core_v2_encoding.HtmlAttributeEncode($core_v2_widget.GetFileUrl("lock.svg"))' alt=""/>
+    </div>
+
+    $core_v2_widget.ApplyTokens($core_v2_widget.GetStringValue('fragmentHeader', '${resource:Mfa_Header}'))
+</div>

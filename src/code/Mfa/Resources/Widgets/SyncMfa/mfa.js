@@ -41,6 +41,15 @@
                 }
             });
         });
+        context.selectors.manualcodeIcon.on('click', async function (e) {
+            e.preventDefault();
+            try {
+                await navigator.clipboard.writeText(context.selectors.manualcodeValue.text());
+                context.selectors.manualcodeCopied.fadeIn().delay(1000).fadeOut();
+            } catch (err) {
+                alert("Failed to copy: ", err);
+            }
+        });        
 
         // enter key on code entry
         context.selectors.validateInput.bind('keypress', function (e) {
@@ -76,6 +85,10 @@
                         //Show error message
                         context.selectors.validateInput.closest('.field-item').find('.field-item-validation').show();
                     }
+                },
+                error: function (resp, msg, err) {
+                    $.telligent.evolution.notifications.show(msg, { type: 'error' });
+                    context.selectors.validateInput.closest('.field-item').find('.field-item-validation').show();
                 }
             });
         };

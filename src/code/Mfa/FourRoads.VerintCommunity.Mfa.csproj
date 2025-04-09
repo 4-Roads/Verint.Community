@@ -132,6 +132,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Widgets\AdminDisableMfa\validateemail.vm" />
     <EmbeddedResource Include="Resources\Widgets\UserConsent\accepterms.vm" />
+    <EmbeddedResource Include="Resources\Widgets\SyncMfa\copypaste.svg" />
+    <EmbeddedResource Include="Resources\Widgets\SyncMfa\header.vm" />
+    <EmbeddedResource Include="Resources\Widgets\SyncMfa\lock.svg" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Widgets\SyncMfa\mfa.js" />
@@ -174,7 +177,10 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Widgets\SyncMfa\google.png" />
+    <EmbeddedResource Include="Resources\Widgets\SyncMfa\microsoft.png" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Widgets\MfaSettings\widget.xml">
       <SubType>Designer</SubType>

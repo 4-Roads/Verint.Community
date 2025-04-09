@@ -1,27 +1,228 @@
+@base_font_size: -evo-themeconfig-unit('baseFontSizeValue', 14px);
 
-.mfa-settings{
+html .content-fragment.mfa-settings {
+	width: 0rem + 500/@base_font_size;
+	max-width: 100%;
+	margin-inline: auto;
 
-    .button{
-        padding: 10px 5px 10px 5px;
-        margin-top:10px;
-    }
-    
-    .two-factors-required{
-        padding:10px;
-        background-color:rgba(255, 255, 235, 10);
-        border-color:rgb(255, 255, 235);
-    }
+	.content-fragment-header {
+		border-bottom: 0px !important;
+		margin-bottom: 0px !important;
+		padding-bottom: 1rem !important;
 
-    .codes-list .left-col {
-        float: left;
-    }
+		.content {
+			display: flex;
+			align-items: center;
+			color: #000000;
+			font-size: 0rem + 20/@base_font_size !important;
+			line-height: 1;
 
-    .codes-list ul {
-        padding: 20px;
-    }
+			.avatar {
+				padding-right: 0rem + 22/@base_font_size;
 
-    .codes-list li {
-        margin: 10px;
-        padding: 0 20px;
-    }
+				img {
+					width: 0rem + 37/@base_font_size;
+					height: 0rem + 41/@base_font_size;
+				}
+			}
+		}
+	}
+
+	.mfa-enabled {
+		color: green;
+		font-weight: 700;
+	}
+
+	.mfa-enabled::before {
+		content: "\2713"; /* Unicode Check Mark ✓ */
+		color: green;
+		font-size: 1.2em;
+		margin-right: 1.5rem;
+	}
+
+	.two-factors-required,
+	.two-factors-summary {
+		font-size: 1.2rem;
+		padding-bottom: 2rem;
+		line-height: 1.4;
+	}
+
+	.mfa-panel {
+		display: flex;
+		padding: 1rem;
+		border-radius: 0rem + 20/@base_font_size;
+		background-color: #f2f2f2;
+		box-sizing: border-box;
+		margin-bottom: 1rem;
+
+		.mfa-task-seq {
+			padding: 1rem;
+			font-weight: 700;
+			font-size: 2rem;
+		}
+
+		.mfa-task {
+			padding: 1rem;
+
+			.mfa-title {
+				font-weight: 700;
+				padding-bottom: 1rem;
+			}
+
+			.app-list {
+				color: inherit !important;
+				text-decoration: underline;
+				font-size: 0rem + 16/@base_font_size;
+			}
+
+			.app-item {
+				display: flex;
+				align-items: center;
+				padding: 0.5rem;
+
+				.avatar {
+					padding-right: 2rem;
+
+					img {
+						width: 0rem + 32/@base_font_size;
+						height: 0rem + 32/@base_font_size;
+					}
+				}
+			}
+
+			.scancode-wrapper {
+				display: flex;
+				align-items: center;
+
+				.scancode {
+					width: 0rem + 140/@base_font_size;
+					height: 0rem + 140/@base_font_size;
+					flex-shrink: 0;
+				}
+
+				.manualcode {
+					padding: 0 1rem;
+
+					.prompt {
+						font-size: 1.2rem;
+						padding-bottom: 1rem;
+					}
+
+					.code {
+						display: flex;
+						align-items: center;
+						font-weight: 700;
+						font-size: 1.2rem;
+						line-height: normal;
+						word-break: break-all;
+
+						img {
+							padding-left: 0.5rem;
+						}
+					}
+
+					.manual-code-copied {
+						height: 0rem + 20/@base_font_size;
+						margin-top: 0rem + 10/@base_font_size;
+					}
+				}
+			}
+
+			.field-list {
+				display: flex;
+				gap: 0rem + 13/@base_font_size;
+
+				.field-item-input {
+					input {
+						width: 100%;
+						background: #ffffff;
+					}
+				}
+			}
+		}
+	}
+
+	.button {
+		padding: 10px 5px 10px 5px;
+		margin-top: 0rem + 10/@base_font_size;
+		min-width: 0rem + 129/@base_font_size;
+	}
+
+	.codes-list .left-col {
+		float: left;
+	}
+
+	.codes-list ul {
+		padding: 0rem + 20/@base_font_size;
+	}
+
+	.codes-list li {
+		margin: 10px;
+		padding: 0 20px;
+	}
+}
+
+@media only screen and (min-width: 768px) {
+
+	html .content-fragment.mfa-settings {
+
+		.content-fragment-header {
+
+			.content {
+
+				.avatar {
+					font-size: 0rem + 28/@base_font_size !important;
+				}
+			}
+		}
+
+		.mfa-panel {
+
+			.mfa-task {
+
+				.mfa-title {
+					font-size: 0rem + 16/@base_font_size;
+					line-height: 0rem + 20/@base_font_size;
+				}
+
+				form {
+
+					fieldset .field-list .field-item {
+						margin: 0;
+					}
+				}
+			}
+		}
+	}
+
+}
+
+@media screen and (max-width: 670px) {
+	html .content-fragment.mfa-settings {
+		.mfa-panel {
+			.scancode-wrapper {
+				display: block!important;
+				.manualcode {
+					padding: 0!important;
+					margin-top: 10px;
+				}
+			}
+			.mfa-task {
+				.field-list {
+					display: block!important;
+					.field-item {
+						&:first-child {
+							margin: 0!important;
+						}
+						&:last-child {
+							margin: 10px 0 0 0!important;
+						}
+						.button {
+							width: 100%;
+						}
+					}
+				}
+			}
+		}
+	}
 }
