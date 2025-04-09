@@ -91,7 +91,7 @@ $core_v2_widget.ApplyTokens($core_v2_widget.GetStringValue('fragmentHeader', '${
   <resource name="Mfa_Description">Adds support for MFA.</resource>
   <resource name="Options">Options</resource>
   <resource name="SaveButton">Submit</resource>
-  <resource name="TwoFactorEnabled">Two factor authentication is enabled for this account, using your Google Authenticator App please enter the current code</resource>
+  <resource name="TwoFactorEnabled">Two factor authentication is enabled for this account, using your Authenticator App please enter the current code</resource>
   <resource name="Submit">Submit Code</resource>
   <resource name="EnterCode">Enter Code</resource>
   <resource name="Heading">Two Factor Authentication</resource>

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Configuration;
@@ -42,9 +44,9 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
         private static readonly string _eakey_mfaEnabled = "__mfaEnabled";
         private static readonly string _eakey_codesGeneratedOnUtc = "__mfaCodesGeneratedOnUtc";
         private static readonly string _eakey_mfaVersion = "__mfaVersion";
-        private static readonly string _eakey_mfaRequiresSetup = "_mfaRequiresSetup"; 
+        private static readonly string _eakey_mfaRequiresSetup = "_mfaRequiresSetup";
         private static readonly string _eakey_emailVerified = "___emailVerified";
-        private static readonly string _eakey_emailVerifiedCheck = "___emailVerifiedCheck"; 
+        private static readonly string _eakey_emailVerifiedCheck = "___emailVerifiedCheck";
         private static readonly string _eakey_emailVerifiedDate = "___emailVerifiedDate";
         private static readonly string _eakey_emailVerifyCode = "_eakey_emailVerifyCode";
         private readonly IEncryptedCookieService _encryptedCookieService;
@@ -65,8 +67,8 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
         private string[] _requiredRoles;
         private ISocketMessage _socketMessenger;
         private SameSiteMode _sameSiteCookieMode;
-        private Dictionary<string,bool> _safePages;
-        
+        private Dictionary<string, bool> _safePages;
+
         public MfaLogic(IUsers usersService, IUrl urlService, IMfaDataProvider mfaDataProvider,
             IEncryptedCookieService encryptedCookieService,
             IPermissions permissions)
@@ -80,14 +82,14 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
 
         public void Initialize(bool enableEmailVerification, IVerifyEmailProvider emailProvider,
             ISocketMessage socketMessenger, DateTime emailValidationCutoffDate, PersitenceEnum isPersistent,
-            int persistentDuration, int timeTolerance, int emailVerificationExpiry, int[] requiredRoles, string sameSiteMode, string[] whitelistPages )
+            int persistentDuration, int timeTolerance, int emailVerificationExpiry, int[] requiredRoles, string sameSiteMode, string[] whitelistPages)
         {
             EmailValidationEnabled = enableEmailVerification;
             _emailProvider = emailProvider;
             _socketMessenger = socketMessenger;
             _emailValidationCutoffDate = emailValidationCutoffDate;
             _usersService.Events.AfterAuthenticate += EventsOnAfterAuthenticate;
-            _usersService.Events.BeforeUpdate += Events_BeforeUpdate; 
+            _usersService.Events.BeforeUpdate += Events_BeforeUpdate;
             _jwtSecret = Encoding.UTF8.GetBytes(GetJwtSecret()).Take(32).ToArray();
             _isPersistent = isPersistent;
             _fileStoreNames = PluginManager.Get<ISecuredCentralizedFileStore>().Select(fs => $"/{fs.FileStoreKey.ToLowerInvariant().Replace(".", "-")}/").ToList();
@@ -112,7 +114,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
                 }
             }
 
-            string[] baselineSafe  = { "/login", "/logout", "/mfa", "/user/changepassword" , "/verifyemail", "/user/consent" , "/msgs" , "/register" };
+            string[] baselineSafe = { "/login", "/logout", "/mfa", "/user/changepassword", "/verifyemail", "/user/consent", "/msgs", "/register" };
             foreach (var page in baselineSafe)
             {
                 if (!_safePages.ContainsKey(page))
@@ -124,7 +126,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
 
         private void Events_BeforeUpdate(UserBeforeUpdateEventArgs e)
         {
-            var user = _usersService.Get(new UsersGetOptions(){ Id= e.Id.Value });
+            var user = _usersService.Get(new UsersGetOptions() { Id = e.Id.Value });
 
             e.ExtendedAttributes.Add(new ExtendedAttribute()
             {
@@ -148,8 +150,8 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
 
                 HttpCookie jwtCookie = HttpContext.Current.Request.Cookies[GetMfaCookieName()];
 
-                return CheckJwtCookie(jwtCookie , user).HasValue;
-             }
+                return CheckJwtCookie(jwtCookie, user).HasValue;
+            }
         }
 
         private PayLoad? CheckJwtCookie(HttpCookie jwtCookie, User user)
@@ -203,7 +205,9 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
                 }
 
                 if (_isPersistent == PersitenceEnum.Authentication)
+                {
                     EnsureJwtCookieExpirationMatchesAuthCookie(payload);
+                }
             }
 
             if (!EmailValidationRequired(user))
@@ -211,23 +215,23 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
                 //To get here must have validated email and 
                 if (!mfaEnabled)
                     //Is this user in the role that requires MFA
-                    if (UserRequiresMfa(user)) 
-                    { 
-                        ForceRedirect(request,"/manage_mfa" + "?ReturnUrl=" + _urlService.Encode(request.HttpContext.Request.RawUrl));
+                    if (UserRequiresMfa(user))
+                    {
+                        ForceRedirect(request, "/manage_mfa" + "?ReturnUrl=" + _urlService.Encode(request.HttpContext.Request.RawUrl));
                     }
 
                 return;
             }
-            
+
             if (user.JoinDate < _emailValidationCutoffDate && VerifiedDateHasBeenSet(user))
             { //Never validated and also joined before cutoff date so assumed a valid use
                 SetEmailInExtendedAttributes(user);
                 return;
             }
 
-            ForceRedirect(request,"/verifyemail" + "?ReturnUrl=" + _urlService.Encode(request.HttpContext.Request.RawUrl));
+            ForceRedirect(request, "/verifyemail" + "?ReturnUrl=" + _urlService.Encode(request.HttpContext.Request.RawUrl));
 
-            if (EmailNotSent(user)) 
+            if (EmailNotSent(user))
                 SendValidationCode(user);
         }
 
@@ -286,7 +290,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
                 string storedHashCode = user.ExtendedAttributes.Get(_eakey_emailVerifyCode)?.Value;
 
                 //Read the users profile, if matches then clear the user profile and set _eakey_emailVerified to current email
-                if (string.CompareOrdinal(storedHashCode, code.Hash(GetAccountSecureKey(user) , user.Id.Value)) == 0)
+                if (string.CompareOrdinal(storedHashCode, code.Hash(GetAccountSecureKey(user), user.Id.Value)) == 0)
                 {
                     SetEmailInExtendedAttributes(user);
                     result = true;
@@ -313,9 +317,10 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
             };
 
             return _usersService.Update(new UsersUpdateOptions
-                {
-                    Id = user.Id, ExtendedAttributes = attributes
-                })
+            {
+                Id = user.Id,
+                ExtendedAttributes = attributes
+            })
                 .HasErrors();
         }
 
@@ -379,7 +384,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
                     //remove version number
 #if !SIMULATE_OLDMFA_KEY_VERSION
                     updateOptions.ExtendedAttributes.Add(new ExtendedAttribute
-                        { Key = _eakey_mfaVersion, Value = string.Empty });
+                    { Key = _eakey_mfaVersion, Value = string.Empty });
 #endif
                 }
                 else
@@ -387,7 +392,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
 #if !SIMULATE_OLDMFA_KEY_VERSION
                     //store plugin version in EA
                     updateOptions.ExtendedAttributes.Add(new ExtendedAttribute
-                        { Key = _eakey_mfaVersion, Value = _mfaLogicVersion.ToString(CultureInfo.InvariantCulture) });
+                    { Key = _eakey_mfaVersion, Value = _mfaLogicVersion.ToString(CultureInfo.InvariantCulture) });
 #endif
 
                     var mfaEnabled = user.ExtendedAttributes.Get(_eakey_mfaEnabled);
@@ -396,7 +401,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
                     if (mfaEnabled != null)
                         bool.TryParse(mfaEnabled.Value, out currentEnabled);
 
-                    updateOptions.ExtendedAttributes.Add(new ExtendedAttribute { Key = _eakey_mfaRequiresSetup, Value = currentEnabled ? "false": "true" });
+                    updateOptions.ExtendedAttributes.Add(new ExtendedAttribute { Key = _eakey_mfaRequiresSetup, Value = currentEnabled ? "false" : "true" });
                 }
 
                 updateOptions.ExtendedAttributes.Add(new ExtendedAttribute { Key = _eakey_mfaEnabled, Value = enabled.ToString() });
@@ -417,11 +422,11 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
 
             var tfa = new FourRoadsTwoFactorAuthenticator();
 
-            if (!tfa.ValidateTwoFactorPIN(GetAccountSecureKey(user), code, new TimeSpan(0,0, _timeTolerance)))
+            if (!tfa.ValidateTwoFactorPIN(GetAccountSecureKey(user), code, new TimeSpan(0, 0, _timeTolerance)))
                 return false;
 
             SetTwoFactorState(user, TwoFactorState.Passed, persist);
-                return true;
+            return true;
         }
 
         public string GetAccountSecureKey(User user)
@@ -482,11 +487,11 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
             _usersService.RunAsUser(_usersService.ServiceUserName, () =>
             {
                 var updateOptions = new UsersUpdateOptions
-                    { Id = user.Id.Value, ExtendedAttributes = user.ExtendedAttributes };
+                { Id = user.Id.Value, ExtendedAttributes = user.ExtendedAttributes };
                 updateOptions.ExtendedAttributes.Add(new ExtendedAttribute
-                    { Key = _eakey_codesGeneratedOnUtc, Value = DateTime.UtcNow.ToString("O") });
+                { Key = _eakey_codesGeneratedOnUtc, Value = DateTime.UtcNow.ToString("O") });
                 updateOptions.ExtendedAttributes.Add(new ExtendedAttribute
-                    { Key = _eakey_mfaVersion, Value = _mfaLogicVersion.ToString(CultureInfo.InvariantCulture) });
+                { Key = _eakey_mfaVersion, Value = _mfaLogicVersion.ToString(CultureInfo.InvariantCulture) });
                 _usersService.Update(updateOptions);
             });
             return codes;
@@ -524,7 +529,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
                 !string.IsNullOrWhiteSpace(HttpContext.Current.Request.QueryString["userName"]))
             {
                 var userValidation = _usersService.Get(new UsersGetOptions
-                    { Username = HttpContext.Current.Request.QueryString["userName"] });
+                { Username = HttpContext.Current.Request.QueryString["userName"] });
 
                 if (userValidation != null && !userValidation.HasErrors())
                     if (ValidateEmailCode(userValidation, HttpContext.Current.Request.QueryString["code"]))
@@ -605,12 +610,17 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
         {
             if (payLoad == null || !DateTime.TryParse(payLoad.Value.expires, out var jwtExpiration)) return;
 
-            //TODO: Reinstate this functionality
-            var authCookieExpiration = DateTime.UtcNow.AddDays(7);//_authenticationService.GetAuthenticationCookieExpiration();
+            DateTime? authCookieExpiration = GetAuthCookieExpiry();
+            if (!authCookieExpiration.HasValue)
+            {
+                authCookieExpiration = DateTime.UtcNow.AddDays(7); // todo - add config
+            }
 
             //using 'sortable' datetime to avoid comparing down to milliseconds
-            if (!authCookieExpiration.ToString("s").Equals(jwtExpiration.ToUniversalTime().ToString("s")))
+            if (!authCookieExpiration.Value.ToString("s").Equals(jwtExpiration.ToUniversalTime().ToString("s")))
+            {
                 SetTwoFactorState(payLoad.Value.userId, TwoFactorState.Passed, true);
+            }
         }
 
         private void RemoveMfaToken()
@@ -619,6 +629,87 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
             {
                 Expires = DateTime.UtcNow.AddDays(-7)
             });
+        }
+
+        private DateTime? GetAuthCookieExpiry()
+        {
+            if (AuthCookie != null)
+            {
+                var authCookieValues = GetAuthCookieValues(AuthCookie.Value);
+                if (authCookieValues != null && authCookieValues["Expires"] != null)
+                {
+                    try
+                    {
+                        DateTime? utcDateTime = null;
+                        utcDateTime = DateTime.Parse(authCookieValues["Expires"], null, DateTimeStyles.AdjustToUniversal);
+                        if (utcDateTime.HasValue)
+                        {
+                            return utcDateTime;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        // ignore cookie data as failed to extract date
+                    }
+                }
+
+                if (AuthCookie.Expires != DateTime.MinValue)
+                {
+                    return AuthCookie.Expires;
+                }
+            }
+
+            return null;
+        }
+
+        private NameValueCollection GetAuthCookieValues(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return null;
+            }
+
+            string queryString = "";
+            try
+            {
+                queryString = DecryptCookieValue(value);
+            }
+            catch (CryptographicException)
+            {
+                // invalid so pass back empty set
+            }
+            return string.IsNullOrEmpty(queryString) ? null : ParseQueryString(queryString);
+        }
+
+        private NameValueCollection ParseQueryString(string queryString)
+        {
+            NameValueCollection queryString1 = new NameValueCollection();
+            if (!string.IsNullOrEmpty(queryString))
+            {
+                int num = queryString.IndexOf('?');
+                if (num >= 0)
+                    queryString = queryString.Substring(num + 1);
+                string str1 = queryString.Replace("&amp;", "&");
+                char[] chArray1 = new char[1] { '&' };
+                foreach (string str2 in str1.Split(chArray1))
+                {
+                    char[] chArray2 = new char[1] { '=' };
+                    string[] strArray = str2.Split(chArray2);
+                    if (strArray.Length == 2)
+                        queryString1.Add(_urlService.Decode(strArray[0]), _urlService.Decode(strArray[1]));
+                }
+            }
+            return queryString1;
+        }
+
+        private string DecryptCookieValue(string cookieValue)
+        {
+            if (string.IsNullOrEmpty(cookieValue))
+            {
+                return null;
+            }
+            byte[] bytes = MachineKey.Unprotect(Convert.FromBase64String(HttpUtility.UrlDecode(cookieValue)));
+            return Encoding.UTF8.GetString(bytes, 0, bytes.Length);
         }
 
         private void SetEmailInExtendedAttributes(User user)
@@ -646,7 +737,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
             ///Hash the email so that it can not be viewed in the extended attributes
             //If the email is not hashed then let's hash it
             string storedEmailCheck = user.ExtendedAttributes.Get(_eakey_emailVerifiedCheck)?.Value;
-            string storedEmail= user.ExtendedAttributes.Get(_eakey_emailVerified)?.Value;
+            string storedEmail = user.ExtendedAttributes.Get(_eakey_emailVerified)?.Value;
 
             if (!string.IsNullOrWhiteSpace(storedEmail) && storedEmail.Contains("@")) // Not base64 therefore not hashed
             {
@@ -841,7 +932,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
             //if no machineKey defined in web.config, fallback to hash value of a string
             //consisting of serviceUser membership Id and site home page url
             var serviceUser = Apis.Get<IUsers>().Get(new UsersGetOptions
-                { Username = Apis.Get<IUsers>().ServiceUserName });
+            { Username = Apis.Get<IUsers>().ServiceUserName });
             var siteUrl = Apis.Get<IUrl>().Absolute(Apis.Get<ICoreUrls>().Home(false));
 
             return $"{siteUrl}{serviceUser.ContentId:N}".MD5Hash();
@@ -858,19 +949,22 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
                 case PersitenceEnum.Off:
                     return null;
                 case PersitenceEnum.Authentication:
-                {
-                    if (AuthCookie != null)
-                        return AuthCookie.Expires;
-
-                    return DateTime.UtcNow.AddHours(7);
-                }
+                    {
+                        DateTime? authCookieDateTime = GetAuthCookieExpiry();
+                        if (authCookieDateTime.HasValue)
+                        {
+                            return authCookieDateTime.Value;
+                        }
+                           
+                        return DateTime.UtcNow.AddDays(7); // todo - add config
+                    }
 
                 case PersitenceEnum.UserDefined:
-                {
-                    if (persist) return DateTime.Now.AddDays(_persistentDuration);
+                    {
+                        if (persist) return DateTime.Now.AddDays(_persistentDuration);
 
-                    return null;
-                }
+                        return null;
+                    }
             }
         }
 
@@ -884,11 +978,11 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
                 {
                     var mfaEnabled = user.ExtendedAttributes.Get(_eakey_mfaEnabled);
 
-                    if (mfaEnabled != null) 
+                    if (mfaEnabled != null)
                         bool.TryParse(mfaEnabled.Value, out isEnabled);
                 }
             });
-            return isEnabled ;
+            return isEnabled;
         }
 
         private bool IsImpersonator()
@@ -904,20 +998,20 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
         private bool IsImpersonator(HttpRequestBase request)
         {
             var cookieValues = _encryptedCookieService.GetCookieValues(".te.auth");  //This should be configurable
-         
+
             if (cookieValues == null)
                 return false;
 
             var token = cookieValues["PrivateToken"];
             var impersonating = cookieValues["Impersonating"];
-            
+
             if (int.TryParse(cookieValues["UserID"], out var userId)
                 && !string.IsNullOrEmpty(token)
                 && !string.IsNullOrEmpty(impersonating)
                )
             {
                 var user = _usersService.Get(new UsersGetOptions { Id = userId });
-          
+
                 if (user != null && !user.HasErrors())
                     return _permissions.CheckPermission(SitePermission.ImpersonateUser, userId).IsAllowed;
 
@@ -1043,7 +1137,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
         {
             //props set in JWT decoder
             //prop names match claims
-            
+
             /// <summary>
             /// User ID
             /// </summary>
@@ -1063,7 +1157,7 @@ namespace FourRoads.VerintCommunity.Mfa.Logic
             /// contains the last auth data to be approved
             /// </summary>
             public string authdata;
-            
+
         }
     }
 }

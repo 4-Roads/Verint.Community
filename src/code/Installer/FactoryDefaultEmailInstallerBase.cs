@@ -104,7 +104,7 @@ namespace FourRoads.VerintCommunity.Installer
                     emails.AddFile("",$"{instanceId:N}.xml", EmbeddedResources.GetStream(resourceName), false);
 
                     IEnumerable<string> supplementaryResources = GetType().Assembly.GetManifestResourceNames()
-                                                .Where(r => r.StartsWith(widgetPath) && !r.EndsWith(".automation.xml")).ToArray();
+                                                .Where(r => r.StartsWith(widgetPath) && !r.EndsWith(".email.xml")).ToArray();
 
                     if (!supplementaryResources.Any())
                         return;
