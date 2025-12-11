@@ -6,38 +6,38 @@ This repository hosts a comprehensive collection of open-source extensions and p
 ## Included Plugins
 
 ### Analytics & Data
-*   **ApplicationInsights**: Integrates Azure Application Insights for deep telemetry, error tracking, and usage analytics.
-*   **PowerBI**: Synchronizes community data (content and users) to Microsoft Power BI for advanced reporting.
+*   **[ApplicationInsights](src/code/ApplicationInsights)**: Integrates Azure Application Insights for deep telemetry, error tracking, and usage analytics.
+*   **[PowerBI](src/code/PowerBI)**: Synchronizes community data (content and users) to Microsoft Power BI for advanced reporting.
 
 ### Security & Spam Protection
-*   **Mfa**: Adds Multi-Factor Authentication support to user logins.
-*   **StopForumSpam**: Integrates with StopForumSpam.org to automatically detect and block spammer registrations.
-*   **GPTZero**: Detects AI-generated content using the GPTZero API to help maintain content authenticity.
-*   **Paywall**: Implements a configurable paywall system to restrict content access based on permissions or tags.
+*   **[Mfa](src/code/Mfa)**: Adds Multi-Factor Authentication support to user logins.
+*   **[StopForumSpam](src/code/StopForumSpam)**: Integrates with StopForumSpam.org to automatically detect and block spammer registrations.
+*   **[GPTZero](src/code/GPTZero)**: Detects AI-generated content using the GPTZero API to help maintain content authenticity.
+*   **[Paywall](src/code/Paywall)**: Implements a configurable paywall system to restrict content access based on permissions or tags.
 
 ### SEO & Metadata
-*   **MicroData**: Injects Schema.org microdata attributes into pages to improve SEO and search result appearance.
-*   **MetaData**: Advanced metadata management for pages.
-*   **ExtendedSearch**: Enhancements to the native search capabilities.
+*   **[MicroData](src/code/MicroData)**: Injects Schema.org microdata attributes into pages to improve SEO and search result appearance.
+*   **[MetaData](src/code/MetaData)**: Advanced metadata management for pages.
+*   **[ExtendedSearch](src/code/ExtendedSearch)**: Enhancements to the native search capabilities.
 
 ### Integrations
-*   **AmazonS3**: Enables file storage offloading to Amazon S3 buckets.
-*   **HubSpot**: Integration with the HubSpot platform.
-*   **VidYardViewer**: Components for embedding and viewing VidYard videos.
+*   **[AmazonS3](src/code/AmazonS3)**: Enables file storage offloading to Amazon S3 buckets.
+*   **[HubSpot](src/code/HubSpot)**: Integration with the HubSpot platform.
+*   **[VidYardViewer](src/code/VidYardViewer)**: Components for embedding and viewing VidYard videos.
 
 ### Community Features
-*   **ForumLastPost**: Enhances forum listings to show detailed last post information.
-*   **GroupDataExport**: Tools for exporting group-specific data.
-*   **GroupMentionActivity**: Better handling of mentions within groups.
-*   **PwaFeatures**: Adds Progressive Web App (PWA) capabilities to the community site.
-*   **SocialProfileControls**: Additional UI controls for user profiles.
-*   **Splash**: Functionality for splash screens or welcome modals.
+*   **[ForumLastPost](src/code/ForumLastPost)**: Enhances forum listings to show detailed last post information.
+*   **[GroupDataExport](src/code/GroupDataExport)**: Tools for exporting group-specific data.
+*   **[GroupMentionActivity](src/code/GroupMentionActivity)**: Better handling of mentions within groups.
+*   **[PwaFeatures](src/code/PwaFeatures)**: Adds Progressive Web App (PWA) capabilities to the community site.
+*   **[SocialProfileControls](src/code/SocialProfileControls)**: Additional UI controls for user profiles.
+*   **[Splash](src/code/Splash)**: Functionality for splash screens or welcome modals.
 
 ### Developer & Utility
-*   **ConfigurationExtensions**: Helper extensions for advanced configuration scenarios.
-*   **RenderingHelper**: Utilities to assist with content rendering.
-*   **MigratorFramework**: A framework to assist with data migration tasks.
-*   **Installer**: Utilities to help with the installation of these components.
+*   **[ConfigurationExtensions](src/code/ConfigurationExtensions)**: Helper extensions for advanced configuration scenarios.
+*   **[RenderingHelper](src/code/RenderingHelper)**: Utilities to assist with content rendering.
+*   **[MigratorFramework](src/code/MigratorFramework)**: A framework to assist with data migration tasks.
+*   **[Installer](src/code/Installer)**: Utilities to help with the installation of these components.
 
 ## Compatibility
 This version is the development branch for Verint Community 13 (Telligent 13).
